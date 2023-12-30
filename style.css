@@ -6,10 +6,25 @@ table {
 th, td {
   border: 1px solid black;
   text-align: left;
-  padding: 8px;
+  padding: 4px;
+  font-size: 10px; /* Adjust as needed */
 }
 
 th {
   background-color: #f2f2f2;
 }
 
+@media print {
+  @page {
+    size: landscape;
+  }
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  table {
+    width: 100%;
+    max-width: none;
+  }
+}
