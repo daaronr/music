@@ -1,14 +1,13 @@
 | Variation | 1     | 2     | 3       | 4     | 5     | 6       | 7     | 8     | 9       | 10    | 11    | 12      | Name                        |
 |-----------|-------|-------|---------|-------|-------|---------|-------|-------|---------|-------|-------|---------|-----------------------------|
 | 1         | I7    | I7    | I7      | I7    | IV7   | IV7     | I7    | I7    | V7      | V7    | I7    | I7      | Basic Blues                  |
-| 2         | I7    | I7    | I7      | I7    | IV7   | IV7     | I7    | I7    | V7      | **IV7**  | I7   | **V7**    | Classic V-IV Turnaround      |
-| 3         | I7    | **IV7** | I7      | I7    | IV7   | IV7     | I7    | I7    | **II7**     | **V7**   | I7    | V7      |  Dominant II-V         |
-| 4         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | **VI7**   | II7     | V7    | I7   | V7   | Dominant 6-2-5-1            |
-| 5         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | VI7   | **ii-7**     | V7    | I7   | **ii- V7**  |  Diatonic 6-2-5-1          |
-| 6         | I7    | IV7   | I7      | I7    | IV7   | **VII7**  | I7    | VI7   | **bVI7**  | V7    | I7   | ** bVI7 V7**   | IV of IV; b6 turnaround |
-| 7         | I7    | IV7   | I7      | **v-** I7 | IV7   | VII7  | I7 | **iii-** VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | 2-5 delays, Minor Subdom Turn's |
-| 8         | I7    | IV7   | I7      | **v-** I7 | IV7   | VII7  | *iii-* | VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | Minor Subdom Turns extend |
-
+| 2         | I7    | I7    | I7      | I7    | IV7   | IV7     | I7    | I7    | IV7     | IV7   | I7    | I7      | Quick Four Blues             |
+| 3         | I7    | I7    | I7      | I7    | IV7   | IV7     | I7    | I7    | V7      | IV7   | I7    | V7      | Classic V-IV Turnaround      |
+| 4         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | I7    | V7      | IV7   | I7    | V7      | Early Change Blues           |
+| 5         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | ii7   | V7      | I7    | ii7   | V7      | ii-V Turnaround              |
+| 6         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | ii7   | V7      | I7    | ii7   | V7      | Jazz Turnaround              |
+| 7         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | vi7   | ii7     | V7    | I7    | vi7     | Minor Subdominant Turnaround |
+| 8         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | vi7   | ii7     | V7    | I7    | vi7     | Bebop Blues Variation        |
 | 9         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | vi7   | ii7     | V7    | vi7   | I7      | Bebop Plagal Cadence         |
 | 10        | Imaj7 | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | Diminished Passing Chords    |
 | 11        | Imaj7 | iv-dim7| Imaj7  | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Diminished Pedal Point       |
