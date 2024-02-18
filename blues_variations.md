@@ -7,15 +7,15 @@
 | 5         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | VI7   | **ii-7**     | V7    | I7   | **ii- V7**  |  Diatonic 6-2-5-1          |
 | 6         | I7    | IV7   | I7      | I7    | IV7   | **VII7**  | I7    | VI7   | **bVI7**  | V7    | I7   | ** bVI7 V7**   | IV of IV; b6 turnaround |
 | 7         | I7    | IV7   | I7      | **v-** I7 | IV7   | VII7  | I7 | **iii-** VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | 2-5 delays, Minor Subdom Turn's |
-| 8         | I7    | IV7   | I7      | **v-** I7 | IV7   | VII7  | *iii-* | VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | Minor Subdom Turns extend |
+| 8         | I7    | IV7   | I7      | v- I7 | IV7   | VII7  | *iii-* | VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | Minor Subdom Turns extend |
 
-| 9         | I7    | IV7   | I7      | I7    | IV7   | IV7     | I7    | vi7   | ii7     | V7    | vi7   | I7      | Bebop Plagal Cadence         |
-| 10        | Imaj7 | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | Diminished Passing Chords    |
-| 11        | Imaj7 | iv-dim7| Imaj7  | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Diminished Pedal Point       |
-| 12        | Imaj7 | iv-dim7| Imaj7  | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Major Seventh Cycle          |
-| 13        | Imaj7 | iv-dim7| Imaj7  | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Maj7 Diminished Variation    |
-| 14        | Imaj7 | IV7   | iv-dim7 | I7    | Imaj7 | iv-dim7 | I7    | Imaj7 | iv-dim7 | I7    | Imaj7 | iv-dim7 | Maj7 IV Diminished Mix       |
-| 15        | Imaj7 | IV7   | iv-dim7 | I7    | Imaj7 | iv-dim7 | I7    | Imaj7 | iv-dim7 | I7    | Imaj7 | iv-dim7 | Maj7 Diminished Interchange  |
-| 16        | Imaj7 | iv-dim7| IV7    | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Maj7 IV Contrast             |
-| 17        | Imaj7 | iv-dim7| Imaj7  | iv-dim7| I7   | Imaj7  | iv-dim7| I7    | Imaj7  | iv-dim7| I7    | Imaj7  | Maj7 Diminished Mix-up       |
-| 18        | I7/V  | IV7/bVII| I7/V  | I7/V  | IV7/bVII| IV7/bVII| I7/V| I7/V | IV7/bVII| IV7/bVII| I7/V| I7/V   | Slash Bass Blues             |
+| 9         | I7    | IV7   | I7      |  v- I7   | IV7   | IV7     | I7    | vi7   | ii7     | V7    | vi7   | I7      | Bebop Plagal Cadence         |
+| 10        | Imaj | **vii- III7** | **vi- II7**| **v- I7** | IV7   | #iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | Diminished Passing Chords    |
+| 11        | Imaj |**vii- bvii-** | **vi- bvi-**  | *v- bV7*       | **IVmaj** | **iv-**  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | Diminished Pedal Point       |
+| 12        | Imaj | **IVmaj**    | **iii- ii-** | **#i-** *bV7*    | IVmaj   | Imaj  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | Major Seventh Cycle          |
+| 13        | Imaj | **IVmaj**    | iii- ii-  | **#i-** bV7         | IVmaj   | Imaj  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | maj Diminished Variation    |
+| 14        | Imaj | *vii- III7*   | *vi- II7* | *v- I7*            | IVmaj | iv-dim7 | I7    | Imaj | iv-dim7 | I7    | Imaj | iv-dim7 | maj IV Diminished Mix       |
+| 15        | Imaj | vii- III7     | vi- II7   | *#i-bV7*           | IVmaj | iv-dim7 | I7    | Imaj | iv-dim7 | I7    | Imaj | iv-dim7 | maj Diminished Interchange  |
+| 16    | **#i- #IV7** | vii- III7  | vi- II7   | *v- I7*           | IVmaj | Imaj  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | maj IV Contrast             |
+| 17    | Imaj | **#i-bV7** | **VIImaj bVIImaj** | **bVImaj bVmaj** | IVmaj | Imaj  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | maj Diminished Mix-up       |
+| 18    | v-/I | i-/IV | v-/I | v-/I |                              | i-/IV | I7/V| I7/V | IV7/bVII| IV7/bVII| I7/V| I7/V   | Slash Bass Blues             |
