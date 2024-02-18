@@ -8,7 +8,6 @@
 | 6         | I7    | IV7   | I7      | I7    | IV7   | **VII7**  | I7    | VI7   | **bVI7**  | V7    | I7   | ** bVI7 V7**   | IV of IV; b6 turnaround |
 | 7         | I7    | IV7   | I7      | **v-** I7 | IV7   | VII7  | I7 | **iii-** VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | 2-5 delays, Minor Subdom Turn's |
 | 8         | I7    | IV7   | I7      | v- I7 | IV7   | VII7  | *iii-* | VI7 | ii-7 | V7 |  **iii- VI7**    |  **ii- V7**  | Minor Subdom Turns extend |
-
 | 9         | I7    | IV7   | I7      |  v- I7   | IV7   | IV7     | I7    | vi7   | ii7     | V7    | vi7   | I7      | Bebop Plagal Cadence         |
 | 10        | Imaj | **vii- III7** | **vi- II7**| **v- I7** | IV7   | #iv-dim7 | I7    | IV7   | iv-dim7 | I7    | IV7   | iv-dim7 | Diminished Passing Chords    |
 | 11        | Imaj |**vii- bvii-** | **vi- bvi-**  | *v- bV7*       | **IVmaj** | **iv-**  | iv-dim7| I7    | Imaj  | iv-dim7| I7    | Imaj  | Diminished Pedal Point       |
