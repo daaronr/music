@@ -64,49 +64,49 @@ export const bluesVariations: BluesVariation[] = [
   {
     id: 10,
     name: "Diminished Passing Chords",
-    chords: ["Imaj", "vii- III7", "vi- II7", "v- I7", "IV7", "#iv°7", "I7", "IV7", "iv°7", "I7", "IV7", "iv°7"],
+    chords: ["Imaj", "vii- III7", "vi- II7", "v- I7", "IV7", "#iv°7", "I7", "IV7", "#iv°7", "I7", "IV7", "#iv°7"],
     description: "Spooky diminished movement"
   },
   {
     id: 11,
     name: "Diminished Pedal Point",
-    chords: ["Imaj", "vii- ♭vii-", "vi- ♭vi-", "v- ♭V7", "IVmaj", "iv-", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj"],
+    chords: ["Imaj", "vii- ♭vii-", "vi- ♭vi-", "v- ♭V7", "IVmaj", "iv-", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj"],
     description: "Hypnotic pedal tones"
   },
   {
     id: 12,
     name: "Major Seventh Cycle",
-    chords: ["Imaj", "IVmaj", "iii- ii-", "#i- ♭V7", "IVmaj", "Imaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj"],
+    chords: ["Imaj", "IVmaj", "iii- ii-", "#i- ♭V7", "IVmaj", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj"],
     description: "Lush major seventh harmony"
   },
   {
     id: 13,
     name: "Major Diminished Variation",
-    chords: ["Imaj", "IVmaj", "iii- ii-", "#i- ♭V7", "IVmaj", "Imaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj"],
+    chords: ["Imaj", "IVmaj", "iii- ii-", "#i- ♭V7", "IVmaj", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj"],
     description: "Major meets diminished"
   },
   {
     id: 14,
     name: "Major IV Diminished Mix",
-    chords: ["Imaj", "vii- III7", "vi- II7", "v- I7", "IVmaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj", "iv°7"],
+    chords: ["Imaj", "vii- III7", "vi- II7", "v- I7", "IVmaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7"],
     description: "Mixing major and diminished colors"
   },
   {
     id: 15,
     name: "Major Diminished Interchange",
-    chords: ["Imaj", "vii- III7", "vi- II7", "#i- ♭V7", "IVmaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj", "iv°7"],
+    chords: ["Imaj", "vii- III7", "vi- II7", "#i- ♭V7", "IVmaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7"],
     description: "Chromatic interchange mastery"
   },
   {
     id: 16,
     name: "Major IV Contrast",
-    chords: ["#i- #IV7", "vii- III7", "vi- II7", "v- I7", "IVmaj", "Imaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj"],
+    chords: ["#i- #IV7", "vii- III7", "vi- II7", "v- I7", "IVmaj", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj"],
     description: "Bold harmonic contrast"
   },
   {
     id: 17,
     name: "Major Diminished Mix-up",
-    chords: ["Imaj", "#i- ♭V7", "VIImaj ♭VIImaj", "♭VImaj ♭Vmaj", "IVmaj", "Imaj", "iv°7", "I7", "Imaj", "iv°7", "I7", "Imaj"],
+    chords: ["Imaj", "#i- ♭V7", "VIImaj ♭VIImaj", "♭VImaj ♭Vmaj", "IVmaj", "Imaj", "#iv°7", "I7", "Imaj", "#iv°7", "I7", "Imaj"],
     description: "Wild chromatic adventure"
   },
   {
