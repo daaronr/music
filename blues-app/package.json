@@ -13,6 +13,7 @@
     "framer-motion": "^12.34.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "smplr": "^0.18.1",
     "tone": "^15.1.22"
   },
   "devDependencies": {
