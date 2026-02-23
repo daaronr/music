@@ -112,8 +112,8 @@ export const bluesVariations: BluesVariation[] = [
   {
     id: 18,
     name: "Slash Bass Blues",
-    chords: ["v-/I", "i-/IV", "v-/I", "v-/I", "i-/IV", "I7/V", "I7/V", "IV7/♭VII", "IV7/♭VII", "I7/V", "I7/V", "I7/V"],
-    description: "Groovy slash bass movement"
+    chords: ["I7/I", "I7/I", "I7/I", "I7/I", "IV7/IV", "IV7/IV", "I7/I", "I7/V", "V7/V", "IV7/IV", "I7/I", "V7/V"],
+    description: "Groovy slash bass movement (chord/bass note)"
   }
 ];
 
@@ -448,27 +448,3 @@ export function getChordColor(chord: string): string {
   return "#10B981"; // Green - other
 }
 
-// Flowchart structure - simplified paths through the 12 bars
-export interface FlowNode {
-  bar: number;
-  choices: {
-    chord: string;
-    variations: number[];
-    nextBar: number;
-  }[];
-}
-
-export const bluesFlowchart: FlowNode[] = [
-  { bar: 1, choices: [{ chord: "I7", variations: [1,2,3,4,5,6,7,8,9], nextBar: 2 }, { chord: "Imaj", variations: [10,11,12,13,14,15,17], nextBar: 2 }, { chord: "#i-", variations: [16], nextBar: 2 }] },
-  { bar: 2, choices: [{ chord: "I7", variations: [1,2], nextBar: 3 }, { chord: "IV7", variations: [3,4,5,6,7,8,9], nextBar: 3 }, { chord: "IVmaj", variations: [12,13], nextBar: 3 }, { chord: "vii-", variations: [10,14,15,16], nextBar: 3 }] },
-  { bar: 3, choices: [{ chord: "I7", variations: [1,2,3,4,5,6,7,8,9], nextBar: 4 }, { chord: "vi-", variations: [10,14,15], nextBar: 4 }, { chord: "iii-", variations: [12,13], nextBar: 4 }] },
-  { bar: 4, choices: [{ chord: "I7", variations: [1,2,3,4,5,6], nextBar: 5 }, { chord: "v- I7", variations: [7,8,9,10,14,16], nextBar: 5 }, { chord: "#i-", variations: [12,13,15], nextBar: 5 }] },
-  { bar: 5, choices: [{ chord: "IV7", variations: [1,2,3,4,5,7,8,9,10], nextBar: 6 }, { chord: "IVmaj", variations: [11,12,13,14,15,16,17], nextBar: 6 }] },
-  { bar: 6, choices: [{ chord: "IV7", variations: [1,2,3,4,5,9], nextBar: 7 }, { chord: "VII7", variations: [6,7,8], nextBar: 7 }, { chord: "#iv°7", variations: [10], nextBar: 7 }, { chord: "iv-", variations: [11], nextBar: 7 }, { chord: "Imaj", variations: [12,13,16,17], nextBar: 7 }] },
-  { bar: 7, choices: [{ chord: "I7", variations: [1,2,3,4,5,6,7,9,10], nextBar: 8 }, { chord: "iii-", variations: [8], nextBar: 8 }, { chord: "iv°7", variations: [11,12,13,14,15,16,17], nextBar: 8 }] },
-  { bar: 8, choices: [{ chord: "I7", variations: [1,2,3], nextBar: 9 }, { chord: "VI7", variations: [4,5,6,8], nextBar: 9 }, { chord: "iii-", variations: [7], nextBar: 9 }, { chord: "vi7", variations: [9], nextBar: 9 }, { chord: "IV7", variations: [10], nextBar: 9 }, { chord: "I7/Imaj", variations: [11,12,13,14,15,16,17], nextBar: 9 }] },
-  { bar: 9, choices: [{ chord: "V7", variations: [1,2], nextBar: 10 }, { chord: "II7", variations: [3,4], nextBar: 10 }, { chord: "ii-7", variations: [5,7,8,9], nextBar: 10 }, { chord: "♭VI7", variations: [6], nextBar: 10 }, { chord: "iv°7", variations: [10,11,12,13,14,15,16,17], nextBar: 10 }] },
-  { bar: 10, choices: [{ chord: "V7", variations: [1,3,4,5,6,7,8,9], nextBar: 11 }, { chord: "IV7", variations: [2,10], nextBar: 11 }, { chord: "I7", variations: [11,12,13,14,15,16,17], nextBar: 11 }] },
-  { bar: 11, choices: [{ chord: "I7", variations: [1,3,4], nextBar: 12 }, { chord: "iii-", variations: [7,8], nextBar: 12 }, { chord: "vi7", variations: [9], nextBar: 12 }, { chord: "IV7", variations: [10], nextBar: 12 }, { chord: "Imaj", variations: [11,12,13,14,15,16,17], nextBar: 12 }] },
-  { bar: 12, choices: [{ chord: "I7", variations: [1,9], nextBar: 1 }, { chord: "V7", variations: [2,3,4], nextBar: 1 }, { chord: "ii- V7", variations: [5,7,8], nextBar: 1 }, { chord: "♭VI7 V7", variations: [6], nextBar: 1 }, { chord: "iv°7", variations: [10,11,12,13,14,15,16,17], nextBar: 1 }] },
-];
