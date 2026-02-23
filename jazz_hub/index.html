@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jazz Practice Hub — Standalone</title>
+  <style>
+    :root { --bg:#0b0c10; --card:#15171d; --muted:#9aa0a6; --text:#e8eaed; --accent:#6ee7b7; --line:#2a2f36; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header { display:flex; gap:8px; align-items:center; padding:16px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(11,12,16,0.9); backdrop-filter: blur(8px); }
+    h1 { font-size: 20px; margin:0; }
+    .container { padding: 16px; max-width: 1200px; margin: 0 auto; }
+    .row { display:flex; flex-wrap: wrap; gap: 12px; }
+    .btn { background:#23262f; border:1px solid var(--line); color:var(--text); padding:8px 12px; border-radius:10px; cursor:pointer; }
+    .btn:hover { border-color:#3a404a; }
+    .btn.primary { background:#1d8f6e; border-color:#1d8f6e; }
+    .btn.ghost { background:transparent; }
+    .input, select, .number { background:#181b21; color:var(--text); border:1px solid var(--line); padding:8px; border-radius:10px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px; }
+    .grid { display:grid; gap:12px; }
+    .grid.repertoire { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .badge { display:inline-block; padding:2px 8px; border:1px solid var(--line); border-radius:999px; font-size:12px; margin-right:6px; color:var(--muted); }
+    .muted { color:var(--muted); }
+    .label { font-size:12px; color:var(--muted); }
+    .section-title { font-weight:700; margin: 8px 0; }
+    .tabs { display:flex; gap:6px; border-bottom:1px solid var(--line); margin-top:8px; }
+    .tab { padding:8px 10px; border:1px solid var(--line); background:#181b21; border-bottom:none; border-radius:10px 10px 0 0; cursor:pointer; }
+    .tab.active { background:#22252d; }
+    .table { width:100%; border-collapse: collapse; }
+    .table th, .table td { border-bottom:1px solid var(--line); padding:8px; text-align:left; }
+    .pill { display:inline-block; padding:2px 6px; background:#1f2937; border-radius:999px; font-size:12px; margin-right:6px; }
+    .small { font-size:12px; }
+    .right { margin-left:auto; }
+    .divider { height:1px; background:var(--line); margin:12px 0; }
+    .hint { font-size:12px; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Jazz Practice Hub</h1>
+    <div class="right"></div>
+    <button class="btn" id="btnExportCSV">Export Repertoire CSV</button>
+    <button class="btn" id="btnGenPlan">Generate Practice Plan</button>
+    <button class="btn" id="btnPrint">Print</button>
+  </header>
+  <div class="container">
+    <!-- Filters -->
+    <div class="card">
+      <div class="row">
+        <input id="q" class="input" placeholder="Search title or composer" style="min-width:260px;">
+        <select id="family">
+          <option>All</option>
+        </select>
+        <select id="feel">
+          <option>All</option>
+        </select>
+        <select id="status">
+          <option>All</option>
+          <option>Learning</option>
+          <option>Polishing</option>
+          <option>Ready</option>
+        </select>
+        <div class="row" style="align-items:center;">
+          <span class="label">Difficulty</span>
+          <input id="diffMin" type="number" class="number" value="1" min="1" max="5" style="width:70px;">
+          <span>–</span>
+          <input id="diffMax" type="number" class="number" value="5" min="1" max="5" style="width:70px;">
+        </div>
+        <div class="row" style="align-items:center;">
+          <span class="label">Tempo</span>
+          <input id="tempoMin" type="number" class="number" value="40" min="30" max="320" style="width:80px;">
+          <span>–</span>
+          <input id="tempoMax" type="number" class="number" value="300" min="30" max="320" style="width:80px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="library">Repertoire</div>
+      <div class="tab" data-tab="setlist">Setlist</div>
+      <div class="tab" data-tab="tech">Technique Matrix</div>
+      <div class="tab" data-tab="planner">Practice Planner</div>
+    </div>
+
+    <!-- Tab contents -->
+    <div id="tab-library" class="tabpane">
+      <div class="grid repertoire" id="repertoire"></div>
+    </div>
+    <div id="tab-setlist" class="tabpane" style="display:none;">
+      <div class="grid" style="grid-template-columns:2fr 1fr;">
+        <div class="card">
+          <div class="section-title">Current Setlist</div>
+          <div id="setlist"></div>
+          <div class="divider"></div>
+          <div id="setlistSummary" class="small muted"></div>
+          <div class="row" style="margin-top:8px;">
+            <button class="btn" id="btnExportSetlist">Export setlist CSV</button>
+            <button class="btn" id="btnSetToPractice">Create practice logs</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Presets</div>
+          <div class="small">
+            <div class="section-title small">Intros</div>
+            <ul>
+              <li>2-bar pickup (dominant approach)</li>
+              <li>Turnaround vamp, cue in</li>
+              <li>Rubato head → time</li>
+            </ul>
+            <div class="section-title small">Endings</div>
+            <ul>
+              <li>Tag last 4 bars ×2 and cut</li>
+              <li>Plagal cadence (IV → I) low pedal</li>
+              <li>Ritard to button on I</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tab-tech" class="tabpane" style="display:none;">
+      <div class="card">
+        <div class="section-title">Technique Matrix — 12 keys × skills</div>
+        <div class="hint">Ticks are saved locally.</div>
+        <div style="overflow:auto;">
+          <table class="table" id="techTable"></table>
+        </div>
+      </div>
+    </div>
+    <div id="tab-planner" class="tabpane" style="display:none;">
+      <div class="grid" style="grid-template-columns:2fr 1fr;">
+        <div class="card">
+          <div class="section-title">Daily practice generator</div>
+          <div class="hint">Samples from the filtered repertoire.</div>
+          <div class="row">
+            <button class="btn primary" id="btnGen5">Generate 5 tasks</button>
+            <button class="btn" id="btnGen10">Generate 10 tasks</button>
+          </div>
+          <div id="planPreview" class="small" style="margin-top:8px;"></div>
+        </div>
+        <div class="card">
+          <div class="section-title">Metronome placements</div>
+          <ul class="small">
+            <li>All beats → Offbeats (“&”)</li>
+            <li>2 & 4 only (swing)</li>
+            <li>Beat 4 only</li>
+            <li>Every 2 bars (displaced)</li>
+            <li>3 on / 1 off (silent bars)</li>
+            <li>Dotted quarters over 4</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const KEYS = ["C","G","D","A","E","B","F#","C#","F","Bb","Eb","Ab","Db","Gb","Cb"];
+    const FAMILIES = ["Blues","Rhythm Changes","AABA Standard","ABAC Standard","Ballad","Modal","Bossa","Waltz","Odd Meter","Latin","Funk"];
+    const FEELS = ["Swing","Bossa","Samba","Latin","Funk","Even 8ths","Waltz","Ballad"];
+    const FORMS = ["Blues 12","Blues (minor)","Rhythm Changes AABA 32","AABA 32","ABAC 32","AABC 32","Through-composed","Modal 16","Waltz 32","Other"];
+    const STATUS = ["Learning","Polishing","Ready"];
+    const SEED = [
+      {title:"Billie's Bounce", composer:"Charlie Parker", family:"Blues", form:"Blues 12", defaultKey:"F", altKeys:["Eb","G"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:240, goalTempo:180},
+      {title:"Straight, No Chaser", composer:"Thelonious Monk", family:"Blues", form:"Blues 12", defaultKey:"F", altKeys:["Bb"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:240, goalTempo:176},
+      {title:"Tenor Madness", composer:"Sonny Rollins", family:"Blues", form:"Blues 12", defaultKey:"Bb", altKeys:["F"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:220, goalTempo:168},
+      {title:"Now's The Time", composer:"Charlie Parker", family:"Blues", form:"Blues 12", defaultKey:"F", altKeys:["G"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:220, goalTempo:168},
+      {title:"Au Privave", composer:"Charlie Parker", family:"Blues", form:"Blues 12", defaultKey:"F", altKeys:["Eb"], feel:"Swing", difficulty:3, tempoMin:150, tempoMax:260, goalTempo:200},
+      {title:"Oleo", composer:"Sonny Rollins", family:"Rhythm Changes", form:"Rhythm Changes AABA 32", defaultKey:"Bb", altKeys:["F","C"], feel:"Swing", difficulty:3, tempoMin:160, tempoMax:300, goalTempo:220},
+      {title:"Anthropology", composer:"Parker/Gillespie", family:"Rhythm Changes", form:"Rhythm Changes AABA 32", defaultKey:"Bb", altKeys:["F"], feel:"Swing", difficulty:4, tempoMin:180, tempoMax:320, goalTempo:240},
+      {title:"Dexterity", composer:"Charlie Parker", family:"Rhythm Changes", form:"Rhythm Changes AABA 32", defaultKey:"Bb", altKeys:["C"], feel:"Swing", difficulty:4, tempoMin:180, tempoMax:320, goalTempo:240},
+      {title:"Cotton Tail", composer:"Duke Ellington", family:"Rhythm Changes", form:"Rhythm Changes AABA 32", defaultKey:"Bb", altKeys:["F"], feel:"Swing", difficulty:3, tempoMin:160, tempoMax:300, goalTempo:220},
+      {title:"All The Things You Are", composer:"Jerome Kern", family:"AABA Standard", form:"AABA 32", defaultKey:"Ab", altKeys:["G","Bb"], feel:"Swing", difficulty:3, tempoMin:120, tempoMax:220, goalTempo:176},
+      {title:"How High The Moon", composer:"Hamilton/Lewis", family:"ABAC Standard", form:"ABAC 32", defaultKey:"G", altKeys:["F","Ab"], feel:"Swing", difficulty:3, tempoMin:140, tempoMax:260, goalTempo:200},
+      {title:"There Will Never Be Another You", composer:"Harry Warren", family:"ABAC Standard", form:"ABAC 32", defaultKey:"Eb", altKeys:["F"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:220, goalTempo:168},
+      {title:"Just Friends", composer:"Klenner/Lewis", family:"ABAC Standard", form:"ABAC 32", defaultKey:"G", altKeys:["F","A"], feel:"Swing", difficulty:3, tempoMin:130, tempoMax:240, goalTempo:184},
+      {title:"Out of Nowhere", composer:"Green/Heyman", family:"ABAC Standard", form:"ABAC 32", defaultKey:"G", altKeys:["F","Ab"], feel:"Swing", difficulty:3, tempoMin:120, tempoMax:240, goalTempo:176},
+      {title:"Stella by Starlight", composer:"Victor Young", family:"AABA Standard", form:"AABA 32", defaultKey:"Bb", altKeys:["A","C"], feel:"Swing", difficulty:4, tempoMin:100, tempoMax:200, goalTempo:160},
+      {title:"Body and Soul", composer:"Green", family:"Ballad", form:"AABA 32", defaultKey:"Db", altKeys:["C","Eb"], feel:"Ballad", difficulty:3, tempoMin:40, tempoMax:70, goalTempo:60},
+      {title:"Blue Bossa", composer:"Kenny Dorham", family:"Bossa", form:"AABA 32", defaultKey:"Cm", altKeys:["Dm"], feel:"Bossa", difficulty:1, tempoMin:120, tempoMax:170, goalTempo:140},
+      {title:"Recorda-Me", composer:"Joe Henderson", family:"Bossa", form:"AABA 32", defaultKey:"Am", altKeys:["Bm"], feel:"Bossa", difficulty:3, tempoMin:120, tempoMax:190, goalTempo:160},
+      {title:"Wave", composer:"Jobim", family:"Bossa", form:"AABC 32", defaultKey:"D", altKeys:["C"], feel:"Bossa", difficulty:3, tempoMin:120, tempoMax:180, goalTempo:150},
+      {title:"So What", composer:"Miles Davis", family:"Modal", form:"Modal 16", defaultKey:"Dm", altKeys:["Em","Cm"], feel:"Swing", difficulty:2, tempoMin:120, tempoMax:220, goalTempo:176},
+      {title:"Impressions", composer:"John Coltrane", family:"Modal", form:"Modal 16", defaultKey:"Dm", altKeys:["Em"], feel:"Swing", difficulty:3, tempoMin:160, tempoMax:300, goalTempo:220},
+      {title:"Maiden Voyage", composer:"Herbie Hancock", family:"Modal", form:"AABA 32", defaultKey:"D", altKeys:["C"], feel:"Even 8ths", difficulty:3, tempoMin:120, tempoMax:200, goalTempo:160},
+      {title:"Someday My Prince Will Come", composer:"Morey/Churchill", family:"Waltz", form:"Waltz 32", defaultKey:"Bb", altKeys:["C"], feel:"Waltz", difficulty:2, tempoMin:110, tempoMax:180, goalTempo:150},
+      {title:"Bluesette", composer:"Toots Thielemans", family:"Waltz", form:"Waltz 32", defaultKey:"Bb", altKeys:["A"], feel:"Waltz", difficulty:4, tempoMin:120, tempoMax:200, goalTempo:160},
+      {title:"All Blues", composer:"Miles Davis", family:"Odd Meter", form:"Other", defaultKey:"G", altKeys:["F"], feel:"6/8", difficulty:2, tempoMin:90, tempoMax:160, goalTempo:130},
+      {title:"Cantaloupe Island", composer:"Herbie Hancock", family:"Funk", form:"AABA 16", defaultKey:"Fm", altKeys:["Gm"], feel:"Funk", difficulty:1, tempoMin:95, tempoMax:120, goalTempo:110},
+      {title:"Chameleon", composer:"Herbie Hancock", family:"Funk", form:"AABA 16", defaultKey:"Bm", altKeys:["Am"], feel:"Funk", difficulty:2, tempoMin:95, tempoMax:120, goalTempo:110}
+    ].map((t,i)=>({ id:i+1, ...t, status:(t.family==="Blues"||t.family==="Bossa"||t.family==="AABA Standard")? "Polishing":"Learning", priority:(t.family==="Rhythm Changes"||t.family==="Modal")? "High":"Normal", patterns:["Root–5th","R–3–5–6","Chromatic approach down"] }));
+
+    const LS = {
+      get: (k, def) => { try { const v = localStorage.getItem(k); return v? JSON.parse(v): def; } catch { return def; } },
+      set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
+    };
+    let DATA = LS.get("jps_data", SEED);
+    let SETLIST = LS.get("jps_setlist", []);
+
+    function el(sel){ return document.querySelector(sel); }
+    function esc(s){ return String(s ?? '').replace(/\"/g,'\"'); }
+    function toCSV(rows){
+      if(!rows || !rows.length) return '';
+      const cols = Object.keys(rows[0]);
+      const escape = s => '\"'+String(s??'').replaceAll('\"','\"\"')+'\"';
+      return [cols.map(escape).join(','), ...rows.map(r => cols.map(c => escape(r[c])).join(','))].join('\\n');
+    }
+    function download(name, text){
+      const blob = new Blob([text], {type: 'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+    function rotateKey(k){ const i = KEYS.indexOf(k); return i===-1? k : KEYS[(i+7)%KEYS.length]; }
+    function suggestMetronome(family){
+      if(family==="Ballad") return "Clicks on 2 & 4 (slow)";
+      if(family==="Rhythm Changes" || family==="Blues") return "Clicks only on 2 (displaced)";
+      if(family==="Modal") return "Every 2 bars; silent gaps";
+      return "All beats → offbeats";
+    }
+    function suggestFocus(family){
+      if(family==="Blues") return "Walking in 4; approach tones to 3 & 7";
+      if(family==="Rhythm Changes") return "Bridge voice-leading; cycle dominants";
+      if(family==="Modal") return "Motif development; space; register shifts";
+      if(family==="Bossa") return "Even 8ths; anticipations on ‘& of 2’";
+      return "Guide tones + bassline shapes";
+    }
+
+    (function initSelects(){
+      const famSel = el('#family');
+      FAMILIES.forEach(f => { const o = document.createElement('option'); o.textContent = f; famSel.appendChild(o); });
+      const feelSel = el('#feel');
+      feelSel.innerHTML = '<option>All</option>' + FEELS.map(f=>`<option>${f}</option>`).join('');
+    })();
+
+    function getFilters(){
+      return {
+        q: el('#q').value.trim().toLowerCase(),
+        family: el('#family').value,
+        feel: el('#feel').value,
+        status: el('#status').value,
+        diffMin: Number(el('#diffMin').value)||1,
+        diffMax: Number(el('#diffMax').value)||5,
+        tempoMin: Number(el('#tempoMin').value)||40,
+        tempoMax: Number(el('#tempoMax').value)||320
+      };
+    }
+    function passFilters(t, f){
+      return (f.family==='All'||t.family===f.family) &&
+             (f.feel==='All'||t.feel===f.feel) &&
+             (f.status==='All'||t.status===f.status) &&
+             (t.difficulty>=f.diffMin && t.difficulty<=f.diffMax) &&
+             (t.tempoMin<=f.tempoMax && t.tempoMax>=f.tempoMin) &&
+             (f.q==='' || (t.title+' '+t.composer).toLowerCase().includes(f.q));
+    }
+
+    function renderRepertoire(){
+      const f = getFilters();
+      const list = DATA.filter(t => passFilters(t,f));
+      const host = el('#repertoire');
+      host.innerHTML = '';
+      list.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; gap:6px;">
+            <div>
+              <div style="font-weight:700;">${esc(t.title)}</div>
+              <div class="muted small">${esc(t.composer)}</div>
+            </div>
+            <div class="small" style="text-align:right;">
+              <span class="badge">${esc(t.family)}</span>
+              <span class="badge">${esc(t.form)}</span>
+              <span class="badge">${esc(t.feel)}</span>
+              <span class="badge">${esc(t.status)}</span>
+            </div>
+          </div>
+          <div class="small" style="margin-top:6px; display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+            <div><b>Key:</b> ${esc(t.defaultKey)} ${t.altKeys.length? '('+t.altKeys.join(', ')+')':''}</div>
+            <div><b>Tempo:</b> ${t.tempoMin}–${t.tempoMax} (goal ${t.goalTempo})</div>
+            <div><b>Difficulty:</b> ${t.difficulty}/5</div>
+            <div><b>Priority:</b> ${esc(t.priority)}</div>
+          </div>
+          <div style="margin-top:6px;">${t.patterns.map(p=>`<span class="pill">${esc(p)}</span>`).join('')}</div>
+          <div class="row" style="margin-top:8px;">
+            <button class="btn" data-action="add">Add to set</button>
+            <button class="btn" data-action="task">Quick task</button>
+          </div>
+        `;
+        card.querySelector('[data-action="add"]').addEventListener('click', () => addToSet(t));
+        card.querySelector('[data-action="task"]').addEventListener('click', () => quickTask(t));
+        host.appendChild(card);
+      });
+    }
+
+    function addToSet(t){
+      const order = SETLIST.length + 1;
+      const estMins = t.family==='Ballad' ? 6 : (t.family==='Modal' ? 10 : 5);
+      SETLIST.push({ tuneId: t.id, order, estMins, key: t.defaultKey, targetTempo: t.goalTempo });
+      LS.set('jps_setlist', SETLIST);
+      renderSetlist();
+      switchTab('setlist');
+    }
+    function quickTask(t){
+      const key = prompt('Key for today', t.defaultKey) || t.defaultKey;
+      const tempo = Number(prompt('Target tempo today', Math.round((t.tempoMin + t.goalTempo)/2))) || t.goalTempo;
+      const minutes = Number(prompt('Minutes to spend', 12)) || 12;
+      const task = [{
+        Date: new Date().toISOString().slice(0,10),
+        Tune: t.title,
+        Family: t.family,
+        KeyToday: key,
+        TempoToday: tempo,
+        Metronome: suggestMetronome(t.family),
+        Focus: suggestFocus(t.family),
+        Minutes: minutes
+      }];
+      download(`practice-task-${t.title.replaceAll(' ','_')}.csv`, toCSV(task));
+    }
+
+    function renderSetlist(){
+      const host = el('#setlist'); host.innerHTML='';
+      const list = SETLIST.slice().sort((a,b)=>a.order-b.order);
+      let total = 0;
+      list.forEach(si => {
+        const t = DATA.find(d=>d.id===si.tuneId);
+        total += si.estMins;
+        const row = document.createElement('div');
+        row.className='card';
+        row.innerHTML = `
+          <div class="row" style="align-items:center;">
+            <div class="small" style="width:24px;">${si.order}</div>
+            <div style="flex:1; font-weight:600;">${esc(t?.title||'')}</div>
+            <select class="input" data-field="key" style="width:90px;"></select>
+            <input class="number" data-field="tempo" type="number" value="${si.targetTempo}" style="width:90px;" />
+            <input class="number" data-field="mins" type="number" value="${si.estMins}" style="width:80px;" />
+            <button class="btn" data-action="remove">✕</button>
+          </div>`;
+        const keySel = row.querySelector('[data-field="key"]');
+        const keyOpts = Array.from(new Set([t.defaultKey, ...(t.altKeys||[]), ...KEYS]));
+        keySel.innerHTML = keyOpts.map(k=>`<option ${k===si.key?'selected':''}>${k}</option>`).join('');
+        keySel.addEventListener('change', e => { si.key = e.target.value; LS.set('jps_setlist', SETLIST); });
+        row.querySelector('[data-field="tempo"]').addEventListener('change', e => { si.targetTempo = Number(e.target.value)||si.targetTempo; LS.set('jps_setlist', SETLIST); });
+        row.querySelector('[data-field="mins"]').addEventListener('change', e => { si.estMins = Number(e.target.value)||si.estMins; LS.set('jps_setlist', SETLIST); });
+        row.querySelector('[data-action="remove"]').addEventListener('click', () => {
+          SETLIST = SETLIST.filter(s => s.order !== si.order).map((s,i)=>({...s, order:i+1}));
+          LS.set('jps_setlist', SETLIST);
+          renderSetlist();
+        });
+        host.appendChild(row);
+      });
+      el('#setlistSummary').textContent = `Estimated time: ${total} min`;
+    }
+
+    const TECH = ["Major scales","Minor scales","Arpeggios (1–7)","II–V–I guide tones","Walking in 2","Walking in 4","Chromatic approaches","Odd meters (5/7)","Articulation study"];
+    function renderTech(){
+      const table = el('#techTable'); table.innerHTML='';
+      const head = document.createElement('thead');
+      head.innerHTML = '<tr><th>Skill \\\\ Key</th>' + KEYS.slice(0,12).map(k=>`<th>${k}</th>`).join('') + '</tr>';
+      table.appendChild(head);
+      const body = document.createElement('tbody');
+      const marks = LS.get('jps_tech', {});
+      TECH.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${s}</td>` + KEYS.slice(0,12).map(k=>{
+          const id = k+'__'+s;
+          const checked = marks[id] ? 'checked' : '';
+          return `<td><input type="checkbox" data-id="${id}" ${checked}></td>`;
+        }).join('');
+        body.appendChild(tr);
+      });
+      table.appendChild(body);
+      table.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const id = e.target.getAttribute('data-id');
+          const m = LS.get('jps_tech', {}); m[id] = e.target.checked; LS.set('jps_tech', m);
+        });
+      });
+    }
+
+    function generatePlan(n){
+      const f = getFilters();
+      const pool = DATA.filter(t=>passFilters(t,f));
+      const pick = pool.sort(()=>Math.random()-0.5).slice(0,n);
+      const rows = pick.map(t => ({
+        Date: new Date().toISOString().slice(0,10),
+        Tune: t.title,
+        Family: t.family,
+        KeyToday: rotateKey(t.defaultKey),
+        TempoToday: Math.max(t.tempoMin, Math.min(t.goalTempo-10, Math.round((t.tempoMin + t.goalTempo)/2))),
+        Metronome: suggestMetronome(t.family),
+        Focus: suggestFocus(t.family)
+      }));
+      const csv = toCSV(rows);
+      download(`practice-plan-${new Date().toISOString().slice(0,10)}.csv`, csv);
+      el('#planPreview').innerHTML = rows.map(r=> `<div>• ${r.Tune} — ${r.KeyToday} @ ${r.TempoToday} (${r.Metronome})</div>`).join('');
+    }
+
+    function exportRepertoire(){
+      const f = getFilters();
+      const rows = DATA.filter(t=>passFilters(t,f)).map(t => ({
+        Tune: t.title, Composer: t.composer, Family: t.family, Form: t.form,
+        PrimaryKey: t.defaultKey, AltKeys: t.altKeys.join(' | '), Feel: t.feel,
+        Difficulty: t.difficulty, TempoMin: t.tempoMin, TempoMax: t.tempoMax, GoalTempo: t.goalTempo,
+        Status: t.status, Priority: t.priority, Patterns: (t.patterns||[]).join(' | ')
+      }));
+      download('repertoire-export.csv', toCSV(rows));
+    }
+    function exportSetlist(){
+      const rows = SETLIST.slice().sort((a,b)=>a.order-b.order).map(si => {
+        const t = DATA.find(d=>d.id===si.tuneId);
+        return {Order: si.order, Tune: t?.title||'', Key: si.key, TargetTempo: si.targetTempo, EstMinutes: si.estMins};
+      });
+      download('setlist.csv', toCSV(rows));
+    }
+    function setlistToPractice(){
+      const rows = SETLIST.slice().sort((a,b)=>a.order-b.order).map(si => {
+        const t = DATA.find(d=>d.id===si.tuneId);
+        return {Date: new Date().toISOString().slice(0,10), Focus_Area: 'Set run-through', Tune: t?.title||'', Key: si.key, Tempo: si.targetTempo, Exercise_Task: 'Form, cues, endings', Outcome_Notes: '', Rating: ''};
+      });
+      download('practice_logs_from_set.csv', toCSV(rows));
+    }
+
+    function switchTab(name){
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===name));
+      document.querySelectorAll('.tabpane').forEach(p => p.style.display = 'none');
+      el('#tab-'+name).style.display = '';
+      if(name==='tech') renderTech();
+    }
+
+    ['q','family','feel','status','diffMin','diffMax','tempoMin','tempoMax'].forEach(id => {
+      el('#'+id).addEventListener('input', renderRepertoire);
+      el('#'+id).addEventListener('change', renderRepertoire);
+    });
+    document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
+    el('#btnExportCSV').addEventListener('click', exportRepertoire);
+    el('#btnGenPlan').addEventListener('click', ()=>generatePlan(7));
+    el('#btnPrint').addEventListener('click', ()=>window.print());
+    el('#btnExportSetlist').addEventListener('click', exportSetlist);
+    el('#btnSetToPractice').addEventListener('click', setlistToPractice);
+    el('#btnGen5').addEventListener('click', ()=>generatePlan(5));
+    el('#btnGen10').addEventListener('click', ()=>generatePlan(10));
+
+    function renderAll(){ renderRepertoire(); renderSetlist(); }
+    renderAll();
+  </script>
+</body>
+</html>
