@@ -38,25 +38,24 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 6px;
+  height: 4px;
   background: #334155;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 18px;
-  width: 18px;
+  height: 14px;
+  width: 14px;
   border-radius: 50%;
-  background: #a855f7;
-  margin-top: -6px;
+  background: #64748b;
+  margin-top: -5px;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  background: #c084fc;
+  background: #94a3b8;
 }
 
 /* Select styling */

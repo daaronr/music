@@ -10,10 +10,10 @@ import { BluesFlowchart } from './BluesFlowchart';
 type InstrumentType = 'acoustic_grand_piano' | 'electric_piano_1' | 'electric_guitar_jazz' | 'drawbar_organ';
 
 const instrumentNames: Record<InstrumentType, string> = {
-  'acoustic_grand_piano': '🎹 Grand Piano',
-  'electric_piano_1': '🎸 Electric Piano',
-  'electric_guitar_jazz': '🎸 Jazz Guitar',
-  'drawbar_organ': '🎛️ Hammond Organ',
+  'acoustic_grand_piano': 'Grand Piano',
+  'electric_piano_1': 'Electric Piano',
+  'electric_guitar_jazz': 'Jazz Guitar',
+  'drawbar_organ': 'Hammond Organ',
 };
 
 export function BluesPlayer() {
@@ -159,15 +159,21 @@ export function BluesPlayer() {
     const playBeat = () => {
       if (!isPlayingRef.current) return;
 
-      const currentChord = chords[barIndex];
+      const currentChordStr = chords[barIndex];
       const nextChord = chords[(barIndex + 1) % chords.length];
 
-      // Generate walking bass for this bar
-      const bassLine = generateWalkingBass(currentChord, nextChord);
+      // Check if this bar has 2 chords (space-separated)
+      const hasSecondChord = currentChordStr.includes(' ') && !currentChordStr.includes('/');
+      const [firstChord, secondChord] = hasSecondChord
+        ? currentChordStr.split(' ')
+        : [currentChordStr, null];
 
-      // Beat 1: Chord + kick + bass root
+      // Generate walking bass for this bar
+      const bassLine = generateWalkingBass(currentChordStr, nextChord);
+
+      // Beat 1: First chord + kick + bass root
       if (beatIndex === 0) {
-        playChord(currentChord, beatDuration * 3.5 / 1000);
+        playChord(firstChord, beatDuration * (hasSecondChord ? 1.8 : 3.5) / 1000);
         playDrum('kick');
         playBass(bassLine[0], beatDuration / 1000);
         setCurrentBar(barIndex);
@@ -178,8 +184,11 @@ export function BluesPlayer() {
         playDrum('hihat');
         playBass(bassLine[1], beatDuration / 1000);
       }
-      // Beat 3: Kick + hi-hat + bass
+      // Beat 3: Second chord (if exists) or continue first + kick + hi-hat + bass
       else if (beatIndex === 2) {
+        if (secondChord) {
+          playChord(secondChord, beatDuration * 1.8 / 1000);
+        }
         playDrum('kick');
         playDrum('hihat');
         playBass(bassLine[2], beatDuration / 1000);
@@ -253,17 +262,17 @@ export function BluesPlayer() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-4 md:p-8">
+    <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8">
       {/* Header */}
       <motion.div
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="text-center mb-6"
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-          🎸 Blues Flow
+        <h1 className="text-3xl md:text-4xl font-semibold text-slate-100 mb-1">
+          Blues Flow
         </h1>
-        <p className="text-slate-400">Interactive 12-Bar Blues with Walking Bass & Drums</p>
+        <p className="text-slate-500 text-sm">12-Bar Blues Explorer</p>
       </motion.div>
 
       {/* Audio start overlay */}
@@ -271,32 +280,28 @@ export function BluesPlayer() {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-slate-950/90 flex items-center justify-center z-50"
         >
           <div className="text-center">
             <motion.button
               onClick={startAudio}
               disabled={isLoading}
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-2xl font-bold shadow-2xl disabled:opacity-50"
-              whileHover={{ scale: isLoading ? 1 : 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: isLoading ? 'none' : ['0 0 20px #3B82F6', '0 0 40px #8B5CF6', '0 0 20px #3B82F6'],
-              }}
-              transition={{ repeat: Infinity, duration: 2 }}
+              className="px-8 py-4 bg-slate-700 hover:bg-slate-600 rounded-lg text-lg font-medium shadow-lg disabled:opacity-50 transition-colors"
+              whileHover={{ scale: isLoading ? 1 : 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {isLoading ? '🎹 Loading...' : '🎵 Start Playing'}
+              {isLoading ? 'Loading...' : 'Start Audio'}
             </motion.button>
             {isLoading && (
               <div className="mt-4">
-                <div className="w-64 h-2 bg-slate-700 rounded-full overflow-hidden mx-auto">
+                <div className="w-64 h-1.5 bg-slate-800 rounded-full overflow-hidden mx-auto">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                    className="h-full bg-slate-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${loadingProgress}%` }}
                   />
                 </div>
-                <p className="text-slate-400 text-sm mt-2">Loading piano, bass & drums...</p>
+                <p className="text-slate-500 text-sm mt-2">Loading instruments...</p>
               </div>
             )}
           </div>
@@ -308,13 +313,13 @@ export function BluesPlayer() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/60 flex items-center justify-center z-40"
+          className="fixed inset-0 bg-slate-950/70 flex items-center justify-center z-40"
         >
           <div className="text-center">
-            <p className="text-white text-lg">Loading {instrumentNames[selectedInstrument]}...</p>
-            <div className="w-48 h-2 bg-slate-700 rounded-full overflow-hidden mx-auto mt-3">
+            <p className="text-slate-300 text-sm">Loading {instrumentNames[selectedInstrument]}...</p>
+            <div className="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden mx-auto mt-3">
               <motion.div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                className="h-full bg-slate-500"
                 animate={{ width: `${loadingProgress}%` }}
               />
             </div>
@@ -325,7 +330,7 @@ export function BluesPlayer() {
       {/* Variation & Instrument Selectors */}
       <div className="grid md:grid-cols-2 gap-4 mb-4">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-          <label className="block text-sm text-slate-400 mb-2">Choose Your Blues:</label>
+          <label className="block text-xs text-slate-500 mb-1.5 uppercase tracking-wide">Variation</label>
           <div className="flex gap-2">
             <select
               value={selectedVariation.id}
@@ -337,36 +342,36 @@ export function BluesPlayer() {
                   setPlayedBars(new Set());
                 }
               }}
-              className="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="flex-1 bg-slate-800 border border-slate-700 rounded-md px-3 py-2.5 text-slate-200 text-sm focus:ring-1 focus:ring-slate-500 focus:outline-none"
             >
               {bluesVariations.map(v => (
                 <option key={v.id} value={v.id}>
-                  #{v.id} - {v.name}
+                  {v.id}. {v.name}
                 </option>
               ))}
             </select>
             <motion.button
               onClick={shuffleVariation}
-              className="px-4 py-3 bg-gradient-to-r from-pink-500 to-orange-500 rounded-xl font-semibold"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-md text-slate-400 hover:bg-slate-700 hover:text-slate-200 transition-colors"
+              whileTap={{ scale: 0.98 }}
+              title="Random variation"
             >
-              🎲
+              Shuffle
             </motion.button>
           </div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
-          <label className="block text-sm text-slate-400 mb-2">Keys Sound:</label>
-          <div className="flex flex-wrap gap-2">
+          <label className="block text-xs text-slate-500 mb-1.5 uppercase tracking-wide">Instrument</label>
+          <div className="flex flex-wrap gap-1.5">
             {(Object.keys(instrumentNames) as InstrumentType[]).map((inst) => (
               <motion.button
                 key={inst}
                 onClick={() => setSelectedInstrument(inst)}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-3 py-2 rounded-md text-xs font-medium transition-all ${
                   selectedInstrument === inst
-                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
-                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    ? 'bg-slate-700 text-slate-100'
+                    : 'bg-slate-800 text-slate-400 hover:bg-slate-750 hover:text-slate-300'
                 }`}
                 whileTap={{ scale: 0.98 }}
                 disabled={isLoading}
@@ -385,10 +390,10 @@ export function BluesPlayer() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
-          className="mb-4 p-3 bg-slate-800/50 rounded-xl border border-slate-700"
+          className="mb-4 p-3 bg-slate-800/30 rounded-md border border-slate-800"
         >
-          <h2 className="text-xl font-bold text-purple-300">{selectedVariation.name}</h2>
-          <p className="text-slate-400 text-sm italic">{selectedVariation.description}</p>
+          <h2 className="text-base font-medium text-slate-200">{selectedVariation.name}</h2>
+          <p className="text-slate-500 text-sm">{selectedVariation.description}</p>
         </motion.div>
       </AnimatePresence>
 
@@ -397,18 +402,18 @@ export function BluesPlayer() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex justify-center gap-2 mb-4"
+          className="flex justify-center gap-1.5 mb-4"
         >
           {[0, 1, 2, 3].map((beat) => (
             <motion.div
               key={beat}
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+              className={`w-7 h-7 rounded flex items-center justify-center text-sm font-medium ${
                 currentBeat === beat
-                  ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
-                  : 'bg-slate-700 text-slate-400'
+                  ? 'bg-slate-600 text-slate-100'
+                  : 'bg-slate-800 text-slate-500'
               }`}
-              animate={currentBeat === beat ? { scale: [1, 1.2, 1] } : {}}
-              transition={{ duration: 0.15 }}
+              animate={currentBeat === beat ? { scale: [1, 1.1, 1] } : {}}
+              transition={{ duration: 0.1 }}
             >
               {beat + 1}
             </motion.div>
@@ -463,35 +468,34 @@ export function BluesPlayer() {
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="flex flex-wrap items-center justify-center gap-4 mb-6"
+        className="flex flex-wrap items-center justify-center gap-3 mb-6"
       >
         {/* Play/Stop Button */}
         <motion.button
           onClick={isPlaying ? stopPlaying : startPlaying}
-          className={`px-8 py-4 rounded-2xl text-xl font-bold shadow-lg ${
+          className={`px-6 py-2.5 rounded-md text-sm font-medium transition-colors ${
             isPlaying
-              ? 'bg-gradient-to-r from-red-500 to-orange-500'
-              : 'bg-gradient-to-r from-green-500 to-emerald-500'
+              ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+              : 'bg-slate-700 text-slate-200 hover:bg-slate-600'
           }`}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: 0.98 }}
           disabled={!audioStarted || isLoading}
         >
-          {isPlaying ? '⏹ Stop' : '▶ Play'}
+          {isPlaying ? 'Stop' : 'Play'}
         </motion.button>
 
         {/* Tempo Control */}
-        <div className="flex items-center gap-3 bg-slate-800 px-4 py-3 rounded-xl">
-          <span className="text-slate-400">🥁</span>
+        <div className="flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-md">
+          <span className="text-slate-500 text-xs">Tempo</span>
           <input
             type="range"
             min="60"
             max="200"
             value={tempo}
             onChange={(e) => setTempo(Number(e.target.value))}
-            className="w-20 accent-purple-500"
+            className="w-20"
           />
-          <span className="text-sm font-mono w-20">{tempo} BPM</span>
+          <span className="text-xs font-mono text-slate-400 w-14">{tempo} bpm</span>
         </div>
       </motion.div>
 
@@ -500,10 +504,10 @@ export function BluesPlayer() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="flex flex-wrap justify-center gap-4 mb-6 text-sm"
+        className="flex flex-wrap justify-center gap-3 mb-6 text-xs"
       >
-        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-lg">
-          <span>🎹</span>
+        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-md">
+          <span className="text-slate-500">Keys</span>
           <input
             type="range"
             min="0"
@@ -511,11 +515,11 @@ export function BluesPlayer() {
             step="0.1"
             value={pianoVolume}
             onChange={(e) => setPianoVolume(Number(e.target.value))}
-            className="w-16 accent-blue-500"
+            className="w-14"
           />
         </div>
-        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-lg">
-          <span>🎸</span>
+        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-md">
+          <span className="text-slate-500">Bass</span>
           <input
             type="range"
             min="0"
@@ -523,11 +527,11 @@ export function BluesPlayer() {
             step="0.1"
             value={bassVolume}
             onChange={(e) => setBassVolume(Number(e.target.value))}
-            className="w-16 accent-amber-500"
+            className="w-14"
           />
         </div>
-        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-lg">
-          <span>🥁</span>
+        <div className="flex items-center gap-2 bg-slate-800/50 px-3 py-2 rounded-md">
+          <span className="text-slate-500">Drums</span>
           <input
             type="range"
             min="0"
@@ -535,37 +539,8 @@ export function BluesPlayer() {
             step="0.1"
             value={drumVolume}
             onChange={(e) => setDrumVolume(Number(e.target.value))}
-            className="w-16 accent-red-500"
+            className="w-14"
           />
-        </div>
-      </motion.div>
-
-      {/* Legend */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="flex flex-wrap justify-center gap-3 text-xs"
-      >
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-blue-500" />
-          <span className="text-slate-400">Tonic</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-amber-500" />
-          <span className="text-slate-400">Subdominant</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-red-500" />
-          <span className="text-slate-400">Dominant</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-purple-500" />
-          <span className="text-slate-400">Minor</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-pink-500" />
-          <span className="text-slate-400">Chromatic</span>
         </div>
       </motion.div>
 
@@ -574,9 +549,9 @@ export function BluesPlayer() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="text-center mt-8 text-slate-500 text-xs"
+        className="text-center mt-8 text-slate-600 text-xs"
       >
-        <p>🎹 Jazz voicings • 🎸 Walking bass • 🥁 4/4 swing feel</p>
+        <p>Jazz voicings with walking bass</p>
       </motion.footer>
     </div>
   );
