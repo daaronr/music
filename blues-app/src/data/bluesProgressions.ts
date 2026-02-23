@@ -40,19 +40,19 @@ export const bluesVariations: BluesVariation[] = [
   {
     id: 6,
     name: "IV of IV + ♭VI Turnaround",
-    chords: ["I7", "IV7", "I7", "I7", "IV7", "VII7", "I7", "VI7", "♭VI7", "V7", "I7", "♭VI7 V7"],
+    chords: ["I7", "IV7", "I7", "I7", "IV7", "♭VII7", "I7", "VI7", "♭VI7", "V7", "I7", "♭VI7 V7"],
     description: "Chromatic magic with the flat six"
   },
   {
     id: 7,
     name: "2-5 Delays + Minor Subdom",
-    chords: ["I7", "IV7", "I7", "v- I7", "IV7", "VII7", "I7", "iii- VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
+    chords: ["I7", "IV7", "I7", "v- I7", "IV7", "♭VII7", "I7", "iii- VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
     description: "Bebop sophistication"
   },
   {
     id: 8,
     name: "Minor Subdom Extended",
-    chords: ["I7", "IV7", "I7", "v- I7", "IV7", "VII7", "iii-", "VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
+    chords: ["I7", "IV7", "I7", "v- I7", "IV7", "♭VII7", "iii-", "VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
     description: "Deep minor territory"
   },
   {
@@ -112,8 +112,8 @@ export const bluesVariations: BluesVariation[] = [
   {
     id: 18,
     name: "Slash Bass Blues",
-    chords: ["I7/I", "I7/I", "I7/I", "I7/I", "IV7/IV", "IV7/IV", "I7/I", "I7/V", "V7/V", "IV7/IV", "I7/I", "V7/V"],
-    description: "Groovy slash bass movement (chord/bass note)"
+    chords: ["v-/I", "i-/IV", "v-/I", "v-/I", "i-/IV", "i-/IV", "v-/I", "ii-/V", "ii-/V", "i-/IV", "v-/I", "ii-/V"],
+    description: "Minor triads over walking bass - polychord voicings"
   }
 ];
 
@@ -174,6 +174,12 @@ export const jazzVoicings: Record<string, ChordVoicing> = {
     notes: ["Bb3", "E4", "Ab4"],     // 3-7-9
     root: "Gb2",
     chordTones: ["Gb", "Bb", "Db", "E"],
+    type: 'dom7'
+  },
+  "♭VII7": {
+    notes: ["D4", "Ab4", "C5"],       // 3-7-9
+    root: "Bb2",
+    chordTones: ["Bb", "D", "F", "Ab"],
     type: 'dom7'
   },
   "#IV7": {

@@ -14,7 +14,7 @@ const flowchartData = [
   { bar: 3, chords: ["I7"] },
   { bar: 4, chords: ["I7", "v- I7"] },
   { bar: 5, chords: ["IV7"] },
-  { bar: 6, chords: ["IV7", "VII7", "#iv°7"] },
+  { bar: 6, chords: ["IV7", "♭VII7", "#iv°7"] },
   { bar: 7, chords: ["I7", "iii-"] },
   { bar: 8, chords: ["I7", "VI7", "vi7"] },
   { bar: 9, chords: ["V7", "II7", "ii-7", "♭VI7"] },
@@ -30,9 +30,9 @@ const variationPaths: Record<number, string[]> = {
   3: ["I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "I7", "II7", "V7", "I7", "V7"],
   4: ["I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "VI7", "II7", "V7", "I7", "V7"],
   5: ["I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "VI7", "ii-7", "V7", "I7", "ii- V7"],
-  6: ["I7", "IV7", "I7", "I7", "IV7", "VII7", "I7", "VI7", "♭VI7", "V7", "I7", "♭VI7 V7"],
-  7: ["I7", "IV7", "I7", "v- I7", "IV7", "VII7", "I7", "iii- VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
-  8: ["I7", "IV7", "I7", "v- I7", "IV7", "VII7", "iii-", "VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
+  6: ["I7", "IV7", "I7", "I7", "IV7", "♭VII7", "I7", "VI7", "♭VI7", "V7", "I7", "♭VI7 V7"],
+  7: ["I7", "IV7", "I7", "v- I7", "IV7", "♭VII7", "I7", "iii- VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
+  8: ["I7", "IV7", "I7", "v- I7", "IV7", "♭VII7", "iii-", "VI7", "ii-7", "V7", "iii- VI7", "ii- V7"],
   9: ["I7", "IV7", "I7", "v- I7", "IV7", "IV7", "I7", "vi7", "ii7", "V7", "vi7", "I7"],
 };
 
