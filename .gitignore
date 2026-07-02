@@ -1,0 +1,4 @@
+# gtd-trio is its own repository (github.com/daaronr/gtd-trio) with its own
+# GitHub Pages site. It is cloned inside this folder for convenience only and
+# must NOT be tracked here (it previously appeared as a broken submodule link).
+gtd-trio/
