@@ -1,0 +1,344 @@
+<title>Can AI write a modern jazz tune?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Big+Shoulders+Display:wght@700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --paper: #F3F5F8;
+  --surface: #FFFFFF;
+  --ink: #17202B;
+  --muted: #5A6474;
+  --rule: #D6DCE5;
+  --accent: #2447C0;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E3E9FA;
+  --brass: #9A6A0C;
+  --tip-bg: #17202B;
+  --tip-ink: #F3F5F8;
+  --sheet: #FFFFFF;
+  --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0E131A; --surface: #151B24; --ink: #E8ECF2; --muted: #9AA4B3; --rule: #283241;
+    --accent: #8CA8FF; --accent-ink: #0E131A; --accent-soft: #1C2640; --brass: #E0B04A;
+    --tip-bg: #E8ECF2; --tip-ink: #0E131A; --sheet: #F4F4F2;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0E131A; --surface: #151B24; --ink: #E8ECF2; --muted: #9AA4B3; --rule: #283241;
+  --accent: #8CA8FF; --accent-ink: #0E131A; --accent-soft: #1C2640; --brass: #E0B04A;
+  --tip-bg: #E8ECF2; --tip-ink: #0E131A; --sheet: #F4F4F2;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 1160px; margin-inline: auto; padding-inline: 20px; padding-block: 36px 64px; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.7rem, 8vw, 5rem); line-height: 0.95; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow, .model, .meta, .sec-label, .t-time, .effort, .preview-cap, .chart-name, .tl-model {
+  font-family: var(--cond); letter-spacing: 0.04em;
+}
+.eyebrow { text-transform: uppercase; color: var(--muted); font-weight: 600; font-size: 0.95rem; }
+header { display: grid; gap: 18px; }
+.lede { display: grid; gap: 12px; max-width: 64ch; font-size: 1.12rem; }
+.byline { color: var(--muted); }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--cond); font-size: 1.05rem; font-weight: 600; }
+nav a { text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+section { display: grid; gap: 18px; }
+.intro { max-width: 68ch; color: var(--muted); }
+
+/* tune cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; display: grid; gap: 14px; }
+.model { margin: 0; color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
+.model span { font-weight: 500; }
+.tune { font-size: 2.5rem; line-height: 0.95; }
+.meta { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 1.05rem; font-weight: 500; }
+.preview { display: block; padding: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); cursor: zoom-in; overflow: hidden; position: relative; }
+.preview img { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; object-position: top; }
+.preview-cap { position: absolute; right: 8px; bottom: 8px; background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 0.95rem; padding: 3px 9px; border-radius: 4px; }
+.idea { font-size: 0.98rem; }
+.idea-label { font-weight: 600; }
+.actions { display: grid; gap: 8px; }
+.btn { font: 600 0.95rem/1.25 var(--body); padding: 9px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; text-align: left; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost:hover { background: var(--accent-soft); filter: none; }
+.linkish { font: inherit; color: var(--accent); background: none; border: 0; padding: 2px 0; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
+button:focus-visible, a:focus-visible, summary:focus-visible, .tip:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+details.sheets summary, details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+details.sheets ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 2px; }
+.note { color: var(--muted); font-size: 0.95rem; }
+.note strong { color: var(--ink); }
+.audio { display: grid; gap: 10px; border-top: 1px solid var(--rule); padding-top: 12px; }
+.track { margin: 0; display: grid; gap: 4px; }
+.track figcaption { font-size: 0.95rem; font-weight: 600; }
+.track audio { width: 100%; }
+
+/* chord charts */
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: start; }
+.chart { display: grid; gap: 10px; }
+.chart-name { font-family: var(--display); font-size: 1.7rem; letter-spacing: 0.01em; }
+.sec { display: grid; grid-template-columns: 2.2em 1fr; gap: 8px; align-items: start; }
+.sec-label { font-weight: 600; font-size: 1.05rem; padding-top: 6px; }
+.bars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-left: 2px solid var(--ink); }
+.bar { border-right: 1px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 6px 5px; min-height: 2.6em; display: flex; flex-wrap: wrap; gap: 0 6px; align-content: center; font-family: var(--cond); font-weight: 500; font-size: 0.98rem; line-height: 1.15; }
+.bar.two { font-size: 0.9rem; }
+.ch { white-space: nowrap; }
+.s11 { color: var(--brass); font-weight: 600; }
+.shared { margin: 0; padding-left: 20px; display: grid; gap: 8px; max-width: 72ch; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 0.95rem; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--rule); }
+thead th { font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.01em; }
+tbody th { font-weight: 600; color: var(--muted); white-space: nowrap; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td { font-variant-numeric: tabular-nums; }
+
+/* what I asked for */
+.asks { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 72ch; }
+.asks li { position: relative; }
+.tip { border-bottom: 1px dotted var(--muted); cursor: help; }
+.tip:hover::after, .tip:focus::after {
+  content: "\201C" attr(data-tip) "\201D";
+  position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 5;
+  background: var(--tip-bg); color: var(--tip-ink); padding: 10px 12px; border-radius: 6px;
+  font-size: 0.92rem; line-height: 1.45; font-style: italic;
+}
+.verbatim { margin: 10px 0 0; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--surface); white-space: pre-wrap; font-size: 0.95rem; }
+
+/* prompts in order */
+.tls { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; align-items: start; }
+.tl { display: grid; gap: 6px; }
+.tl h3 { font-size: 1.7rem; }
+.tl-model { color: var(--muted); font-weight: 600; }
+.tl ol { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 14px; border-left: 2px solid var(--rule); }
+.tl li { padding-left: 14px; display: grid; gap: 4px; }
+.t-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.t-time { font-weight: 600; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.t-label { font-weight: 600; }
+.effort { font-size: 0.85rem; font-weight: 600; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 0 6px; }
+.t-out { color: var(--muted); font-size: 0.95rem; }
+.plain { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 72ch; }
+.ask { max-width: 68ch; font-size: 1.08rem; font-weight: 600; }
+footer { color: var(--muted); font-size: 0.92rem; border-top: 1px solid var(--rule); padding-top: 16px; max-width: 80ch; }
+
+/* sheet viewer */
+dialog { width: min(940px, calc(100vw - 24px)); max-height: calc(100vh - 24px); padding: 0; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(8, 12, 18, 0.65); }
+.v-head { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface); border-bottom: 1px solid var(--rule); z-index: 1; }
+.v-title { font-family: var(--display); font-size: 1.4rem; font-weight: 800; }
+.v-pages { display: grid; gap: 10px; padding: 10px; background: var(--paper); }
+.v-pages img { display: block; width: 100%; height: auto; background: var(--sheet); border: 1px solid var(--rule); }
+#status { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: calc(100vw - 32px); background: var(--tip-bg); color: var(--tip-ink); padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; z-index: 10; }
+#copyfallback { display: grid; gap: 6px; }
+#copyfallback textarea { width: 100%; min-height: 5em; font: 0.8rem/1.4 ui-monospace, Menlo, monospace; }
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .preview { transition: filter 120ms ease, background-color 120ms ease; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">An informal trial &middot; 26 September 2026</p>
+    <p class="note" style="font-size:1.05rem"><strong>This page has moved:</strong> the current version, with the recordings up top and a vote, is at <a href="https://ai-jazz-tune-trial.netlify.app">ai-jazz-tune-trial.netlify.app</a>.</p>
+    <h1>Can AI write a modern jazz tune?</h1>
+    <div class="lede">
+      <p>One evening I gave the same composition prompt to three AI coding agents: two Claude Opus 5.5 sessions in Claude Code and one GPT-6 Astra session in Codex. Each got its own folder in my music repo, and the whole thing took about an hour. Each came back with an original tune and a two-chorus trumpet and guitar duo solo, as sheet music, MuseScore files and an iReal Pro chart. Two also made mocked-up recordings.</p>
+      <p>This is far from a clean trial, benchmark or comparison: one attempt per setup, different follow-up prompts, no blind listening, and nobody has played these yet. I&rsquo;m sharing it because the results are interesting to read and, I hope, to play.</p>
+    </div>
+    <p class="byline">David Reinstein</p>
+    <nav aria-label="Sections"><ul>
+      <li><a href="#tunes">The tunes</a></li>
+      <li><a href="#changes">The changes</a></li>
+      <li><a href="#asked">What I asked for</a></li>
+      <li><a href="#prompts">Prompts, in order</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#caveats">Caveats</a></li>
+    </ul></nav>
+  </header>
+
+  <section id="tunes" aria-labelledby="tunes-h">
+    <h2 id="tunes-h">The three tunes</h2>
+    <p class="intro">Click a sheet to read it here. The buttons save the PDFs, a zip of the editable files, or the iReal Pro link. Everything is as each run left it.</p>
+    <div class="cards">$cards</div>
+    <p id="copyfallback" hidden><label for="copytext">Copy this link, then paste it into Safari on a device with iReal Pro:</label><textarea id="copytext" readonly></textarea></p>
+  </section>
+
+  <section id="changes" aria-labelledby="changes-h">
+    <h2 id="changes-h">The changes side by side</h2>
+    <p class="intro">Concert pitch, as each run wrote them, four bars to a line. Two chords in a bar split it at beat 3. Chords with a <span class="s11">&#9839;11</span> are marked, since I asked for bright lydian sounds.</p>
+    <div class="charts">$grids</div>
+    <ul class="shared">
+      <li>All three are 32-bar medium-up swing tunes centered on F or E&#9837;, and all three lean hard on maj7&#9839;11 chords.</li>
+      <li>The two Claude sessions opened the same way: two bars of a maj7&#9839;11 chord, then two bars of a maj7&#9839;5 a whole step down (Fmaj7&#9839;11 to E&#9837;maj7&#9839;5 in Halation, E&#9837;maj7&#9839;11 to D&#9837;maj7&#9839;5 in Parallax), with melody notes held across the change.</li>
+      <li>Halation (Claude) and Glass Meridian (GPT) start their melodies with nearly the same notes over F lydian: A&ndash;C&ndash;G&ndash;D in Halation, A&ndash;C&ndash;G&ndash;B&ndash;D in Glass Meridian.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><td></td><th scope="col">Halation</th><th scope="col">Parallax</th><th scope="col">Glass Meridian</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Model</th><td>Claude Opus 5.5 (max)</td><td>Claude Opus 5.5 (max)</td><td>GPT-6 Astra (Codex)</td></tr>
+          <tr><th scope="row">Tempo</th><td>&#9833; = 184</td><td>&#9833; = 176</td><td>&#9833; = 164</td></tr>
+          <tr><th scope="row">Form</th><td>A B A&prime; C</td><td>A A B A</td><td>A A2 B C</td></tr>
+          <tr><th scope="row">Around the head</th><td>1st and 2nd endings; all-lydian turnaround</td><td>4-bar guitar intro; coda</td><td>None; every pass ends on F6/9</td></tr>
+          <tr><th scope="row">Solo sheets</th><td>One PDF per chorus</td><td>One PDF per part, a chorus a page</td><td>One PDF per part, a chorus a page</td></tr>
+          <tr><th scope="row">Guitar notation</th><td>Treble clef, sounds an octave lower</td><td>Treble clef, sounds an octave lower</td><td>Written at sounding pitch</td></tr>
+          <tr><th scope="row">Recording</th><td>One band demo (trumpet, alto sax)</td><td>Not requested</td><td>Three versions (v1&ndash;v3)</td></tr>
+          <tr><th scope="row">Notation done (file times)</th><td>23:23</td><td>About 23:35</td><td>22:50</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="asked" aria-labelledby="asked-h">
+    <h2 id="asked-h">What I asked for</h2>
+    <p class="intro">Hover over or tap a line to see my exact wording.</p>
+    <ul class="asks">$asks</ul>
+    <details>
+      <summary>The full prompt</summary>
+      <blockquote class="verbatim">$prompt_claude</blockquote>
+      <p class="note" style="margin-top:8px">$prompt_codex_diff</p>
+    </details>
+  </section>
+
+  <section id="prompts" aria-labelledby="prompts-h">
+    <h2 id="prompts-h">Prompts, in order</h2>
+    <p class="intro">UK time on 26 September. Every run started from the prompt above; the follow-ups were mostly about audio. Open a prompt to read it as I typed it, typos included. For the Codex run I&rsquo;ve added the reasoning effort its log shows for each turn.</p>
+    <div class="tls">$timelines</div>
+  </section>
+
+  <section id="setup" aria-labelledby="setup-h">
+    <h2 id="setup-h">Setup</h2>
+    <ul class="plain">
+      <li>All three ran on my Mac in one Git repo that already had some of my chart work in it. Each session made its own subfolder and was told not to look at the others.</li>
+      <li>Claude: two separate sessions in the Claude Code desktop app, both Claude Opus 5.5 at max effort.</li>
+      <li>Codex: the Codex desktop app with GPT-6 Astra. Its log shows reasoning effort &ldquo;xhigh&rdquo; for the composition and the first recording, then &ldquo;medium&rdquo; and &ldquo;high&rdquo; for the audio fixes.</li>
+      <li>The machine had MuseScore 3.6.2, iReal Pro and Python. All three wrote their own code to generate the notation and rendered their PDFs through MuseScore.</li>
+      <li>My prompt pointed to &ldquo;the folder/repo&rdquo; for soloing ideas and then trailed off. The Parallax session went looking and found the topic list from my weekly brass-practice generator (pentatonic pairs, triad pairs, displacement).</li>
+    </ul>
+  </section>
+
+  <section id="caveats" aria-labelledby="caveats-h">
+    <h2 id="caveats-h">Caveats</h2>
+    <ol class="plain">
+      <li>One attempt per setup. The two Claude sessions share an opening move but otherwise came out quite differently, so a single run says little about a model.</li>
+      <li>The follow-ups differed. Glass Meridian got four rounds of audio feedback, Halation one audio request and Parallax none, so the recordings aren&rsquo;t comparable.</li>
+      <li>Nobody has played these or rated them blind. The motif and device descriptions come from each run&rsquo;s own notes; treat them as claims to check against the scores.</li>
+      <li>The recordings are programmed sample performances, not people playing.</li>
+      <li>This was an hour of me switching between windows, and the prompts have my typos in them.</li>
+    </ol>
+    <p class="ask">If you play trumpet or guitar and try one of these, I&rsquo;d like to hear how it sits on the instrument and whether the duo parts work as duets.</p>
+  </section>
+
+  <footer>Page put together by Claude (in the Parallax session) from the three output folders and the session logs, 26 September 2026. The sheets and recordings are unchanged from what each run produced. The previews here are images of the PDFs, the MuseScore files are the uncompressed .mscx form MuseScore saves inside each .mscz, and the MusicXML copies drop their DOCTYPE line, which this host won&rsquo;t serve.</footer>
+</div>
+
+<dialog id="viewer" aria-labelledby="v-title">
+  <div class="v-head"><span class="v-title" id="v-title"></span><button type="button" class="btn ghost" id="v-close">Close</button></div>
+  <div class="v-pages" id="v-pages"></div>
+</dialog>
+<div id="status" role="status" hidden></div>
+
+<script type="application/json" id="views">$views</script>
+<script type="application/json" id="bundles">$bundles</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(function () {
+  var views = JSON.parse(document.getElementById("views").textContent);
+  var bundles = JSON.parse(document.getElementById("bundles").textContent);
+  var downloads = null;
+  var statusTimer = null;
+
+  function setStatus(msg) {
+    var el = document.getElementById("status");
+    el.textContent = msg;
+    el.hidden = !msg;
+    clearTimeout(statusTimer);
+    if (msg) statusTimer = setTimeout(function () { el.hidden = true; }, 6000);
+  }
+
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (d) { downloads = d; }, function () {});
+  }
+
+  function getBlob(path) {
+    return fetch(path).then(function (r) { if (!r.ok) throw { code: "fetch" }; return r.blob(); });
+  }
+
+  function offer(name, blobPromise) {
+    if (!downloads) { setStatus("Saving files isn't available in this view."); return; }
+    blobPromise
+      .then(function (blob) { return downloads.save({ filename: name, data: blob }); })
+      .then(function (res) { if (res && res.status === "saved") setStatus("Saved " + name + "."); })
+      .catch(function (e) {
+        var code = e && e.code;
+        if (code === "declined") return;
+        if (code === "rate_limited") { setStatus("Another save is waiting for your confirmation."); return; }
+        setStatus("Couldn't save " + name + " here.");
+      });
+  }
+
+  function save(path, name) { offer(name, getBlob(path)); }
+
+  function saveZip(name) {
+    var b = bundles[name];
+    if (!b || typeof JSZip === "undefined") { setStatus("Couldn't build " + name + " here."); return; }
+    setStatus("Packing " + name + "…");
+    var zip = new JSZip();
+    var jobs = b.files.map(function (f) {
+      return getBlob(f[0]).then(function (blob) { zip.file(f[1], blob); });
+    });
+    offer(name, Promise.all(jobs).then(function () {
+      return zip.generateAsync({ type: "blob", compression: b.store ? "STORE" : "DEFLATE" });
+    }));
+  }
+
+  var dialog = document.getElementById("viewer");
+  function openViewer(id, title) {
+    var box = document.getElementById("v-pages");
+    box.textContent = "";
+    (views[id] || []).forEach(function (src, i) {
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = title + ", page " + (i + 1);
+      img.loading = i === 0 ? "eager" : "lazy";
+      box.appendChild(img);
+    });
+    document.getElementById("v-title").textContent = title;
+    if (typeof dialog.showModal === "function") dialog.showModal(); else dialog.setAttribute("open", "");
+    box.scrollTop = 0;
+  }
+  document.getElementById("v-close").addEventListener("click", function () { dialog.close(); });
+  dialog.addEventListener("click", function (ev) { if (ev.target === dialog) dialog.close(); });
+
+  function copyLink(url) {
+    var shown = function () {
+      var p = document.getElementById("copyfallback");
+      var t = document.getElementById("copytext");
+      t.value = url; p.hidden = false; t.focus(); t.select();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        setStatus("Copied. Paste it into Safari on a device with iReal Pro.");
+      }, shown);
+    } else { shown(); }
+  }
+
+  document.addEventListener("click", function (ev) {
+    var t = ev.target.closest("[data-save], [data-zip], [data-view], [data-copy]");
+    if (!t) return;
+    if (t.hasAttribute("data-save")) save(t.getAttribute("data-save"), t.getAttribute("data-name"));
+    else if (t.hasAttribute("data-zip")) saveZip(t.getAttribute("data-zip"));
+    else if (t.hasAttribute("data-view")) openViewer(t.getAttribute("data-view"), t.getAttribute("data-title"));
+    else copyLink(t.getAttribute("data-copy"));
+  });
+})();
+</script>

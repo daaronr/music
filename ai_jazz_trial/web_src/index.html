@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can AI write a modern jazz tune?</title>
+  <meta name="description" content="An informal one-hour trial: three AI agents (two Claude Opus 5.5 sessions, one GPT-6 Astra in Codex) each wrote a post-bop tune and a trumpet and guitar duo solo. Listen, read the sheets, and vote.">
+  <meta property="og:title" content="Can AI write a modern jazz tune?">
+  <meta property="og:description" content="Three AI-written post-bop tunes with trumpet and guitar duo solos. Listen and vote.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <p class="kicker">An informal trial &middot; 26 September 2026 &middot; David Reinstein</p>
+    <h1>Can AI write a modern jazz tune?</h1>
+    <p class="dek">I gave three AI agents the same prompt: write an original [[post-bop]] tune and a two-[[chorus]] trumpet and guitar [[duo solo]] over its [[changes]], with sheet music, [[MuseScore]] files and an [[iReal Pro]] chart. Here&rsquo;s what came back. Have a listen, then tell me which you prefer.</p>
+    <nav class="jump" aria-label="Sections"><ul>
+      <li><a href="#listen">Listen</a></li>
+      <li><a class="primary" href="#vote">Vote</a></li>
+      <li><a href="#about">What this is</a></li>
+      <li><a href="#tunes">The tunes and sheets</a></li>
+      <li><a href="#how">How it was made</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="listen" aria-labelledby="listen-h">
+    <h2 id="listen-h">TL;DR: just hear the recordings</h2>
+    <p class="note">These are [[mocked-up]] recordings, made by the agents from their own sheet music. The order is shuffled for each visitor. If you&rsquo;d like to listen blind, vote before reading the tune notes further down: they say which AI wrote which.</p>
+    <div class="listen-grid" id="listen-grid">$listen_cards</div>
+  </section>
+
+  <section id="vote" class="vote-box" aria-labelledby="vote-h">
+    <h2 id="vote-h">Which do you prefer?</h2>
+    <p class="note">One vote per browser, and you can change it later. You&rsquo;ll see how others voted once you&rsquo;ve voted.</p>
+    <form id="vote-form" novalidate>
+      <fieldset>
+        <legend>Your favourite overall</legend>
+        <div class="choices" id="pref-choices">$pref_choices</div>
+      </fieldset>
+      <fieldset>
+        <legend>Rate each one <span class="opt">(optional; 1 = weak, 5 = strong)</span></legend>
+        <div class="ratings" id="ratings">$rating_rows</div>
+      </fieldset>
+      <fieldset>
+        <legend>What did you do? <span class="opt">(optional)</span></legend>
+        <div class="checks">
+          <label><input type="checkbox" name="did" value="listened"> Listened to the recordings</label>
+          <label><input type="checkbox" name="did" value="read"> Read the sheet music</label>
+          <label><input type="checkbox" name="did" value="played"> Played or sang through them</label>
+        </div>
+      </fieldset>
+      <div class="fields">
+        <label for="instrument">Your instrument, if you play <span class="opt">(optional)</span></label>
+        <input id="instrument" name="instrument" maxlength="60" autocomplete="off">
+        <label for="comment">Anything else? <span class="opt">(optional; only I see this)</span></label>
+        <textarea id="comment" name="comment" maxlength="1500" rows="3"></textarea>
+      </div>
+      <div><button class="btn" type="submit" id="vote-btn">Vote and see how others voted</button></div>
+      <p id="vote-msg" role="status"></p>
+    </form>
+    <div class="voted" id="voted" hidden>
+      <p><strong>Thanks, your vote is in.</strong> You can change it any time from this browser.</p>
+      <div class="row"><a class="btn secondary" href="results.html">See how others voted</a><button type="button" class="btn ghost" id="revote">Change my vote</button></div>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">What this is</h2>
+    <div class="prose">
+      <p>One evening I gave the same composition prompt to three AI coding agents: two separate [[Claude Code]] sessions running Claude Opus 5.5 at [[max effort]], and one [[Codex]] session running GPT-6 Astra. Each worked in its own folder of my music repo, and the whole thing took about an hour, with a few follow-up prompts about audio.</p>
+      <p>This is far from a clean trial, benchmark or comparison. I&rsquo;m sharing it because the results are interesting to read and, I hope, to play.</p>
+    </div>
+    <details class="big" open>
+      <summary>Caveats</summary>
+      <div class="inner prose">
+        <ol>
+          <li>One attempt per setup. The two Claude sessions share an opening move but otherwise came out quite differently, so a single run says little about a model.</li>
+          <li>The follow-ups differed, mostly about audio. The Codex run got four rounds of audio feedback; the other two got one audio request each. See <a href="#how">How it was made</a>.</li>
+          <li>Nobody has played these or rated them blind. The descriptions of motifs and devices come from each run&rsquo;s own notes; treat them as claims to check against the scores.</li>
+          <li>The recordings are programmed sample performances, not people playing.</li>
+          <li>This was an hour of me switching between windows, and the prompts have my typos in them.</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <section id="tunes" aria-labelledby="tunes-h">
+    <h2 id="tunes-h">The three tunes and their sheets</h2>
+    <p class="note">Each card says which AI wrote the tune. Open the folds for the PDFs, recordings, editable files and the iReal Pro chart.</p>
+    <div class="tune-grid">$tune_cards</div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it was made</h2>
+
+    <details class="big">
+      <summary>What I asked for</summary>
+      <div class="inner">
+        <p class="note">Hover over or tap a line to see my exact words.</p>
+        <ul class="asks">$asks</ul>
+        <details class="fold"><summary>The full prompt</summary>
+          <blockquote class="verbatim">$prompt_full</blockquote>
+          <p class="note">$prompt_codex_diff</p>
+        </details>
+      </div>
+    </details>
+
+    <details class="big">
+      <summary>Prompts, in order, for each run</summary>
+      <div class="inner">
+        <p class="note">UK time, the evening of 26 September (times after 00:00 are the 27th). Every run started from the prompt above. Open a prompt to read it as I typed it. For the Codex run I&rsquo;ve added the [[reasoning effort]] its log shows for each turn.</p>
+        <div class="tls">$timelines</div>
+      </div>
+    </details>
+
+    <details class="big">
+      <summary>Recordings: who got which audio request</summary>
+      <div class="inner prose">
+        <p>Two sessions got one audio request each, in the same words: make an MP3 with something closer to [[Band-in-a-Box]] than &ldquo;cheesy 8-bit MIDI,&rdquo; and swap the guitar for alto sax on the recording (not the score). Halation&rsquo;s session got it at 23:21. Parallax&rsquo;s was requested after this page went up; it follows the same request plus a written audio brief the Codex session produced.</p>
+        <p>The Codex session got the first audio request at 22:52 (without the sax swap), then three more rounds of feedback: sound more natural, use sax instead of guitar, a less clich&eacute;d swing feel, and a fuller upright bass. Its first version (v1) is the headline recording above, because it came from a single request like the others; v3 is under &ldquo;other versions.&rdquo; I&rsquo;m also rendering all three tunes through one shared pipeline, so they can be heard on equal terms; those versions will go up here.</p>
+      </div>
+    </details>
+
+    <details class="big">
+      <summary>The chord changes side by side, and a few things they share</summary>
+      <div class="inner">
+        <p class="note">[[concert pitch|Concert pitch]], four bars to a line; two chords in a bar split it at beat 3. Chords with a <span class="s11">&#9839;11</span> are marked, since I asked for bright [[lydian]] sounds.</p>
+        <div class="charts">$grids</div>
+        <ul class="asks">
+          <li>All three are 32-bar medium-up swing tunes centered on F or E&#9837;, and all three lean hard on maj7[[♯11]] chords.</li>
+          <li>The two Claude sessions opened the same way: two bars of a maj7&#9839;11 chord, then two bars of a maj7&#9839;5 a whole step down (Fmaj7&#9839;11 to E&#9837;maj7&#9839;5 in Halation, E&#9837;maj7&#9839;11 to D&#9837;maj7&#9839;5 in Parallax), with melody notes held across the change.</li>
+          <li>Halation (Claude) and Glass Meridian (GPT) start their melodies with nearly the same notes over F lydian: A&ndash;C&ndash;G&ndash;D in Halation, A&ndash;C&ndash;G&ndash;B&ndash;D in Glass Meridian.</li>
+        </ul>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><td></td><th scope="col">Halation</th><th scope="col">Parallax</th><th scope="col">Glass Meridian</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Model</th><td>Claude Opus 5.5 (max)</td><td>Claude Opus 5.5 (max)</td><td>GPT-6 Astra (Codex)</td></tr>
+              <tr><th scope="row">Tempo</th><td>&#9833; = 184</td><td>&#9833; = 176</td><td>&#9833; = 164</td></tr>
+              <tr><th scope="row">Form</th><td>A B A&prime; C</td><td>A A B A</td><td>A A2 B C</td></tr>
+              <tr><th scope="row">Around the head</th><td>1st and 2nd endings; all-lydian turnaround</td><td>4-bar guitar intro; coda</td><td>None; every pass ends on F6/9</td></tr>
+              <tr><th scope="row">Solo sheets</th><td>One PDF per chorus</td><td>One PDF per part, a chorus a page</td><td>One PDF per part, a chorus a page</td></tr>
+              <tr><th scope="row">Guitar notation</th><td>Treble clef, sounds an octave lower</td><td>Treble clef, sounds an octave lower</td><td>Written at sounding pitch</td></tr>
+              <tr><th scope="row">Notation done (file times)</th><td>23:23</td><td>About 23:35</td><td>22:50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details class="big">
+      <summary>Setup</summary>
+      <div class="inner prose">
+        <ul>
+          <li>All three ran on my Mac in one Git repo that already had some of my chart work in it. Each session made its own subfolder and was told not to look at the others.</li>
+          <li>Claude: two separate sessions in the Claude Code desktop app, both Claude Opus 5.5 at max effort.</li>
+          <li>Codex: the Codex desktop app with GPT-6 Astra. Its log shows reasoning effort &ldquo;xhigh&rdquo; for the composition and the first recording, then &ldquo;medium&rdquo; and &ldquo;high&rdquo; for the audio fixes.</li>
+          <li>The machine had MuseScore 3.6.2, iReal Pro and Python. All three wrote their own code to generate the notation and rendered their PDFs through MuseScore.</li>
+          <li>My prompt pointed to &ldquo;the folder/repo&rdquo; for soloing ideas and then trailed off. The Parallax session went looking and found the topic list from my weekly brass-practice generator (pentatonic pairs, triad pairs, displacement).</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <p>If you play trumpet or guitar and try one of these, I&rsquo;d like to hear how it sits on the instrument and whether the duo parts work as duets. Page put together by Claude (in the Parallax session) from the three output folders and the session logs; the sheets and recordings are as each run left them. Updated $built.</p>
+  </footer>
+</main>
+
+<div id="tooltip" role="tooltip" hidden></div>
+<div id="status" role="status" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

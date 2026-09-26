@@ -1,0 +1,9 @@
+{
+  "name": "ai-jazz-tune-trial",
+  "private": true,
+  "type": "module",
+  "description": "Informal 'can AI write a modern jazz tune' trial: listening page, votes and results",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

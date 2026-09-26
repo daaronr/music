@@ -1,0 +1,6 @@
+# generated: rebuild with build_site.py / build_page.py
+site/
+web/public/
+web/node_modules/
+web/.netlify/
+__pycache__/

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How others voted &middot; Can AI write a modern jazz tune?</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <p class="kicker">Can AI write a modern jazz tune? &middot; Results</p>
+    <h1>How others voted</h1>
+    <nav class="jump" aria-label="Back"><ul><li><a href="index.html">Back to the tunes</a></li><li><a href="index.html#vote">Change my vote</a></li></ul></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section id="gate" hidden>
+    <h2>Vote first</h2>
+    <p class="note">Results show up once you&rsquo;ve voted from this browser, so your own choice isn&rsquo;t swayed by everyone else&rsquo;s.</p>
+    <p><a class="btn" href="index.html#vote">Go to the vote</a></p>
+  </section>
+  <section id="err" hidden><p class="pending" id="err-text"></p></section>
+  <section id="res" hidden aria-live="polite">
+    <p class="note" id="res-n"></p>
+    <h2>Favourite overall</h2>
+    <div class="bars-chart" id="prefs"></div>
+    <h2>Average rating <span class="opt">(1 = weak, 5 = strong)</span></h2>
+    <div class="bars-chart" id="ratings"></div>
+    <details class="big">
+      <summary>Who voted</summary>
+      <div class="inner">
+        <div class="bars-chart" id="did"></div>
+        <p class="note" id="instruments"></p>
+      </div>
+    </details>
+    <details class="big">
+      <summary>Which AI wrote which</summary>
+      <div class="inner prose">
+        <ul>
+          <li>Halation: Claude Opus 5.5 at max effort, Claude Code session 1.</li>
+          <li>Parallax: Claude Opus 5.5 at max effort, Claude Code session 2.</li>
+          <li>Glass Meridian: GPT-6 Astra in Codex.</li>
+        </ul>
+        <p class="note">An informal poll: one vote per browser, no sign-in, and the voters so far are mostly people I sent the link to.</p>
+      </div>
+    </details>
+  </section>
+</main>
+<script src="app.js"></script>
+<script src="results.js"></script>
+</body>
+</html>
