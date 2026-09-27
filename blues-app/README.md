@@ -22,7 +22,8 @@ What it does:
   through all 18" plays one chorus of each form in turn.
 - Marks which bars changed from the previous form (or from the basic blues),
   explains what each form adds, and gives chord tones for any bar you click.
-- A flowchart of every chord option in every bar. Click one to swap it into
+- A flowchart of every chord option in every bar (zoom, full screen, roman
+  numerals only if you like). Click one to swap it into
   the progression, as the chart's own note suggests; mixes are kept in the URL.
 - The full chart as a table in the chosen key.
 - A vote on favourite forms; results (a bar chart) only after voting.
@@ -86,6 +87,17 @@ npm test             # theory, data and arranger checks
 npm run build
 npm run render:tour  # rebuild public/audio/blues-18-forms.mp3 (needs ffmpeg; narration via local Kokoro, else macOS say)
 node scripts/make-poster.ts  # rebuild public/posters/*.pdf (needs Google Chrome); --key Eb --for Bb --paper A3 --roman yes for one-offs
+```
+
+YouTube videos (outputs and ready-to-paste descriptions in `video/output/`):
+
+```bash
+# 1. All 18 forms, narrated, lead sheet lit bar by bar (needs rsvg-convert)
+node scripts/render-tour.ts --out .cache/video1/music.wav --timeline .cache/video1/timeline.json
+node scripts/make-video-forms.ts --force
+# 2. Narrated app walkthrough: needs the dev server on port 5178 and step 1's files
+npm run dev -- --port 5178 &
+node scripts/make-video-tour.ts
 ```
 
 `render:tour` takes `--tempo`, `--key`, `--out` and `--voice say|kokoro`.

@@ -1,7 +1,9 @@
 // Render all 18 forms to one MP3, a chorus each with a spoken introduction,
 // using the same arranger (voicings, walking bass, comping, ride) as the app.
 //
-//   node scripts/render-tour.ts [--tempo 126] [--key F] [--out public/audio/blues-18-forms.mp3] [--voice kokoro|say]
+//   node scripts/render-tour.ts [--tempo 126] [--key F] [--out public/audio/blues-18-forms.mp3] [--voice kokoro|say|none]
+//   --voice none: music only, with a --gap (seconds) before each form for an on-screen title,
+//   and --timeline file.json recording when each form, count-in and bar starts (for the video).
 //
 // Needs ffmpeg. Narration uses the local Kokoro setup from
 // ~/githubs/claude_code_misc_work/brass_playing_next_step (falls back to macOS `say`).
@@ -28,6 +30,8 @@ const TEMPO = Number(args.get('tempo') ?? 126);
 const KEY = args.get('key') ?? 'F';
 const OUT = resolve(APP, args.get('out') ?? 'public/audio/blues-18-forms.mp3');
 const VOICE = args.get('voice') ?? 'kokoro';
+const GAP = Number(args.get('gap') ?? 3);
+const TIMELINE = args.get('timeline');
 
 // ---------------------------------------------------------------- narration
 
@@ -278,8 +282,7 @@ function rms(x: Stereo): number {
   return Math.sqrt(s / (2 * x.L.length));
 }
 
-const texts = speechTexts();
-const speech = renderSpeech(texts).map((f) => decode(f, false));
+const speech = VOICE === 'none' ? [] : renderSpeech(speechTexts()).map((f) => decode(f, false));
 const forms = VARIATIONS.map((v) => {
   process.stdout.write(`\rRendering form ${v.id}/18`);
   return renderForm(v.id);
@@ -297,15 +300,37 @@ for (const s of speech) {
 }
 
 const silence = (sec: number): Stereo => ({ L: new Float32Array(Math.round(sec * SR)), R: new Float32Array(Math.round(sec * SR)) });
-const timeline: Stereo[] = [silence(0.4), speech[0], silence(0.9)];
-const chapters: Array<{ title: string; start: number }> = [{ title: 'Introduction', start: 0 }];
 const lengthOf = (parts: Stereo[]) => parts.reduce((s, p) => s + p.L.length, 0);
-VARIATIONS.forEach((v, i) => {
-  chapters.push({ title: `${v.id}. ${v.name}`, start: lengthOf(timeline) / SR });
-  timeline.push(speech[i + 1], silence(0.35), forms[i], silence(0.4));
-});
-chapters.push({ title: 'End', start: lengthOf(timeline) / SR });
-timeline.push(speech[speech.length - 1], silence(1));
+const timeline: Stereo[] = [];
+const chapters: Array<{ title: string; start: number }> = [];
+const marks: Array<{ id: number; title: number; countIn: number; end: number }> = [];
+if (VOICE === 'none') {
+  const INTRO = GAP + 2;
+  chapters.push({ title: 'Introduction', start: 0 });
+  timeline.push(silence(INTRO));
+  VARIATIONS.forEach((v, i) => {
+    const title = lengthOf(timeline) / SR;
+    chapters.push({ title: `${v.id}. ${v.name}`, start: title });
+    timeline.push(silence(GAP));
+    const countIn = lengthOf(timeline) / SR;
+    timeline.push(forms[i]);
+    marks.push({ id: v.id, title, countIn, end: lengthOf(timeline) / SR });
+  });
+  chapters.push({ title: 'End', start: lengthOf(timeline) / SR });
+  timeline.push(silence(6));
+} else {
+  timeline.push(silence(0.4), speech[0], silence(0.9));
+  chapters.push({ title: 'Introduction', start: 0 });
+  VARIATIONS.forEach((v, i) => {
+    chapters.push({ title: `${v.id}. ${v.name}`, start: lengthOf(timeline) / SR });
+    timeline.push(speech[i + 1], silence(0.35));
+    const countIn = lengthOf(timeline) / SR;
+    timeline.push(forms[i], silence(0.4));
+    marks.push({ id: v.id, title: chapters[chapters.length - 1].start, countIn, end: lengthOf(timeline) / SR });
+  });
+  chapters.push({ title: 'End', start: lengthOf(timeline) / SR });
+  timeline.push(speech[speech.length - 1], silence(1));
+}
 
 const total = lengthOf(timeline);
 const inter = new Float32Array(total * 2);
@@ -335,11 +360,15 @@ mkdirSync(dirname(OUT), { recursive: true });
 execFileSync(
   'ffmpeg',
   ['-y', '-loglevel', 'error', '-f', 'f32le', '-ar', String(SR), '-ac', '2', '-i', 'pipe:0', '-i', meta, '-map_metadata', '1', '-map_chapters', '1',
-    '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-ar', String(SR), '-codec:a', 'libmp3lame', '-q:a', '3', '-id3v2_version', '3', OUT],
+    '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-ar', String(SR),
+    ...(OUT.endsWith('.mp3') ? ['-codec:a', 'libmp3lame', '-q:a', '3', '-id3v2_version', '3'] : []), OUT],
   { input: Buffer.from(inter.buffer), maxBuffer: 1 << 30 },
 );
 
+if (TIMELINE)
+  writeFileSync(TIMELINE, JSON.stringify({ tempo: TEMPO, key: KEY, spb: 60 / TEMPO, total: total / SR, forms: marks, chapters }, null, 1));
+
 const stamp = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 const tracklist = chapters.map((c) => `${stamp(c.start)}  ${c.title}`).join('\n');
-writeFileSync(OUT.replace(/\.mp3$/, '.txt'), `Blues Flow: 18 ways through a 12-bar blues (key of ${KEY}, ${TEMPO} bpm)\n\n${tracklist}\n`);
+if (OUT.endsWith('.mp3')) writeFileSync(OUT.replace(/\.mp3$/, '.txt'), `Blues Flow: 18 ways through a 12-bar blues (key of ${KEY}, ${TEMPO} bpm)\n\n${tracklist}\n`);
 console.log(`Wrote ${OUT} (${stamp(total / SR)})\n${tracklist}`);

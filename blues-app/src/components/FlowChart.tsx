@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { VARIATIONS } from '../music/progressions.ts';
 import { FLOW, type View } from '../music/display.ts';
 
@@ -57,13 +57,71 @@ function edgePath(from: number, a: number, b: number) {
 
 export function FlowChart({ bars, view, activeBar, selectedBar, onPick }: Props) {
   const [hover, setHover] = useState<{ bar: number; row: number } | null>(null);
+  const [zoom, setZoom] = useState<number | 'fit'>('fit');
+  const [full, setFull] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [boxWidth, setBoxWidth] = useState(WIDTH);
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setBoxWidth(el.clientWidth));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [full]);
+
+  useEffect(() => {
+    if (!full) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setFull(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [full]);
+
+  const scale = zoom === 'fit' ? Math.max(0.45, boxWidth / WIDTH) : zoom;
+  const clampZoom = (z: number) => Math.min(3, Math.max(0.45, Math.round(z * 100) / 100));
+  const step = (f: number) => setZoom(clampZoom(scale * f));
+
+  // Pinch on a trackpad (or ctrl/cmd + wheel) zooms the chart rather than the page.
+  const scaleRef = useRef(scale);
+  useEffect(() => {
+    scaleRef.current = scale;
+  }, [scale]);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      setZoom(clampZoom(scaleRef.current * (e.deltaY < 0 ? 1.08 : 1 / 1.08)));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [full]);
   const pathRows = bars.map((b, i) => rowOf(i, b));
   const hoverSet = useMemo(() => (hover ? new Set(FLOW[hover.bar][hover.row].variations) : null), [hover]);
 
   return (
-    <div className="flow">
-      <div className="flow-scroll">
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width={WIDTH} height={HEIGHT} role="img" aria-label="Every chord option for each bar, with lines for each of the 18 forms">
+    <div className={`flow${full ? ' is-full' : ''}`}>
+      <div className="flow-tools">
+        <button className="small" onClick={() => step(1 / 1.25)} aria-label="Zoom out">
+          −
+        </button>
+        <span className="zoom-val">{Math.round(scale * 100)}%</span>
+        <button className="small" onClick={() => step(1.25)} aria-label="Zoom in">
+          +
+        </button>
+        <button className={`small${zoom === 'fit' ? ' on' : ''}`} onClick={() => setZoom('fit')}>
+          Fit width
+        </button>
+        <button className="small" onClick={() => setFull(!full)}>
+          {full ? 'Close full screen' : 'Full screen'}
+        </button>
+      </div>
+      <div
+        className="flow-scroll"
+        ref={boxRef}
+      >
+        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width={WIDTH * scale} height={HEIGHT * scale} role="img" aria-label="Every chord option for each bar, with lines for each of the 18 forms">
           {activeBar !== null && <rect className="flow-now" x={nodeX(activeBar) - 4} y={2} width={NODE_W + 8} height={HEIGHT - 4} rx={6} />}
           {selectedBar !== null && selectedBar !== activeBar && (
             <rect className="flow-sel" x={nodeX(selectedBar) - 4} y={2} width={NODE_W + 8} height={HEIGHT - 4} rx={6} />

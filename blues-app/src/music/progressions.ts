@@ -33,7 +33,7 @@ export const VARIATIONS: Variation[] = [
     id: 1,
     name: 'Basic blues',
     bars: ['F7', 'F7', 'F7', 'F7', 'Bb7', 'Bb7', 'F7', 'F7', 'C7', 'C7', 'F7', 'F7'],
-    summary: 'Three dominant chords: I7, IV7 and V7. Everything below decorates this skeleton.',
+    summary: 'Three dominant chords: I7, IV7 and V7. The other 17 forms decorate this skeleton.',
     notes: {},
     ending: 'F7',
   },
