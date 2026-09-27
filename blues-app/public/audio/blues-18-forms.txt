@@ -2,21 +2,21 @@ Blues Flow: 18 ways through a 12-bar blues (key of F, 126 bpm)
 
 0:00  Introduction
 0:12  1. Basic blues
-0:47  2. V–IV cadence
-1:24  3. Quick four + II7
-2:01  4. VI7–II7–V7 chain
-2:39  5. Diatonic ii–V
-3:16  6. IV of IV + tritone subs
-3:55  7. ii–V into IV; iii–VI–ii–V
-4:35  8. iii– in bar 7
-5:13  9. Chromatic dominants
-5:52  10. Bird blues
-6:33  11. Chromatic minor sevenths
-7:10  12. Major sevenths + chromatic minors
-7:50  13. ii–Vs to ♭III and ♭II
-8:27  14. Blues for Alice style
-9:01  15. Tritone-sub ii–V into IV
-9:39  16. ii–V chain from bar 1
-10:16  17. Major-seventh planing
-10:53  18. Sus-chord blues
-11:30  End
+0:48  2. V–IV cadence
+1:25  3. Quick four + II7
+2:03  4. VI7–II7–V7 chain
+2:41  5. Diatonic ii–V
+3:19  6. IV of IV + tritone subs
+3:58  7. ii–V into IV; iii–VI–ii–V
+4:38  8. iii– in bar 7
+5:17  9. Chromatic dominants
+5:56  10. Bird blues
+6:37  11. Chromatic minor sevenths
+7:15  12. Major sevenths + chromatic minors
+7:55  13. ii–Vs to ♭III and ♭II
+8:33  14. Blues for Alice style
+9:07  15. Tritone-sub ii–V into IV
+9:46  16. ii–V chain from bar 1
+10:23  17. Major-seventh planing
+11:01  18. Sus-chord blues
+11:38  End
