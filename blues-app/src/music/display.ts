@@ -99,11 +99,24 @@ export function sourcesOf(barIndex: number, bar: string): number[] {
 
 const DIGITS = '0123456789abcdefghijklmnopqrstuvwxyz';
 
+/** Compact when every bar is on the chart (one character per bar); otherwise the bars themselves. */
 export function encodeMix(bars: string[]): string {
-  return bars.map((b, i) => DIGITS[FLOW[i].findIndex((o) => o.bar === b)]).join('');
+  const idx = bars.map((b, i) => FLOW[i].findIndex((o) => o.bar === b));
+  if (idx.every((k) => k >= 0)) return idx.map((k) => DIGITS[k]).join('');
+  return `x${bars.join('|')}`;
 }
 
 export function decodeMix(code: string): string[] | null {
+  if (code.startsWith('x')) {
+    const bars = code.slice(1).split('|');
+    if (bars.length !== 12) return null;
+    try {
+      bars.forEach(parseBar);
+      return bars;
+    } catch {
+      return null;
+    }
+  }
   if (code.length !== 12) return null;
   const bars = [...code].map((ch, i) => FLOW[i][DIGITS.indexOf(ch)]?.bar);
   return bars.every(Boolean) ? (bars as string[]) : null;

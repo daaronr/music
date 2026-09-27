@@ -40,6 +40,11 @@ if (mode === 'notes') {
     console.log(`  from: ${n.name || '(no name)'} <${n.email || 'no email'}>${n.creditOk ? '  [ok to thank publicly]' : ''}`);
     if (n.message) console.log(`  ${n.message.replace(/\n/g, '\n  ')}`);
     if (n.context) console.log(`  (was looking at: ${n.context})`);
+    if (n.kind === 'suggestion') {
+      console.log(`  form: "${n.formName}"  (typed in ${n.typedIn})${n.source ? `  source: ${n.source}` : ''}`);
+      console.log(`  bars: | ${n.bars.join(' | ')} |`);
+      console.log(`  in F: | ${n.chartBars.join(' | ')} |`);
+    }
   }
 } else if (mode === 'votes') {
   for (const v of (await all('votes')).filter((v) => !v.test))
@@ -60,5 +65,5 @@ if (mode === 'notes') {
   const votes = (await all('votes')).filter((v) => !v.test);
   console.log(`\nVotes: ${votes.length}. Favourites:`, count(votes.map((v) => v.fav)).map(([f, n]) => `#${f} ${n}`).join(', '));
   const notes = (await all('notes')).filter((n) => !n.test);
-  console.log(`Notes: ${notes.filter((n) => n.kind === 'feedback').length} feedback, ${notes.filter((n) => n.kind === 'donation').length} donations (see: stats.mjs notes)`);
+  console.log(`Notes: ${notes.filter((n) => n.kind === 'feedback').length} feedback, ${notes.filter((n) => n.kind === 'donation').length} donations, ${notes.filter((n) => n.kind === 'suggestion').length} suggested forms (see: stats.mjs notes)`);
 }

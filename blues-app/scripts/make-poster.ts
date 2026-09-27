@@ -111,7 +111,7 @@ header { display: flex; justify-content: space-between; align-items: baseline; b
 h1 { font-size: 1.7rem; letter-spacing: -0.01em; }
 h1 small { font-weight: 400; font-size: 1rem; color: var(--faint); margin-left: 0.6rem; }
 .key { font-size: 1.15rem; font-weight: 700; }
-.q-dom7 { color: var(--dom7); } .q-min7 { color: var(--min7); } .q-maj7 { color: var(--maj7); } .q-dim7 { color: var(--dim7); } .q-sus { color: var(--sus); } .q-maj { color: var(--maj); }
+.q-dom7 { color: var(--dom7); } .q-min7 { color: var(--min7); } .q-maj7 { color: var(--maj7); } .q-dim7 { color: var(--dim7); } .q-hdim { color: var(--dim7); } .q-sus { color: var(--sus); } .q-maj { color: var(--maj); }
 .map { flex: 1; display: grid; grid-template-rows: 7fr 8fr 8fr; gap: 0.4rem; min-height: 0; }
 .phrase { display: grid; grid-template-columns: 5.2rem repeat(4, 1fr); gap: 0.35rem; }
 .plabel { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.72rem; color: var(--faint); padding-top: 0.2rem; }

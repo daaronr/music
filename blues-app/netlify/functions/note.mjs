@@ -3,7 +3,7 @@
 import { getStore } from '@netlify/blobs';
 import { body, clean, json, preflight, randomKey } from '../shared/http.mjs';
 
-const KINDS = ['feedback', 'donation'];
+const KINDS = ['feedback', 'donation', 'suggestion'];
 const WHERE = ['unjournal', 'givewell', 'other', ''];
 
 export default async (req) => {
@@ -20,6 +20,18 @@ export default async (req) => {
   if (!kind) return json(req, { error: 'Unknown note type.' }, 400);
   const message = clean(b.message, 3000);
   if (kind === 'feedback' && !message) return json(req, { error: 'The message is empty.' }, 400);
+  const suggestion =
+    kind === 'suggestion'
+      ? {
+          formName: clean(b.formName, 80),
+          bars: (Array.isArray(b.bars) ? b.bars : []).slice(0, 12).map((x) => clean(x, 40)),
+          chartBars: (Array.isArray(b.chartBars) ? b.chartBars : []).slice(0, 12).map((x) => clean(x, 40)),
+          typedIn: clean(b.typedIn, 80),
+          source: clean(b.source, 300),
+        }
+      : null;
+  if (suggestion && (suggestion.bars.length !== 12 || suggestion.bars.some((x) => !x)))
+    return json(req, { error: 'A suggested form needs all 12 bars.' }, 400);
 
   const note = {
     kind,
@@ -30,6 +42,7 @@ export default async (req) => {
     amount: clean(b.amount, 40),
     creditOk: Boolean(b.creditOk),
     context: clean(b.context, 200),
+    ...(suggestion ?? {}),
     test: String(b.voter || '').startsWith('test-'),
     ts: new Date().toISOString(),
   };

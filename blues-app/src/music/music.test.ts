@@ -153,3 +153,55 @@ describe('arranger', () => {
     });
   }
 });
+
+describe('typed chords for suggestions', async () => {
+  const { parseTypedBar } = await import('./parse.ts');
+  const { chartString } = await import('./theory.ts');
+  const read = (text: string, key = 'F', t: 'C' | 'Bb' = 'C') => {
+    const r = parseTypedBar(text, displayKey(key, t).iv);
+    return typeof r === 'string' ? r : r.map(chartString).join(' ');
+  };
+
+  it('reads letter names in the key on screen, back into the chart key', () => {
+    expect(read('F7')).toBe('F7');
+    expect(read('Fm7 Bb7')).toBe('F- Bb7');
+    expect(read('B♭maj7')).toBe('BbΔ');
+    expect(read('Em7b5 A7')).toBe('Eø A7');
+    expect(read('E°7')).toBe('E°');
+    expect(read('C−  F7')).toBe('C- F7');
+    expect(read('Eb7', 'Bb')).toBe('Bb7'); // IV7 in B♭ is IV7 in F
+    expect(read('C7', 'F', 'Bb')).toBe('Bb7'); // written C7 for B♭ trumpet is concert B♭7
+  });
+
+  it('reads sus and slash chords', () => {
+    expect(read('Cm7/F')).toBe('C-/F');
+    expect(read('F7sus4')).toBe('C-/F');
+    expect(read('F9sus')).toBe('C-/F');
+  });
+
+  it('reads roman numerals', () => {
+    expect(read('bVII7')).toBe('Eb7');
+    expect(read('#iv°7')).toBe('B°');
+    expect(read('ii-7 V7')).toBe('G- C7');
+    expect(read('I9sus')).toBe('C-/F');
+    expect(read('IΔ7')).toBe('FΔ');
+    expect(read('♭VI7 V7')).toBe('Db7 C7');
+  });
+
+  it('explains what it cannot read', () => {
+    expect(read('H7')).toMatch(/Can't read/);
+    expect(read('F7 Bb7 C7')).toMatch(/two chords/);
+    expect(read('')).toMatch(/Empty/);
+  });
+
+  it('round-trips every chart bar through its own display (same pitches; spelling may differ)', async () => {
+    const { chordKey } = await import('./theory.ts');
+    for (const key of ['Eb', 'A', 'F'])
+      for (const v of VARIATIONS)
+        for (const bar of v.bars) {
+          const shown = parseBar(bar).map((c) => chordSymbol(transposeChord(c, displayKey(key, 'C').iv), 'standard')).join(' ');
+          const back = parseTypedBar(shown, displayKey(key, 'C').iv);
+          expect(typeof back === 'string' ? back : back.map(chordKey).join(' ')).toBe(parseBar(bar).map(chordKey).join(' '));
+        }
+  });
+});

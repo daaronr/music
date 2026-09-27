@@ -103,7 +103,8 @@ export function concertOffset(concertKey: string): number {
 
 // dom7 "F7", min7 "C-", maj7 "FΔ", dim7 "B°", maj "Gb" (plain triad),
 // sus "C-/F" (minor seventh over the note a fifth below: F9sus4).
-export type Quality = 'dom7' | 'min7' | 'maj7' | 'dim7' | 'maj' | 'sus';
+// hdim "Eø" (half-diminished, m7♭5) isn't on the chart but turns up in suggestions.
+export type Quality = 'dom7' | 'min7' | 'maj7' | 'dim7' | 'hdim' | 'maj' | 'sus';
 
 export interface Chord {
   root: Spelling; // for sus chords this is the bass note, the functional root
@@ -114,9 +115,9 @@ export interface Chord {
 export function parseChord(sym: string): Chord {
   const slash = /^([A-G][#b]?)-\/([A-G][#b]?)$/.exec(sym);
   if (slash) return { root: parseSpelling(slash[2]), quality: 'sus', upper: parseSpelling(slash[1]) };
-  const m = /^([A-G][#b]?)(7|-|Δ|°)?$/.exec(sym);
+  const m = /^([A-G][#b]?)(7|-|Δ|°|ø)?$/.exec(sym);
   if (!m) throw new Error(`Bad chord symbol: ${sym}`);
-  const quality: Quality = ({ '7': 'dom7', '-': 'min7', 'Δ': 'maj7', '°': 'dim7' } as const)[m[2] as '7'] ?? 'maj';
+  const quality: Quality = ({ '7': 'dom7', '-': 'min7', 'Δ': 'maj7', '°': 'dim7', 'ø': 'hdim' } as const)[m[2] as '7'] ?? 'maj';
   return { root: parseSpelling(m[1]), quality };
 }
 
@@ -136,8 +137,8 @@ export function transposeChord(c: Chord, iv: Interval, preferFlats = true): Chor
 export type Notation = 'chart' | 'standard';
 
 const SUFFIX: Record<Notation, Record<Exclude<Quality, 'sus'>, string>> = {
-  chart: { dom7: '7', min7: '−', maj7: 'Δ', dim7: '°', maj: '' },
-  standard: { dom7: '7', min7: 'm7', maj7: 'maj7', dim7: '°7', maj: '' },
+  chart: { dom7: '7', min7: '−', maj7: 'Δ', dim7: '°', hdim: 'ø', maj: '' },
+  standard: { dom7: '7', min7: 'm7', maj7: 'maj7', dim7: '°7', hdim: 'm7♭5', maj: '' },
 };
 
 export function chordSymbol(c: Chord, notation: Notation = 'chart'): string {
@@ -146,6 +147,13 @@ export function chordSymbol(c: Chord, notation: Notation = 'chart'): string {
     return `${upper}/${noteName(c.root)}`;
   }
   return noteName(c.root) + SUFFIX[notation][c.quality];
+}
+
+/** The chart's own ASCII spelling ("F#-", "BbΔ", "C-/F"), which parseChord reads back. */
+export function chartString(c: Chord): string {
+  const n = noteName(c.root, true);
+  if (c.quality === 'sus') return `${noteName(c.upper!, true)}-/${n}`;
+  return n + ({ dom7: '7', min7: '-', maj7: 'Δ', dim7: '°', hdim: 'ø', maj: '' } as const)[c.quality];
 }
 
 export function chordKey(c: Chord): string {
@@ -158,8 +166,8 @@ const F_MAJOR_BY_DEGREE = [5, 7, 9, 10, 0, 2, 4]; // F G A Bb C D E
 const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 
 const ROMAN_SUFFIX: Record<Notation, Record<Quality, string>> = {
-  chart: { dom7: '7', min7: '−7', maj7: 'Δ7', dim7: '°7', maj: '', sus: '9sus' },
-  standard: { dom7: '7', min7: 'm7', maj7: 'maj7', dim7: '°7', maj: '', sus: '9sus4' },
+  chart: { dom7: '7', min7: '−7', maj7: 'Δ7', dim7: '°7', hdim: 'ø7', maj: '', sus: '9sus' },
+  standard: { dom7: '7', min7: 'm7', maj7: 'maj7', dim7: '°7', hdim: 'm7♭5', maj: '', sus: '9sus4' },
 };
 
 /** Roman numeral for a chord spelled in the chart key (F). Key-independent. */
@@ -169,7 +177,7 @@ export function romanNumeral(chartChord: Chord, notation: Notation = 'chart'): s
   let acc = mod(pc(s) - F_MAJOR_BY_DEGREE[degree], 12);
   if (acc > 6) acc -= 12;
   const prefix = acc < 0 ? '♭'.repeat(-acc) : '♯'.repeat(acc);
-  const lower = chartChord.quality === 'min7' || chartChord.quality === 'dim7';
+  const lower = chartChord.quality === 'min7' || chartChord.quality === 'dim7' || chartChord.quality === 'hdim';
   const numeral = lower ? NUMERALS[degree].toLowerCase() : NUMERALS[degree];
   return prefix + numeral + ROMAN_SUFFIX[notation][chartChord.quality];
 }
@@ -182,6 +190,7 @@ export const CHORD_TONES: Record<Quality, number[]> = {
   min7: [0, 3, 7, 10],
   maj7: [0, 4, 7, 11],
   dim7: [0, 3, 6, 9],
+  hdim: [0, 3, 6, 10],
   maj: [0, 4, 7],
   sus: [0, 5, 7, 10, 2],
 };
@@ -191,6 +200,7 @@ export const SCALES: Record<Quality, number[]> = {
   min7: [0, 2, 3, 5, 7, 9, 10], // dorian
   maj7: [0, 2, 4, 5, 7, 9, 11], // major
   dim7: [0, 2, 3, 5, 6, 8, 9, 11], // whole-half diminished
+  hdim: [0, 1, 3, 5, 6, 8, 10], // locrian
   maj: [0, 2, 4, 5, 7, 9, 11],
   sus: [0, 2, 4, 5, 7, 9, 10],
 };
@@ -200,6 +210,7 @@ export const SCALE_HINT: Record<Quality, string> = {
   min7: 'Dorian',
   maj7: 'Major (or Lydian)',
   dim7: 'Diminished, whole step–half step',
+  hdim: 'Locrian (or Locrian ♮2)',
   maj: 'Major / major pentatonic',
   sus: 'Mixolydian; lean on the 4th, not the 3rd',
 };
@@ -210,6 +221,7 @@ const SPELLED_TONES: Record<Quality, Array<[string, Interval]>> = {
   min7: [['1', { letters: 0, semis: 0 }], ['♭3', { letters: 2, semis: 3 }], ['5', { letters: 4, semis: 7 }], ['♭7', { letters: 6, semis: 10 }]],
   maj7: [['1', { letters: 0, semis: 0 }], ['3', { letters: 2, semis: 4 }], ['5', { letters: 4, semis: 7 }], ['7', { letters: 6, semis: 11 }]],
   dim7: [['1', { letters: 0, semis: 0 }], ['♭3', { letters: 2, semis: 3 }], ['♭5', { letters: 4, semis: 6 }], ['°7', { letters: 6, semis: 9 }]],
+  hdim: [['1', { letters: 0, semis: 0 }], ['♭3', { letters: 2, semis: 3 }], ['♭5', { letters: 4, semis: 6 }], ['♭7', { letters: 6, semis: 10 }]],
   maj: [['1', { letters: 0, semis: 0 }], ['3', { letters: 2, semis: 4 }], ['5', { letters: 4, semis: 7 }]],
   sus: [['1', { letters: 0, semis: 0 }], ['4', { letters: 3, semis: 5 }], ['5', { letters: 4, semis: 7 }], ['♭7', { letters: 6, semis: 10 }], ['9', { letters: 1, semis: 2 }]],
 };
@@ -219,6 +231,7 @@ const GUIDE_DEGREES: Record<Quality, [string, string]> = {
   min7: ['♭3', '♭7'],
   maj7: ['3', '7'],
   dim7: ['♭3', '°7'],
+  hdim: ['♭3', '♭7'],
   maj: ['3', '5'],
   sus: ['4', '♭7'],
 };

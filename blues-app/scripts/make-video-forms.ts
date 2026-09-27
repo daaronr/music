@@ -33,7 +33,7 @@ const H = 1080;
 const C = {
   bg: '#121419', surface: '#1b1e26', line: '#2f3441', text: '#eceef3', muted: '#a3aabb', faint: '#737b8d',
   accent: '#ff7a59', accentSoft: 'rgba(255,122,89,0.16)', changed: '#f06ba8',
-  dom7: '#f2b35b', min7: '#92b2ff', maj7: '#6fd6a2', dim7: '#d39dff', maj: '#eceef3', sus: '#5bd3d3',
+  dom7: '#f2b35b', min7: '#92b2ff', maj7: '#6fd6a2', dim7: '#d39dff', hdim: '#d39dff', maj: '#eceef3', sus: '#5bd3d3',
 } as const;
 const FONT = `font-family="Helvetica Neue, Helvetica, Arial, sans-serif"`;
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');

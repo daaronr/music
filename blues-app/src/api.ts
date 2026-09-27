@@ -43,7 +43,7 @@ const referrer = safe(() => (document.referrer ? new URL(document.referrer).host
 const optedOut = navigator.doNotTrack === '1' || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl;
 
 export type TrackEvent =
-  | 'view' | 'play' | 'tour' | 'mix' | 'vote' | 'results' | 'feedback' | 'donation' | 'donate-click' | 'mp3' | 'key' | 'instrument' | 'poster';
+  | 'view' | 'play' | 'tour' | 'mix' | 'vote' | 'results' | 'feedback' | 'donation' | 'donate-click' | 'mp3' | 'key' | 'instrument' | 'poster' | 'suggestion' | 'suggest-try';
 
 /** Count a use of the app. Fire and forget; never blocks or throws. */
 export function track(e: TrackEvent, detail = '') {
@@ -92,7 +92,7 @@ export async function getResults(): Promise<Results> {
 }
 
 export interface NoteInput {
-  kind: 'feedback' | 'donation';
+  kind: 'feedback' | 'donation' | 'suggestion';
   message: string;
   name: string;
   email: string;
@@ -101,6 +101,12 @@ export interface NoteInput {
   creditOk?: boolean;
   context?: string;
   website?: string; // honeypot
+  // suggestions only
+  formName?: string;
+  bars?: string[];
+  chartBars?: string[];
+  typedIn?: string;
+  source?: string;
 }
 
 export const sendNote = (n: NoteInput) => post('/api/note', { voter: voterId, ...n });

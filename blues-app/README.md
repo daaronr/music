@@ -27,6 +27,10 @@ What it does:
   the progression, as the chart's own note suggests; mixes are kept in the URL.
 - The full chart as a table in the chosen key.
 - A vote on favourite forms; results (a bar chart) only after voting.
+- "Suggest a new form": edit the 12 bars (letters in the key on screen, or
+  roman numerals; `src/music/parse.ts` reads them), try it on the lead sheet,
+  and send it with a name, explanation and source. Arrives in
+  `stats.mjs notes` with the bars as typed and converted to F.
 - Credit and links (K-House, YouTube), a feedback form, and a nudge to donate
   to The Unjournal or GiveWell instead of paying, with a form to say you did.
 - Printable posters in `public/posters/` (map of every option per bar,
@@ -52,7 +56,7 @@ the older static page `../index.html` still carry some of the old errors.
 
 Netlify functions in `netlify/functions/`, data in Netlify Blobs (site
 `blues-flow`): `vote` and `results` (store `votes`), `note` (store `notes`:
-feedback and "I donated" messages, never served back), `hit` (store `hits`:
+feedback, "I donated" messages and suggested forms, never served back), `hit` (store `hits`:
 cookie-free usage counter; skipped under Do Not Track). Ids starting `test-`
 (all ids in `npm run dev`) are kept out of results and counts.
 

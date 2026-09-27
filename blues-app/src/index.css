@@ -1207,3 +1207,56 @@ fieldset {
 .flow.is-full .hint {
   display: none;
 }
+
+.suggest {
+  margin-top: 22px;
+  scroll-margin-top: 16px;
+}
+
+.suggest code {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--surface-2);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.suggest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin: 10px 0 6px;
+  max-width: 820px;
+}
+
+.suggest-grid label {
+  position: relative;
+}
+
+.suggest-grid label span {
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  font-size: 10px;
+  color: var(--faint);
+}
+
+.suggest-grid input {
+  padding-top: 15px;
+  font-weight: 600;
+}
+
+.suggest-grid label.bad input {
+  border-color: var(--changed);
+}
+
+.suggest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.q-hdim {
+  color: var(--q-dim7);
+}

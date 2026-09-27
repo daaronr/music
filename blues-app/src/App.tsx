@@ -5,6 +5,7 @@ import { ChartTable } from './components/ChartTable.tsx';
 import { FlowChart } from './components/FlowChart.tsx';
 import { LeadSheet } from './components/LeadSheet.tsx';
 import { Notes } from './components/Notes.tsx';
+import { Suggest } from './components/Suggest.tsx';
 import { Support } from './components/Support.tsx';
 import { Transport, type SoundPrefs } from './components/Transport.tsx';
 import { Vote } from './components/Vote.tsx';
@@ -255,6 +256,16 @@ export default function App() {
     if (!engine.playing) engine.audition(view.concert(bar)).catch(() => {});
   };
 
+  const tryBars = (next: string[]) => {
+    const exact = VARIATIONS.find((v) => v.bars.every((b, k) => b === next[k]));
+    if (exact) {
+      setVariationId(exact.id);
+      setMix(null);
+    } else setMix(next);
+    if (sp.mode === 'tour') setSound({ mode: 'loop' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const randomMix = () => {
     const r = () => VARIATIONS[Math.floor(Math.random() * 18)].bars;
     const [a, b, c] = [r(), r(), r()];
@@ -395,6 +406,9 @@ export default function App() {
         <a className="small-link" href="#vote" onClick={jumpTo('vote')}>
           Vote for your favourite
         </a>
+        <a className="small-link" href="#suggest" onClick={jumpTo('suggest')}>
+          Suggest a form
+        </a>
       </nav>
 
       <main className="main">
@@ -495,6 +509,14 @@ export default function App() {
       <div id="vote">
         <Vote currentId={variationId} />
       </div>
+
+      <Suggest
+        key={`${vp.key}-${vp.transposition}-${vp.romanOnly}`}
+        bars={bars}
+        view={view}
+        context={mix ? `mix of form ${variationId}` : `form ${variationId}`}
+        onTry={tryBars}
+      />
 
       <Support context={mix ? `mix of form ${variationId}` : `form ${variationId}`} />
 

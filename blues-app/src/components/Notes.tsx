@@ -39,7 +39,16 @@ export function Notes({ variation, mix, bars, view, showRoman, selectedBar, onSe
           <h2>Your mix</h2>
           <p>
             Built on form {variation.id} ({variation.name}). Bars that differ from it are marked. The chart itself notes that
-            its rows can be combined; some joins work better than others, so trust your ears.
+            its rows can be combined; some joins work better than others, so trust your ears. Think it deserves a place on the
+            list? <a
+              href="#suggest"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('suggest')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Suggest it as a new form
+            </a>.
           </p>
           <ul className="bar-notes">
             {mix.map((bar, i) =>
@@ -48,7 +57,8 @@ export function Notes({ variation, mix, bars, view, showRoman, selectedBar, onSe
                   <button className="link" onClick={() => onSelectBar(i)}>
                     Bar {i + 1}
                   </button>{' '}
-                  <ChordText text={`{{${bar}}}`} view={view} showRoman={showRoman} /> from {formList(sourcesOf(i, bar))}
+                  <ChordText text={`{{${bar}}}`} view={view} showRoman={showRoman} />{' '}
+                  {sourcesOf(i, bar).length ? `from ${formList(sourcesOf(i, bar))}` : '(not on the chart)'}
                 </li>
               ) : null,
             )}
@@ -108,7 +118,7 @@ export function Notes({ variation, mix, bars, view, showRoman, selectedBar, onSe
             </div>
           ))}
           <p className="detail-sources">
-            Used in {formList(selSources)}.{' '}
+            {selSources.length ? `Used in ${formList(selSources)}.` : 'Not on the chart.'}{' '}
             {selSources
               .filter((id) => id !== variation.id)
               .slice(0, 6)
