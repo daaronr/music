@@ -1,0 +1,65 @@
+{
+  "score_checks": [
+    {
+      "file": "01_head_concert.musicxml",
+      "parts": 1,
+      "bars_per_part": 32,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    },
+    {
+      "file": "02_head_trumpet_Bb.musicxml",
+      "parts": 1,
+      "bars_per_part": 32,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    },
+    {
+      "file": "03_duo_score_concert.musicxml",
+      "parts": 2,
+      "bars_per_part": 64,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    },
+    {
+      "file": "04_trumpet_concert.musicxml",
+      "parts": 1,
+      "bars_per_part": 64,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    },
+    {
+      "file": "05_trumpet_Bb.musicxml",
+      "parts": 1,
+      "bars_per_part": 64,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    },
+    {
+      "file": "06_guitar_concert.musicxml",
+      "parts": 1,
+      "bars_per_part": 64,
+      "native_sounding_pitches_match": true,
+      "durations_and_chord_offsets_valid": true
+    }
+  ],
+  "pdf_pages": {
+    "01_head_concert": 1,
+    "02_head_trumpet_Bb": 1,
+    "03_duo_score_concert": 4,
+    "04_trumpet_concert": 2,
+    "05_trumpet_Bb": 2,
+    "06_guitar_concert": 2
+  },
+  "texture_eighth_note_cells": {
+    "both": 327,
+    "trumpet_only": 82,
+    "guitar_only": 87,
+    "silence": 16
+  },
+  "bb_transposition_verified": true,
+  "ireal_32_bars_four_cells_each": true,
+  "ireal_app_preview": "Verified all 32 bars in eight systems; import not committed to library",
+  "packet_pages": 14,
+  "visual_review": "All 14 packet pages inspected; final dense duo systems rechecked after layout adjustment."
+}

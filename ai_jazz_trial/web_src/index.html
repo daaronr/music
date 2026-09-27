@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,16 +23,18 @@
       <li><a href="#listen">Listen</a></li>
       <li><a class="primary" href="#vote">Vote</a></li>
       <li><a href="#about">What this is</a></li>
+      <li><a href="#play">Play them</a></li>
       <li><a href="#tunes">The tunes and sheets</a></li>
       <li><a href="#how">How it was made</a></li>
     </ul></nav>
   </div>
 </header>
+<div class="discussion-strip"><div class="wrap"><strong>Feedback welcome on the page itself:</strong> select any text to comment with <a href="https://hypothes.is/" target="_blank" rel="noopener">Hypothes.is</a> (the sidebar on the right). I read every note.</div></div>
 
 <main class="wrap">
   <section id="listen" aria-labelledby="listen-h">
     <h2 id="listen-h">TL;DR: just hear the recordings</h2>
-    <p class="note">These are [[mocked-up]] recordings, made by the agents from their own sheet music. The order is shuffled for each visitor. If you&rsquo;d like to listen blind, vote before reading the tune notes further down: they say which AI wrote which.</p>
+    <p class="note">These are [[mocked-up]] recordings of each run&rsquo;s own sheet music, all made with one recipe: the audio instructions behind the Halation recording, applied unchanged to the other two. The order is shuffled for each visitor. If you&rsquo;d like to listen blind, vote before reading the tune notes further down: they say which AI wrote which.</p>
     <div class="listen-grid" id="listen-grid">$listen_cards</div>
   </section>
 
@@ -91,6 +93,18 @@
     </details>
   </section>
 
+  <section id="play" aria-labelledby="play-h">
+    <h2 id="play-h">Play them, and get in touch</h2>
+    <div class="prose">
+      <ul>
+        <li><strong>Record one yourself.</strong> I&rsquo;d love it if people recorded these with real instruments: any line-up, any tune, the head or the duo choruses. I may try some myself: they&rsquo;ll go on <a href="https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk">my YouTube playlist</a> (short link <a href="https://bit.ly/jazztuba">bit.ly/jazztuba</a>), alongside the recordings on this page. To share a recording, put a link in the comment box of the vote form above (only I can read those comments), email <a href="mailto:daaronr@gmail.com">daaronr@gmail.com</a>, or tag or DM me wherever you found this page.</li>
+        <li><strong>Who did this.</strong> David Reinstein set up and ran this project: the prompts, the follow-ups, the fairness rules for the recordings and this page. The music, sheets and recordings were made by the AI agents described below.</li>
+        <li><strong>Not an Unjournal project.</strong> This isn&rsquo;t directly related to <a href="https://unjournal.org">The Unjournal</a>, where I work on open, public evaluation of research. But if it catches your interest, I&rsquo;m happy to use it to point you there, and I&rsquo;d welcome your attention and support for that work.</li>
+        <li><strong>Jazz AI benchmarking.</strong> If you&rsquo;d like to support or help build a more careful version of this, a proper benchmark of what AI can do in jazz composition, let&rsquo;s discuss it further: email me at <a href="mailto:daaronr@gmail.com">daaronr@gmail.com</a>. This is a personal project, not an Unjournal one.</li>
+      </ul>
+    </div>
+  </section>
+
   <section id="tunes" aria-labelledby="tunes-h">
     <h2 id="tunes-h">The three tunes and their sheets</h2>
     <p class="note">Each card says which AI wrote the tune. Open the folds for the PDFs, recordings, editable files and the iReal Pro chart.</p>
@@ -123,8 +137,9 @@
     <details class="big">
       <summary>Recordings: who got which audio request</summary>
       <div class="inner prose">
-        <p>Two sessions got one audio request each, in the same words: make an MP3 with something closer to [[Band-in-a-Box]] than &ldquo;cheesy 8-bit MIDI,&rdquo; and swap the guitar for alto sax on the recording (not the score). Halation&rsquo;s session got it at 23:21. Parallax&rsquo;s was requested after this page went up; it follows the same request plus a written audio brief the Codex session produced.</p>
-        <p>The Codex session got the first audio request at 22:52 (without the sax swap), then three more rounds of feedback: sound more natural, use sax instead of guitar, a less clich&eacute;d swing feel, and a fuller upright bass. Its first version (v1) is the headline recording above, because it came from a single request like the others; v3 is under &ldquo;other versions.&rdquo; I&rsquo;m also rendering all three tunes through one shared pipeline, so they can be heard on equal terms; those versions will go up here.</p>
+        <p>Two sessions got one audio request each, in the same words: make an MP3 with something closer to [[Band-in-a-Box]] than &ldquo;cheesy 8-bit MIDI,&rdquo; and swap the guitar for alto sax on the recording (not the score). Halation&rsquo;s session got it at 23:21 and made the Halation recording.</p>
+        <p>So that the three can be heard on equal terms, the headline recordings of Parallax and Glass Meridian were then made by applying the Halation recording&rsquo;s instructions unchanged: same code, samples, mix and random seed, each tune at its composer&rsquo;s own tempo, with its own written ending. Halation&rsquo;s recording is the model and was not remade.</p>
+        <p>The Codex session got the first audio request at 22:52 (without the sax swap), then three more rounds of feedback: sound more natural, use sax instead of guitar, a less clich&eacute;d swing feel, and a fuller upright bass. Its own versions, v1 (trumpet and guitar) and v3 (trumpet and sax), are kept as alternates on the Glass Meridian card.</p>
       </div>
     </details>
 
@@ -170,12 +185,13 @@
   </section>
 
   <footer>
-    <p>If you play trumpet or guitar and try one of these, I&rsquo;d like to hear how it sits on the instrument and whether the duo parts work as duets. Page put together by Claude (in the Parallax session) from the three output folders and the session logs; the sheets and recordings are as each run left them. Updated $built.</p>
+    <p>Most of all, I&rsquo;d love to hear live recordings of these, on any instruments. Send a link, or watch <a href="https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk">my YouTube playlist</a> for mine. Project by David Reinstein. Page put together by Claude from the three output folders and the session logs; the sheets are as each run left them, and the headline recordings share one recipe (see How it was made). Updated $built.</p>
   </footer>
 </main>
 
 <div id="tooltip" role="tooltip" hidden></div>
 <div id="status" role="status" hidden></div>
 <script src="app.js"></script>
+<script async src="https://hypothes.is/embed.js"></script>
 </body>
 </html>

@@ -1,21 +1,25 @@
-/* Palette and type follow David's workshop pages: warm paper, slate header, sage + brown. */
+/* Jazz-label look: sleeve-card cream, near-black header with flat colour blocks,
+   condensed display type. Token names are kept from the first version of the page:
+   "brown" is now the burnt-orange action colour, "sage" the label blue. */
 :root {
-  --bg: #f8f6f1;
-  --bg-alt: #f0ece4;
-  --card: #ffffff;
-  --dark: #1a1a1a;
-  --text: #3f3f3f;
-  --muted: #666666;
-  --line: #e3ded4;
-  --brown: #8b5e3c;
-  --brown-dark: #6f4a2f;
-  --sage: #5a7a5a;
-  --sage-dark: #4a6a4a;
-  --sage-light: #e8f0e8;
-  --slate: #2c3e50;
-  --slate-dark: #1a252f;
-  --note-bg: #fff3cd;
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --bg: #f4eee2;
+  --bg-alt: #ebe3d3;
+  --card: #fffdf8;
+  --dark: #16181c;
+  --text: #2e2f33;
+  --muted: #5f5c55;
+  --line: #ddd3c1;
+  --brown: #c9502a;
+  --brown-dark: #a13f1f;
+  --sage: #1f5aa6;
+  --sage-dark: #174683;
+  --sage-light: #fbf1d6;
+  --mustard: #e3a92b;
+  --mustard-ink: #9a6b08;
+  --slate: #16181c;
+  --slate-dark: #0c0d0f;
+  --note-bg: #fbeec4;
+  --serif: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 * { box-sizing: border-box; }
@@ -174,3 +178,39 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
   .rname { min-width: 100%; }
 }
 footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+
+/* ---- jazz-label layer ---- */
+a { color: var(--sage); }
+a:hover { color: var(--sage-dark); }
+h1, h2, h3, legend, .chart-name, details.big > summary { font-family: var(--serif); letter-spacing: 0.01em; }
+h1 { font-weight: 600; }
+h2 { font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: clamp(1.5rem, 3.4vw, 2rem); }
+h3 { font-weight: 500; font-size: 1.55rem; }
+legend { font-weight: 500; font-size: 1.25rem; }
+details.big > summary { font-weight: 500; font-size: 1.3rem; }
+header.band { position: relative; padding-block: 44px 52px; }
+header.band::after {  /* flat colour blocks, record-sleeve style */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12px;
+  background: linear-gradient(90deg, var(--sage) 0 34%, var(--brown) 34% 67%, var(--mustard) 67% 100%);
+}
+header.band h1 { font-size: clamp(2.4rem, 7vw, 4.2rem); line-height: 1.02; }
+.kicker { color: var(--mustard); font-weight: 600; letter-spacing: 0.14em; }
+.dek { color: #e9e4da; }
+.dek .tip { border-bottom-color: var(--mustard); }
+nav.jump a { border-color: rgba(255,255,255,0.3); font-weight: 500; }
+nav.jump a.primary { background: var(--brown); border-color: var(--brown); }
+.listen-card, .tune-card { border-top: 6px solid var(--sage); border-radius: 4px; }
+.listen-card:nth-child(3n+2), .tune-card:nth-child(3n+2) { border-top-color: var(--brown); }
+.listen-card:nth-child(3n), .tune-card:nth-child(3n) { border-top-color: var(--mustard); }
+.listen-card h3, .tune-card h3 { font-size: 1.75rem; }
+.vote-box { background: var(--sage-light); border: 0; border-left: 10px solid var(--brown); border-radius: 4px; }
+.choice:has(input:checked) { border-color: var(--brown); background: #fdeee6; }
+.scale input:checked + span { background: var(--sage); border-color: var(--sage); }
+details.fold > summary, details.big > summary::before, details.fold > summary::before { color: var(--sage-dark); }
+.s11 { color: var(--mustard-ink); }
+.sec-label { color: var(--brown); }
+.bar-fill { background: var(--sage); }
+.dist i { background: var(--brown); }
+.discussion-strip { background: var(--sage-light); color: var(--dark); font-size: 0.95rem; border-bottom: 3px solid var(--mustard); }
+.discussion-strip .wrap { padding-block: 9px; }
+.discussion-strip a { color: var(--dark); font-weight: 600; }

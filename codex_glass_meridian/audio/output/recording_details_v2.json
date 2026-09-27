@@ -1,0 +1,70 @@
+{
+  "trumpet": {
+    "source_active_rms": 0.06402644515037537,
+    "gain": 0.6559789459083185,
+    "target_active_rms": 0.042,
+    "peak": 0.3806203305721283
+  },
+  "sax": {
+    "source_active_rms": 0.03064330294728279,
+    "gain": 1.2400751989879584,
+    "target_active_rms": 0.038,
+    "peak": 0.34404927492141724
+  },
+  "piano": {
+    "source_active_rms": 0.2853144109249115,
+    "gain": 0.15071092925382115,
+    "target_active_rms": 0.043,
+    "peak": 0.7855626344680786
+  },
+  "bass": {
+    "source_active_rms": 0.23511642217636108,
+    "gain": 0.23817987481110248,
+    "target_active_rms": 0.056,
+    "peak": 0.25932741165161133
+  },
+  "drums": {
+    "source_active_rms": 0.04891018196940422,
+    "gain": 0.776934341069737,
+    "target_active_rms": 0.038,
+    "peak": 1.139111042022705
+  },
+  "duration_seconds": 196.1621768707483,
+  "tempo": 164,
+  "music_start_seconds": 2.926829268292683,
+  "section_starts_seconds": [
+    2.926829268292683,
+    49.75609756097561,
+    96.58536585365853,
+    143.41463414634148
+  ],
+  "duo_end_seconds": 143.41463414634148,
+  "premaster_peak": 1.3254730701446533,
+  "score_pitches_preserved": true,
+  "sax_plays_written_guitar_part_at_original_concert_pitch": true,
+  "ireal_audio_used": false,
+  "rhythm_notes": "iReal piano voicings and bass, rephrased; newly programmed drums",
+  "sound_sources": {
+    "trumpet": "VSCO 2 CE",
+    "sax": "Apple Alto Sax EXS",
+    "piano": "Apple Steinway Grand Piano 2 EXS",
+    "bass": "Apple Upright Jazz Bass EXS",
+    "drums": "Apple SoCal Kit EXS"
+  },
+  "lead_level_change_from_v1_db": {
+    "trumpet": -4.681664120667359,
+    "second_voice": -4.66259520052091
+  },
+  "full_band": {
+    "full_decode_passed": true,
+    "integrated_lufs": -17.0,
+    "true_peak_dbtp": -1.33,
+    "bytes": 7849455
+  },
+  "duo_only": {
+    "full_decode_passed": true,
+    "integrated_lufs": -16.79,
+    "true_peak_dbtp": -1.47,
+    "bytes": 3749276
+  }
+}

@@ -1,0 +1,3 @@
+work/
+assets/*.png
+!assets/page_full.png

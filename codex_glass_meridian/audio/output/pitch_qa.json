@@ -1,0 +1,508 @@
+{
+  "trumpet": {
+    "frames": 8650752,
+    "peak": 0.828449547290802,
+    "notes_measured": 35,
+    "median_abs_cents": 3.68,
+    "samples": [
+      {
+        "bar": 1,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 521.81,
+        "cents_error": -4.79
+      },
+      {
+        "bar": 1,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 391.5,
+        "cents_error": -2.2
+      },
+      {
+        "bar": 1,
+        "midi": 74,
+        "expected_hz": 587.33,
+        "measured_hz": 586.06,
+        "cents_error": -3.75
+      },
+      {
+        "bar": 2,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 521.83,
+        "cents_error": -4.71
+      },
+      {
+        "bar": 2,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.88,
+        "cents_error": 3.89
+      },
+      {
+        "bar": 3,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.19,
+        "cents_error": 0.86
+      },
+      {
+        "bar": 3,
+        "midi": 74,
+        "expected_hz": 587.33,
+        "measured_hz": 586.07,
+        "cents_error": -3.72
+      },
+      {
+        "bar": 3,
+        "midi": 73,
+        "expected_hz": 554.37,
+        "measured_hz": 554.63,
+        "cents_error": 0.84
+      },
+      {
+        "bar": 3,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 391.5,
+        "cents_error": -2.2
+      },
+      {
+        "bar": 4,
+        "midi": 64,
+        "expected_hz": 329.63,
+        "measured_hz": 329.58,
+        "cents_error": -0.22
+      },
+      {
+        "bar": 4,
+        "midi": 69,
+        "expected_hz": 440.0,
+        "measured_hz": 438.59,
+        "cents_error": -5.57
+      },
+      {
+        "bar": 4,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 521.78,
+        "cents_error": -4.89
+      },
+      {
+        "bar": 5,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 349.2,
+        "cents_error": -0.16
+      },
+      {
+        "bar": 5,
+        "midi": 75,
+        "expected_hz": 622.25,
+        "measured_hz": 621.26,
+        "cents_error": -2.75
+      },
+      {
+        "bar": 5,
+        "midi": 79,
+        "expected_hz": 783.99,
+        "measured_hz": 783.75,
+        "cents_error": -0.53
+      },
+      {
+        "bar": 5,
+        "midi": 75,
+        "expected_hz": 622.25,
+        "measured_hz": 621.41,
+        "cents_error": -2.36
+      },
+      {
+        "bar": 6,
+        "midi": 74,
+        "expected_hz": 587.33,
+        "measured_hz": 586.89,
+        "cents_error": -1.3
+      },
+      {
+        "bar": 6,
+        "midi": 79,
+        "expected_hz": 783.99,
+        "measured_hz": 780.57,
+        "cents_error": -7.57
+      },
+      {
+        "bar": 6,
+        "midi": 81,
+        "expected_hz": 880.0,
+        "measured_hz": 883.38,
+        "cents_error": 6.64
+      },
+      {
+        "bar": 6,
+        "midi": 75,
+        "expected_hz": 622.25,
+        "measured_hz": 621.69,
+        "cents_error": -1.56
+      },
+      {
+        "bar": 7,
+        "midi": 74,
+        "expected_hz": 587.33,
+        "measured_hz": 585.92,
+        "cents_error": -4.15
+      },
+      {
+        "bar": 7,
+        "midi": 77,
+        "expected_hz": 698.46,
+        "measured_hz": 695.86,
+        "cents_error": -6.45
+      },
+      {
+        "bar": 7,
+        "midi": 69,
+        "expected_hz": 440.0,
+        "measured_hz": 438.6,
+        "cents_error": -5.52
+      },
+      {
+        "bar": 8,
+        "midi": 70,
+        "expected_hz": 466.16,
+        "measured_hz": 466.0,
+        "cents_error": -0.6
+      },
+      {
+        "bar": 8,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.83,
+        "cents_error": 3.68
+      },
+      {
+        "bar": 8,
+        "midi": 73,
+        "expected_hz": 554.37,
+        "measured_hz": 554.63,
+        "cents_error": 0.82
+      },
+      {
+        "bar": 8,
+        "midi": 76,
+        "expected_hz": 659.26,
+        "measured_hz": 659.29,
+        "cents_error": 0.08
+      },
+      {
+        "bar": 9,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 521.83,
+        "cents_error": -4.71
+      },
+      {
+        "bar": 9,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 391.5,
+        "cents_error": -2.2
+      },
+      {
+        "bar": 9,
+        "midi": 74,
+        "expected_hz": 587.33,
+        "measured_hz": 586.08,
+        "cents_error": -3.69
+      },
+      {
+        "bar": 10,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.2,
+        "cents_error": 0.88
+      },
+      {
+        "bar": 10,
+        "midi": 77,
+        "expected_hz": 698.46,
+        "measured_hz": 695.81,
+        "cents_error": -6.57
+      },
+      {
+        "bar": 10,
+        "midi": 81,
+        "expected_hz": 880.0,
+        "measured_hz": 881.1,
+        "cents_error": 2.17
+      },
+      {
+        "bar": 10,
+        "midi": 77,
+        "expected_hz": 698.46,
+        "measured_hz": 696.1,
+        "cents_error": -5.86
+      },
+      {
+        "bar": 11,
+        "midi": 64,
+        "expected_hz": 329.63,
+        "measured_hz": 328.66,
+        "cents_error": -5.07
+      }
+    ]
+  },
+  "guitar": {
+    "frames": 8650752,
+    "peak": 1.8145288228988647,
+    "notes_measured": 35,
+    "median_abs_cents": 4.29,
+    "samples": [
+      {
+        "bar": 33,
+        "midi": 53,
+        "expected_hz": 174.61,
+        "measured_hz": 175.01,
+        "cents_error": 3.93
+      },
+      {
+        "bar": 33,
+        "midi": 55,
+        "expected_hz": 196.0,
+        "measured_hz": 196.28,
+        "cents_error": 2.45
+      },
+      {
+        "bar": 34,
+        "midi": 60,
+        "expected_hz": 261.63,
+        "measured_hz": 263.27,
+        "cents_error": 10.85
+      },
+      {
+        "bar": 34,
+        "midi": 55,
+        "expected_hz": 196.0,
+        "measured_hz": 196.63,
+        "cents_error": 5.59
+      },
+      {
+        "bar": 34,
+        "midi": 62,
+        "expected_hz": 293.66,
+        "measured_hz": 294.55,
+        "cents_error": 5.2
+      },
+      {
+        "bar": 36,
+        "midi": 62,
+        "expected_hz": 293.66,
+        "measured_hz": 294.59,
+        "cents_error": 5.43
+      },
+      {
+        "bar": 36,
+        "midi": 64,
+        "expected_hz": 329.63,
+        "measured_hz": 330.45,
+        "cents_error": 4.29
+      },
+      {
+        "bar": 36,
+        "midi": 69,
+        "expected_hz": 440.0,
+        "measured_hz": 440.25,
+        "cents_error": 1.0
+      },
+      {
+        "bar": 36,
+        "midi": 76,
+        "expected_hz": 659.26,
+        "measured_hz": 660.16,
+        "cents_error": 2.38
+      },
+      {
+        "bar": 37,
+        "midi": 68,
+        "expected_hz": 415.3,
+        "measured_hz": 415.97,
+        "cents_error": 2.76
+      },
+      {
+        "bar": 37,
+        "midi": 63,
+        "expected_hz": 311.13,
+        "measured_hz": 312.21,
+        "cents_error": 6.04
+      },
+      {
+        "bar": 37,
+        "midi": 70,
+        "expected_hz": 466.16,
+        "measured_hz": 466.39,
+        "cents_error": 0.86
+      },
+      {
+        "bar": 38,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.7,
+        "cents_error": 3.11
+      },
+      {
+        "bar": 38,
+        "midi": 63,
+        "expected_hz": 311.13,
+        "measured_hz": 312.17,
+        "cents_error": 5.82
+      },
+      {
+        "bar": 38,
+        "midi": 60,
+        "expected_hz": 261.63,
+        "measured_hz": 263.25,
+        "cents_error": 10.7
+      },
+      {
+        "bar": 38,
+        "midi": 55,
+        "expected_hz": 196.0,
+        "measured_hz": 196.65,
+        "cents_error": 5.72
+      },
+      {
+        "bar": 39,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 350.2,
+        "cents_error": 4.8
+      },
+      {
+        "bar": 40,
+        "midi": 62,
+        "expected_hz": 293.66,
+        "measured_hz": 294.57,
+        "cents_error": 5.34
+      },
+      {
+        "bar": 40,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 350.05,
+        "cents_error": 4.07
+      },
+      {
+        "bar": 40,
+        "midi": 70,
+        "expected_hz": 466.16,
+        "measured_hz": 466.39,
+        "cents_error": 0.86
+      },
+      {
+        "bar": 41,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 350.1,
+        "cents_error": 4.31
+      },
+      {
+        "bar": 41,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 523.58,
+        "cents_error": 1.08
+      },
+      {
+        "bar": 41,
+        "midi": 71,
+        "expected_hz": 493.88,
+        "measured_hz": 494.2,
+        "cents_error": 1.11
+      },
+      {
+        "bar": 41,
+        "midi": 72,
+        "expected_hz": 523.25,
+        "measured_hz": 523.55,
+        "cents_error": 0.99
+      },
+      {
+        "bar": 42,
+        "midi": 70,
+        "expected_hz": 466.16,
+        "measured_hz": 466.38,
+        "cents_error": 0.8
+      },
+      {
+        "bar": 42,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 350.05,
+        "cents_error": 4.05
+      },
+      {
+        "bar": 42,
+        "midi": 63,
+        "expected_hz": 311.13,
+        "measured_hz": 312.22,
+        "cents_error": 6.08
+      },
+      {
+        "bar": 42,
+        "midi": 60,
+        "expected_hz": 261.63,
+        "measured_hz": 263.35,
+        "cents_error": 11.4
+      },
+      {
+        "bar": 43,
+        "midi": 53,
+        "expected_hz": 174.61,
+        "measured_hz": 175.05,
+        "cents_error": 4.34
+      },
+      {
+        "bar": 43,
+        "midi": 57,
+        "expected_hz": 220.0,
+        "measured_hz": 220.46,
+        "cents_error": 3.6
+      },
+      {
+        "bar": 43,
+        "midi": 65,
+        "expected_hz": 349.23,
+        "measured_hz": 350.2,
+        "cents_error": 4.8
+      },
+      {
+        "bar": 43,
+        "midi": 64,
+        "expected_hz": 329.63,
+        "measured_hz": 330.53,
+        "cents_error": 4.75
+      },
+      {
+        "bar": 44,
+        "midi": 67,
+        "expected_hz": 392.0,
+        "measured_hz": 392.74,
+        "cents_error": 3.3
+      },
+      {
+        "bar": 44,
+        "midi": 62,
+        "expected_hz": 293.66,
+        "measured_hz": 294.62,
+        "cents_error": 5.59
+      },
+      {
+        "bar": 44,
+        "midi": 69,
+        "expected_hz": 440.0,
+        "measured_hz": 440.24,
+        "cents_error": 0.94
+      }
+    ]
+  }
+}

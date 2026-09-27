@@ -34,7 +34,7 @@ stored but left out of the results, so the API can be checked without skewing th
 
 ## Open items (27 September 2026)
 
-- Parallax recording: being made from the same audio request Halation got, plus the audio brief
-  the Codex session wrote (`codex_glass_meridian/audio/share/`).
-- Fairness: render all three tunes through that same pipeline and settings, and show those as
-  the headline recordings, keeping each run's own recordings as alternates.
+- Headline recordings now share one recipe: the Halation recording's instructions, applied
+  unchanged to Parallax and Glass Meridian by `../trial_recordings/` (see its README). Codex's
+  own Glass Meridian v1/v3 stay as labelled alternates. A separate Parallax session was also
+  making its own (guitar) recording; if it lands, add it as an alternate, not the headline.

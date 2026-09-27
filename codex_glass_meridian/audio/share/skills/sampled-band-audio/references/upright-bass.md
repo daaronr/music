@@ -1,0 +1,12 @@
+# Audible upright bass with string body
+
+Diagnose both soloed and within the band, at comparable playback loudness. A loud transient can coexist with an inaudible pitched note. Inspect the post-attack portion and the low-mid harmonics, not just the track peak or deepest fundamental. Small speakers may reproduce the harmonics much better than the fundamental.
+
+1. Use a pizzicato upright recording with enough natural decay. Check the velocity layer: hard plucks can emphasize fingerboard attack, and a MIDI sampler can add release noises or shorten the body. Softer layers plus a higher fader can work better than higher MIDI velocity.
+2. Inspect note gates and amplitude envelopes. Walking quarter notes often benefit from sustaining close to the next pluck, with controlled damping as the next note arrives. Preserve deliberate short approach notes and rests. Avoid indiscriminate long overlaps that make the line muddy. Let an ending note ring.
+3. Preserve the recorded string's harmonic movement and decay. Gently reduce an isolated initial click if necessary. Do not flatten the whole note or replace the instrument with a sine-wave layer. Direct sample rendering is an option when a preset envelope is unsuitable, provided pitch maps and sample-rate conversion are verified.
+4. Bring up level and body together. Broad support somewhere around 120–250 Hz can add wood/body; roughly 400–900 Hz can expose pitched string harmonics. These are audition starting points, not mandatory boosts. Keep only the rumble filter the actual recording needs; a steep high-pass can remove useful low fundamentals. Retain enough upper harmonics for pitch definition without amplifying finger noise.
+5. Gentle compression or parallel compression can make decay more audible. Try modest ratios and attacks/releases that restrain an excessive transient while keeping the pluck recognizable. Compare at matched overall loudness. Avoid audible pumping or a permanently swollen low end.
+6. Check masking from piano left hand and kick. Balance or arrange those parts rather than piling on bass EQ. Check mono compatibility and ordinary speakers/headphones if available.
+
+A useful numerical comparison uses equal windows after isolated note onsets: attack RMS at about 0–35 ms and body RMS at about 90–260 ms, excluding short pickups and overlapping notes. Compare old/new body-to-attack ratios and body level at matched master loudness. This supports diagnosis; it cannot establish that the new tone sounds more natural to a listener.

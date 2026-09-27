@@ -1,0 +1,17 @@
+{
+  "v2": {
+    "notes_checked": 467,
+    "median_body_rms": 0.06176760420203209,
+    "median_attack_rms": 0.05614105239510536,
+    "median_body_to_attack_db": 0.27626094222068787
+  },
+  "v3": {
+    "notes_checked": 467,
+    "median_body_rms": 0.08545861393213272,
+    "median_attack_rms": 0.07863273471593857,
+    "median_body_to_attack_db": 1.551261067390442
+  },
+  "v3_local_pitch_median_absolute_cents": 14.058865562981504,
+  "body_level_increase_db": 2.8199017616688202,
+  "limitations": "Pre-master stem comparison; local pitch search and energy measurements, not human listening assessment."
+}

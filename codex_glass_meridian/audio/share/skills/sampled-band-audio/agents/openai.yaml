@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sampled Band Audio"
+  short_description: "Natural band rendering, bass balance and MP3 delivery"
+  default_prompt: "Use $sampled-band-audio to render or improve this small-band recording and deliver a verified MP3."

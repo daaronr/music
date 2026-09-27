@@ -1,0 +1,47 @@
+{
+  "tempo": 164,
+  "sample_rate": 44100,
+  "duration_seconds": 196.1621768707483,
+  "count_in_beats": 8,
+  "music_start_seconds": 2.926829268292683,
+  "form": [
+    "head",
+    "duo chorus I",
+    "duo chorus II",
+    "head out"
+  ],
+  "section_starts_seconds": [
+    2.926829268292683,
+    49.75609756097561,
+    96.58536585365853,
+    143.41463414634148
+  ],
+  "duo_end_seconds": 143.41463414634148,
+  "trumpet_engine": "VSCO 2 CE multi-sample offline renderer",
+  "guitar_engine": "Apple AVAudioUnitSampler, installed Vintage Strat EXS24",
+  "backing_engine": "iReal Pro Jazz - Medium Up Swing, piano/acoustic bass/Real Drums",
+  "trumpet_gain": 0.580648310739926,
+  "guitar_gain": 0.5454668314876423,
+  "backing_gain": 0.44,
+  "premaster_peak": 0.7767876386642456,
+  "active_trumpet_rms": 0.072,
+  "active_guitar_rms": 0.065,
+  "score_pitches_preserved": true,
+  "seed": 164926,
+  "Glass_Meridian_full_band": {
+    "lufs": -17.0,
+    "true_peak_dbtp": -2.07,
+    "loudness_range_lu": 3.1,
+    "bytes": 7849607,
+    "full_decode_passed": true
+  },
+  "Glass_Meridian_duo_only": {
+    "lufs": -16.82,
+    "true_peak_dbtp": -3.26,
+    "loudness_range_lu": 2.3,
+    "bytes": 3749300,
+    "full_decode_passed": true
+  },
+  "format": "320 kb/s stereo MP3, 44.1 kHz",
+  "quality_note": "Sampled and programmed performance, not a live band; technical validation and pitch spot checks completed."
+}

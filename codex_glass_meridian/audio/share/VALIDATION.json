@@ -1,0 +1,7 @@
+{
+  "skill_frontmatter_validation": "Both skills passed skill-creator quick_validate.py",
+  "sampler_helper": "Compiled and rendered 2 events / 88200 frames at 44100 Hz; non-silent WAV independently decoded",
+  "mastering_helper": "Ten-second stereo sample exported at 320 kb/s; full decode, -17.01 LUFS, -2.15 dBTP",
+  "installation": "Project-local only; not globally installed",
+  "included_assets": "Instructions, skills, generic helpers; no composition or proprietary samples"
+}

@@ -1,0 +1,75 @@
+% Halation duo solo, TRUMPET line, concert pitch.  2 choruses x 32 bars.
+% ============================ CHORUS 1 ============================
+% --- A: the conversation starts
+!mp r/4 B4/4.@- A4/8 C5 G4~ |          % 1  Fmaj7#11  bloom a beat late, Z pushed back an 8th
+G4/8 D5/4.@- r/2 |                      % 2           ...so Z's last note lands as a bloom
+r/2 r/8 F5/8 D5 B4~ |                   % 3  Ebmaj7#5  falls while the guitar climbs
+B4/4 C5/8 A4 G4/4 r/4 |                 % 4
+r/2 G4/8 Bb4 F4 C5~ |                   % 5  D7sus(b9) head bars 5-8, displaced a full beat
+C5/8 Eb5/4.@> C5/8 Bb4 F#4 Ab4 |        % 6  D7alt
+C5/8 Bb4/4. A4/4 F4/8 G4 |              % 7  Gm9
+A4/8 C5/4. Bb4/8 G4/4.~ |               % 8  C13sus    lands on the pivot G
+% --- B: guitar bebop, trumpet holds the guide-tone line
+G4/4. r/8 r/2 |                         % 9  Dbmaj7#11 G is now the #11
+r/1 |                                   % 10 Cm7 F7
+r/8 E5/4.@- D5/2 |                      % 11 Bbmaj7#11 head's bloom on E
+r/4 !p Db5/2.@- |                       % 12 Bbm7 Eb7  guide tones Db-C-B-Bb, a beat late
+r/4 C5/2.@- |                           % 13 Am7 D7
+r/4 !cresc B4/2.@- |                    % 14 Abm7 Db7
+r/4 Bb4/2 !end r/4 |                    % 15 Gm9
+!mf r/8 Eb5/8@> Db5 Bb4 Ab4 Bb4 Gb4 E4 | % 16 C7alt   classic altered descent, Gb-E encloses F
+% --- A': trumpet leads with triad pairs, guitar counters in dotted quarters
+F4/8 A4 C5 G4 B4 D5 A4 C5 |             % 17 Fmaj7#11  F/G triads in 3-note groups (hemiola)
+F5/8 B4 D5 G5~ G5/4 r/4 |               % 18
+r/4 G5/8@> D5 B4 F5 C5 A4 |             % 19 Ebmaj7#5  same pair, falling
+D5/8 B4 G4 C5 A4 F4 r/4 |               % 20
+r/2 r/8 C5/8 Bb4 G4~ |                  % 21 Em7b5     hocket with the guitar
+G4/8 Bb4 C#5 E5 G5/4 r/4 |              % 22 A7(b9)    classic: diminished arpeggio from the 3rd
+r/2 r/8 C#5/4.@- |                      % 23 Dm(maj7)  minor-major bloom (head bar 23)
+r/4 Eb5/8 D5 C5 A4 C5 Eb5 |             % 24 Cm7 F7    joins the guitar an octave up
+% --- C: first peak, then the guitar's break
+!f r/8 E5/4.@- D5/8 F5 C5 G5~ |         % 25 Bbmaj7#11 head bars 25-26
+G5/8 A5/4.@> G5/8 F5 Db5 Bb4 |          % 26 Eb9(#11)
+A4/4@f r/4 r/2 |                        % 27 Am7
+r/1 |                                   % 28 D7alt
+r/1 |                                   % 29 Gm9
+!mf r/8 C5/8@> Bb4 Ab4 Gb4 Ab4 Bb4 Db5 | % 30 Gb7(#11) head bar 30, guitar a 6th below
+r/8 B4/4.@- r/8 D5/4.@- |               % 31 F | Ab   the #11 of each chord blooms
+r/8 G4/4.@- r/8 C5/4.@- |               % 32 Db | Gb
+% ============================ CHORUS 2 ============================
+% --- A: guitar ostinato (Z displaced), trumpet shifts pentatonics in and out
+r/1 |                                   % 33 Fmaj7#11
+r/2 r/8 C5/8 E5 G5~ |                   % 34
+G5/8 F5 C5 A4 r/8 Db5@> Bb4 Ab4 |       % 35 Ebmaj7#5  F pentatonic (in) -> Gb pentatonic (out)
+Gb4/8 Eb5@> Db5 Bb4 A4@> C5 D5 F5~ |    % 36           out ... and back in
+F5/8 Eb5 C5 A4 Bb4 C5 Eb5 F5 |          % 37 D7sus(b9) canon: guitar follows 2 beats later, 8vb
+Ab4/8 Bb4 C5 Ab4 F5 D5 Bb4 C5 |         % 38 D7alt
+A4/8 Bb4 D5 E5 G5/4 F5/8 D5 |           % 39 Gm9       (guitar peels away)
+C5/4 Bb4/8 A4 F4 G4 r/4 |               % 40 C13sus
+% --- B: bebop, then pentatonic shifting in hocket with the guitar
+r/4 F5/8 Eb5 C5 Ab4 Bb4 C5 |            % 41 Dbmaj7#11
+D5/8 C5 Bb4 G4 Bb4 G#4 A4 C5 |          % 42 Cm7 F7    classic enclosure of the 3rd (Bb-G#-A)
+D5/4 r/4 r/2 |                          % 43 Bbmaj7#11
+F5/8 Db5 Bb4 Ab4 G4/4 r/4 |             % 44 Bbm7 Eb7  one minor-pentatonic shape...
+E5/8 C5 A4 G4 F#4/4 r/4 |               % 45 Am7 D7    ...slid down a half step per bar,
+Eb5/8 B4 Ab4 Gb4 F4/4 r/4 |             % 46 Abm7 Db7  its b7 resolving to the next 3rd
+A4/8 Bb4 D5 F5 E5 D5 Bb4 C5 |           % 47 Gm9       soli in octaves
+Bb4/8 Db5 Ab4 Eb5 Db5 E5 Gb5 Ab5 |      % 48 C7alt     head's altered Z, then splits upward
+% --- A': slow cantus in the trumpet, triplet triad pairs in the guitar
+A5/2@- G5/4 E5 |                        % 49 Fmaj7#11
+D5/2 B4/2 |                             % 50
+D5/2@- F5/2 |                           % 51 Ebmaj7#5  Z in augmentation (D F C G)
+C5/2 G5/2 |                             % 52
+r/8 !cresc Bb4/8 D5 F#5/4 E5/8 C5 Bb4 | % 53 Em7b5
+C#5/8 E5 G5/4 F5/8 E5 Bb4 C#5 |         % 54 A7(b9)
+r/8 D5/8 F5 A5/4 G5/8 E5 C#5 |          % 55 Dm(maj7)
+G4/8 Bb4 D5 Eb5 F5 A5 G5 Eb5 |          % 56 Cm7 F7
+% --- C: climax, the guitar quotes the head, a last shared bloom
+!ff r/8 E5/4.@- G5/8 A5 C6/4@^~ |       % 57 Bbmaj7#11 top of the solo: C is the 9th...
+C6/4. A5/8 G5 F5 Db5 Bb4 |              % 58 Eb9(#11)  ...and then the 13th
+!mf A4/4 r/4 r/2 |                      % 59 Am7
+r/8 F#5/4.@- Eb5/4 Bb4/8 C5 |           % 60 D7alt     counter-line over the guitar's quote
+D5/4. C5/8 Bb4 A4 G4/4 |                % 61 Gm9
+Eb5/4 Db5/8 C5 Bb4 C5 Db5 E5 |          % 62 Gb7(#11)  a tenth above the guitar
+!mp r/8 B4/4.@- r/8 D5/4.@- |           % 63 F | Ab   final blooms, in ninths with the guitar
+r/8 G4/4.@- r/8 C5/4.@- |               % 64 Db | Gb

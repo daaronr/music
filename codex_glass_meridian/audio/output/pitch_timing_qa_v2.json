@@ -1,0 +1,486 @@
+{
+  "trumpet": {
+    "notes_checked": 25,
+    "median_absolute_cents": 4.2,
+    "checks": [
+      {
+        "note": 72,
+        "time": 3.2946393,
+        "cents_from_expected": -4.72,
+        "periodicity": 0.985
+      },
+      {
+        "note": 75,
+        "time": 9.8842613,
+        "cents_from_expected": -2.83,
+        "periodicity": 0.973
+      },
+      {
+        "note": 77,
+        "time": 17.1948765,
+        "cents_from_expected": -3.99,
+        "periodicity": 0.986
+      },
+      {
+        "note": 69,
+        "time": 25.2364093,
+        "cents_from_expected": -4.59,
+        "periodicity": 0.982
+      },
+      {
+        "note": 69,
+        "time": 30.356938,
+        "cents_from_expected": -4.59,
+        "periodicity": 0.982
+      },
+      {
+        "note": 72,
+        "time": 38.4105438,
+        "cents_from_expected": -4.72,
+        "periodicity": 0.985
+      },
+      {
+        "note": 75,
+        "time": 46.4603955,
+        "cents_from_expected": -2.83,
+        "periodicity": 0.973
+      },
+      {
+        "note": 67,
+        "time": 57.0759517,
+        "cents_from_expected": 3.72,
+        "periodicity": 0.984
+      },
+      {
+        "note": 76,
+        "time": 65.8480747,
+        "cents_from_expected": -2.5,
+        "periodicity": 0.986
+      },
+      {
+        "note": 78,
+        "time": 75.3615554,
+        "cents_from_expected": -5.56,
+        "periodicity": 0.987
+      },
+      {
+        "note": 62,
+        "time": 83.4162619,
+        "cents_from_expected": -6.37,
+        "periodicity": 0.978
+      },
+      {
+        "note": 68,
+        "time": 89.2630727,
+        "cents_from_expected": 3.57,
+        "periodicity": 0.984
+      },
+      {
+        "note": 71,
+        "time": 98.0510604,
+        "cents_from_expected": -4.26,
+        "periodicity": 0.984
+      },
+      {
+        "note": 63,
+        "time": 103.5359235,
+        "cents_from_expected": -5.56,
+        "periodicity": 0.978
+      },
+      {
+        "note": 69,
+        "time": 110.8490853,
+        "cents_from_expected": -4.59,
+        "periodicity": 0.982
+      },
+      {
+        "note": 72,
+        "time": 117.4318982,
+        "cents_from_expected": -4.72,
+        "periodicity": 0.985
+      },
+      {
+        "note": 76,
+        "time": 126.9459604,
+        "cents_from_expected": -2.42,
+        "periodicity": 0.986
+      },
+      {
+        "note": 73,
+        "time": 136.4696327,
+        "cents_from_expected": -3.81,
+        "periodicity": 0.971
+      },
+      {
+        "note": 72,
+        "time": 144.8768988,
+        "cents_from_expected": -4.7,
+        "periodicity": 0.985
+      },
+      {
+        "note": 74,
+        "time": 152.1859884,
+        "cents_from_expected": -3.31,
+        "periodicity": 0.971
+      },
+      {
+        "note": 74,
+        "time": 159.5055308,
+        "cents_from_expected": -3.39,
+        "periodicity": 0.971
+      },
+      {
+        "note": 71,
+        "time": 167.3928168,
+        "cents_from_expected": -4.2,
+        "periodicity": 0.984
+      },
+      {
+        "note": 67,
+        "time": 172.6849318,
+        "cents_from_expected": 3.72,
+        "periodicity": 0.984
+      },
+      {
+        "note": 67,
+        "time": 180.3693712,
+        "cents_from_expected": 3.72,
+        "periodicity": 0.984
+      },
+      {
+        "note": 69,
+        "time": 189.1501423,
+        "cents_from_expected": -4.59,
+        "periodicity": 0.982
+      }
+    ],
+    "eighth_placement_range": [
+      0.5132868299085305,
+      0.6099675105260328
+    ]
+  },
+  "sax": {
+    "notes_checked": 25,
+    "median_absolute_cents": 2.43,
+    "checks": [
+      {
+        "note": 53,
+        "time": 50.5038049,
+        "cents_from_expected": 3.25,
+        "periodicity": 0.969
+      },
+      {
+        "note": 62,
+        "time": 54.1620455,
+        "cents_from_expected": 1.34,
+        "periodicity": 0.976
+      },
+      {
+        "note": 63,
+        "time": 57.4503576,
+        "cents_from_expected": 1.25,
+        "periodicity": 0.974
+      },
+      {
+        "note": 72,
+        "time": 62.5650862,
+        "cents_from_expected": 1.06,
+        "periodicity": 0.984
+      },
+      {
+        "note": 65,
+        "time": 65.1227888,
+        "cents_from_expected": 2.85,
+        "periodicity": 0.982
+      },
+      {
+        "note": 65,
+        "time": 67.3243106,
+        "cents_from_expected": 2.85,
+        "periodicity": 0.982
+      },
+      {
+        "note": 77,
+        "time": 71.3531366,
+        "cents_from_expected": 2.39,
+        "periodicity": 0.99
+      },
+      {
+        "note": 56,
+        "time": 74.2748385,
+        "cents_from_expected": 0.75,
+        "periodicity": 0.97
+      },
+      {
+        "note": 65,
+        "time": 82.3198715,
+        "cents_from_expected": 2.85,
+        "periodicity": 0.982
+      },
+      {
+        "note": 64,
+        "time": 84.8769362,
+        "cents_from_expected": 2.43,
+        "periodicity": 0.975
+      },
+      {
+        "note": 67,
+        "time": 87.4378665,
+        "cents_from_expected": 4.18,
+        "periodicity": 0.982
+      },
+      {
+        "note": 55,
+        "time": 93.6636406,
+        "cents_from_expected": 0.89,
+        "periodicity": 0.97
+      },
+      {
+        "note": 72,
+        "time": 99.1555768,
+        "cents_from_expected": 1.06,
+        "periodicity": 0.984
+      },
+      {
+        "note": 70,
+        "time": 103.5478674,
+        "cents_from_expected": 1.75,
+        "periodicity": 0.983
+      },
+      {
+        "note": 69,
+        "time": 105.7467665,
+        "cents_from_expected": 1.11,
+        "periodicity": 0.986
+      },
+      {
+        "note": 70,
+        "time": 110.1344895,
+        "cents_from_expected": 1.75,
+        "periodicity": 0.983
+      },
+      {
+        "note": 57,
+        "time": 116.3453806,
+        "cents_from_expected": 1.34,
+        "periodicity": 0.968
+      },
+      {
+        "note": 64,
+        "time": 119.2714797,
+        "cents_from_expected": 2.44,
+        "periodicity": 0.975
+      },
+      {
+        "note": 66,
+        "time": 121.0989316,
+        "cents_from_expected": 3.09,
+        "periodicity": 0.983
+      },
+      {
+        "note": 59,
+        "time": 124.0260755,
+        "cents_from_expected": 2.84,
+        "periodicity": 0.971
+      },
+      {
+        "note": 64,
+        "time": 131.3480102,
+        "cents_from_expected": 2.44,
+        "periodicity": 0.975
+      },
+      {
+        "note": 69,
+        "time": 133.9138157,
+        "cents_from_expected": 1.11,
+        "periodicity": 0.986
+      },
+      {
+        "note": 68,
+        "time": 136.1060429,
+        "cents_from_expected": 3.69,
+        "periodicity": 0.984
+      },
+      {
+        "note": 64,
+        "time": 138.6678907,
+        "cents_from_expected": 2.43,
+        "periodicity": 0.975
+      },
+      {
+        "note": 65,
+        "time": 142.6952125,
+        "cents_from_expected": 2.85,
+        "periodicity": 0.982
+      }
+    ],
+    "eighth_placement_range": [
+      0.5135189205684574,
+      0.6099982406538635
+    ]
+  },
+  "bass": {
+    "notes_checked": 25,
+    "median_absolute_cents": 14.51,
+    "checks": [
+      {
+        "note": 41,
+        "time": 2.9238292682926827,
+        "cents_from_expected": -7.51,
+        "periodicity": 0.673
+      },
+      {
+        "note": 43,
+        "time": 10.607600021899115,
+        "cents_from_expected": 47.05,
+        "periodicity": 0.422
+      },
+      {
+        "note": 31,
+        "time": 18.288094153988233,
+        "cents_from_expected": 15.04,
+        "periodicity": 0.776
+      },
+      {
+        "note": 40,
+        "time": 26.337731786392062,
+        "cents_from_expected": -6.86,
+        "periodicity": 0.851
+      },
+      {
+        "note": 40,
+        "time": 34.02127194926712,
+        "cents_from_expected": -7.65,
+        "periodicity": 0.851
+      },
+      {
+        "note": 43,
+        "time": 41.705271403016965,
+        "cents_from_expected": 45.61,
+        "periodicity": 0.426
+      },
+      {
+        "note": 41,
+        "time": 49.754496754966254,
+        "cents_from_expected": -7.64,
+        "periodicity": 0.673
+      },
+      {
+        "note": 43,
+        "time": 57.43540669711635,
+        "cents_from_expected": 46.5,
+        "periodicity": 0.422
+      },
+      {
+        "note": 31,
+        "time": 65.11871489524918,
+        "cents_from_expected": 15.13,
+        "periodicity": 0.776
+      },
+      {
+        "note": 40,
+        "time": 73.16578746315464,
+        "cents_from_expected": -7.31,
+        "periodicity": 0.849
+      },
+      {
+        "note": 40,
+        "time": 80.85195813131601,
+        "cents_from_expected": -7.69,
+        "periodicity": 0.851
+      },
+      {
+        "note": 31,
+        "time": 88.53308299161766,
+        "cents_from_expected": 14.51,
+        "periodicity": 0.776
+      },
+      {
+        "note": 41,
+        "time": 96.58468490698503,
+        "cents_from_expected": -7.39,
+        "periodicity": 0.671
+      },
+      {
+        "note": 39,
+        "time": 104.26342498110539,
+        "cents_from_expected": -8.36,
+        "periodicity": 0.837
+      },
+      {
+        "note": 31,
+        "time": 111.94941659626967,
+        "cents_from_expected": 15.26,
+        "periodicity": 0.776
+      },
+      {
+        "note": 40,
+        "time": 119.99450919738352,
+        "cents_from_expected": -7.33,
+        "periodicity": 0.85
+      },
+      {
+        "note": 33,
+        "time": 127.68219909933795,
+        "cents_from_expected": 15.18,
+        "periodicity": 0.808
+      },
+      {
+        "note": 31,
+        "time": 135.36106668314542,
+        "cents_from_expected": 14.84,
+        "periodicity": 0.776
+      },
+      {
+        "note": 41,
+        "time": 143.4140785997421,
+        "cents_from_expected": -8.16,
+        "periodicity": 0.673
+      },
+      {
+        "note": 31,
+        "time": 151.09208310075263,
+        "cents_from_expected": 15.4,
+        "periodicity": 0.775
+      },
+      {
+        "note": 31,
+        "time": 158.77970820127416,
+        "cents_from_expected": 15.26,
+        "periodicity": 0.776
+      },
+      {
+        "note": 44,
+        "time": 166.82408422859626,
+        "cents_from_expected": 11.43,
+        "periodicity": 0.419
+      },
+      {
+        "note": 43,
+        "time": 174.51166163506505,
+        "cents_from_expected": 46.42,
+        "periodicity": 0.424
+      },
+      {
+        "note": 43,
+        "time": 182.18966255514104,
+        "cents_from_expected": 45.67,
+        "periodicity": 0.424
+      },
+      {
+        "note": 41,
+        "time": 190.24263487378906,
+        "cents_from_expected": -8.44,
+        "periodicity": 0.672
+      }
+    ]
+  },
+  "note_counts": {
+    "trumpet": 634,
+    "sax": 309,
+    "piano": 1046,
+    "bass": 556,
+    "drums": 1342
+  },
+  "limitations": "Pitch checks search near the intended pitch; verifies local tuning, not a comprehensive musical or listening review."
+}

@@ -1,0 +1,38 @@
+% Halation: 32-bar form, concert pitch. One line per bar.
+% Two chords on a line split the bar (beats 1 and 3).
+% --- A
+1: Fmaj7#11
+2: Fmaj7#11
+3: Ebmaj7#5
+4: Ebmaj7#5
+5: D7sus(b9)
+6: D7alt
+7: Gm9
+8: C13sus
+% --- B
+9: Dbmaj7#11
+10: Cm7 F7
+11: Bbmaj7#11
+12: Bbm7 Eb7
+13: Am7 D7
+14: Abm7 Db7
+15: Gm9
+16: C7alt
+% --- A'
+17: Fmaj7#11
+18: Fmaj7#11
+19: Ebmaj7#5
+20: Ebmaj7#5
+21: Em7b5
+22: A7(b9)
+23: Dm(maj7)
+24: Cm7 F7
+% --- C
+25: Bbmaj7#11
+26: Eb9(#11)
+27: Am7
+28: D7alt
+29: Gm9
+30: Gb7(#11)
+31: Fmaj7#11 Abmaj7#11
+32: Dbmaj7#11 Gbmaj7#11

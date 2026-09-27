@@ -1,0 +1,10 @@
+Glass Meridian=Codex=Medium Up Swing=F=n=T44*A[F^9#11   |F^9#11   |E-7b5 A7alt |D-9   |Db^9#11   |C-9 F13 |Bb^9#11   |G-9 C7alt |*A<A2>F^9#11   |Eb^9#11   |D-9 G13#11 |C^9#11   |B-7b5 E7alt |A-9   |Ab^9#11   |G-9 C7alt |*BE^9#11   |E^9#11   |G^9#11   |F#-7b5 B7alt |E-9   |A13#11   |D-9 G13#11 |G-9 C7alt |*CF^9#11   |Eb^9#11   |D-9 G13#11 |Db^9#11 C7alt |F^9#11   |D7alt   |G-9 C7alt |F69   Z
+
+Fmaj9#11 | Fmaj9#11 | Em7b5 / A7alt | Dm9
+Dbmaj9#11 | Cm9 / F13 | Bbmaj9#11 | Gm9 / C7alt
+Fmaj9#11 | Ebmaj9#11 | Dm9 / G13#11 | Cmaj9#11
+Bm7b5 / E7alt | Am9 | Abmaj9#11 | Gm9 / C7alt
+Emaj9#11 | Emaj9#11 | Gmaj9#11 | F#m7b5 / B7alt
+Em9 | A13#11 | Dm9 / G13#11 | Gm9 / C7alt
+Fmaj9#11 | Ebmaj9#11 | Dm9 / G13#11 | Dbmaj9#11 / C7alt
+Fmaj9#11 | D7alt | Gm9 / C7alt | F6/9

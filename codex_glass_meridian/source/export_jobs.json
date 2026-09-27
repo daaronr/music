@@ -1,0 +1,50 @@
+[
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/01_head_concert.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/01_head_concert.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/01_head_concert.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/01_head_concert.mscx"
+    ]
+  },
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/02_head_trumpet_Bb.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/02_head_trumpet_Bb.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/02_head_trumpet_Bb.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/02_head_trumpet_Bb.mscx"
+    ]
+  },
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/03_duo_score_concert.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/03_duo_score_concert.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscx"
+    ]
+  },
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/04_trumpet_concert.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/04_trumpet_concert.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/04_trumpet_concert.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/04_trumpet_concert.mscx"
+    ]
+  },
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/05_trumpet_Bb.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/05_trumpet_Bb.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/05_trumpet_Bb.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/05_trumpet_Bb.mscx"
+    ]
+  },
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/06_guitar_concert.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/06_guitar_concert.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/06_guitar_concert.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/06_guitar_concert.mscx"
+    ]
+  }
+]

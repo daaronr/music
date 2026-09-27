@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expressive Jazz MIDI"
+  short_description: "Phrase-aware swing and contrapuntal jazz playback"
+  default_prompt: "Use $jazz-performance-midi to make expressive performance MIDI from this jazz score while preserving its notes and form."

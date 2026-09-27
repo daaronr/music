@@ -1,0 +1,54 @@
+
+dlopen error : dlopen(libjack.0.dylib, 0x0001): tried: 'libjack.0.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibjack.0.dylib' (no such file), '/Applications/MuseScore 3.app/Contents/Frameworks/libjack.0.dylib' (no such file), '/Applications/MuseScore 3.app/Contents/Frameworks/libjack.0.dylib' (no such file), '/usr/lib/libjack.0.dylib' (no such file, not in dyld cache), 'libjack.0.dylib' (no such file), '/usr/local/lib/libjack.0.dylib' (no such file), '/usr/lib/libjack.0.dylib' (no such file, not in dyld cache) 
+dlopen error : dlopen(/usr/local/lib/libjack.0.dylib, 0x0001): tried: '/usr/local/lib/libjack.0.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjack.0.dylib' (no such file), '/usr/local/lib/libjack.0.dylib' (no such file) 
+Creating main window…
+ZoomBox::setLogicalZoom(): Formatting logical zoom level as 100% (rounded from 1.000000)
+Reading translations…
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/01_head_concert.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/01_head_concert.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/01_head_concert.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/01_head_concert.mscx>
+... success!
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/02_head_trumpet_Bb.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/02_head_trumpet_Bb.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/02_head_trumpet_Bb.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/02_head_trumpet_Bb.mscx>
+... success!
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/03_duo_score_concert.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/03_duo_score_concert.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscx>
+... success!
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/04_trumpet_concert.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/04_trumpet_concert.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/04_trumpet_concert.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/04_trumpet_concert.mscx>
+... success!
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/05_trumpet_Bb.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/05_trumpet_Bb.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/05_trumpet_Bb.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/05_trumpet_Bb.mscx>
+... success!
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/06_guitar_concert.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/06_guitar_concert.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/06_guitar_concert.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/06_guitar_concert.mscx>
+... success!
+
+dlopen error : dlopen(libjack.0.dylib, 0x0001): tried: 'libjack.0.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibjack.0.dylib' (no such file), '/Applications/MuseScore 3.app/Contents/Frameworks/libjack.0.dylib' (no such file), '/Applications/MuseScore 3.app/Contents/Frameworks/libjack.0.dylib' (no such file), '/usr/lib/libjack.0.dylib' (no such file, not in dyld cache), 'libjack.0.dylib' (no such file), '/usr/local/lib/libjack.0.dylib' (no such file), '/usr/lib/libjack.0.dylib' (no such file, not in dyld cache) 
+dlopen error : dlopen(/usr/local/lib/libjack.0.dylib, 0x0001): tried: '/usr/local/lib/libjack.0.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjack.0.dylib' (no such file), '/usr/local/lib/libjack.0.dylib' (no such file) 
+Creating main window…
+ZoomBox::setLogicalZoom(): Formatting logical zoom level as 100% (rounded from 1.000000)
+Reading translations…
+convert </Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/03_duo_score_concert.musicxml>...
+	using style </Users/yosemite/githubs/music/codex_glass_meridian/source/engraving_duo.mss>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/03_duo_score_concert.pdf>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscz>
+	to </Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscx>
+... success!

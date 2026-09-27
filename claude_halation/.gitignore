@@ -1,0 +1,3 @@
+# intermediate MuseScore imports, batch jobs and the downloaded sample cache
+build/
+__pycache__/

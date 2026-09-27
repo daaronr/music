@@ -1,0 +1,1 @@
+- [AI jazz trial page](ai-jazz-trial-page.md) — Netlify page + vote store for the 3-run "can AI write a jazz tune" trial; fairness rule for recordings

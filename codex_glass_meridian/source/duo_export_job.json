@@ -1,0 +1,10 @@
+[
+  {
+    "in": "/Users/yosemite/githubs/music/codex_glass_meridian/output/musicxml/03_duo_score_concert.musicxml",
+    "out": [
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/pdf/03_duo_score_concert.pdf",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscz",
+      "/Users/yosemite/githubs/music/codex_glass_meridian/output/musescore/03_duo_score_concert.mscx"
+    ]
+  }
+]

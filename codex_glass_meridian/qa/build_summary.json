@@ -1,0 +1,132 @@
+{
+  "title": "Glass Meridian",
+  "tempo": 164,
+  "form": "32 bars: A A2 B C, 8 each",
+  "head_bars": 32,
+  "solo_bars": 64,
+  "ranges": {
+    "head": [
+      62,
+      81
+    ],
+    "trumpet": [
+      60,
+      84
+    ],
+    "guitar": [
+      53,
+      77
+    ]
+  },
+  "all_bars_duration_quarters": 4,
+  "changes": [
+    [
+      "Fmaj9#11"
+    ],
+    [
+      "Fmaj9#11"
+    ],
+    [
+      "Em7b5",
+      "A7alt"
+    ],
+    [
+      "Dm9"
+    ],
+    [
+      "Dbmaj9#11"
+    ],
+    [
+      "Cm9",
+      "F13"
+    ],
+    [
+      "Bbmaj9#11"
+    ],
+    [
+      "Gm9",
+      "C7alt"
+    ],
+    [
+      "Fmaj9#11"
+    ],
+    [
+      "Ebmaj9#11"
+    ],
+    [
+      "Dm9",
+      "G13#11"
+    ],
+    [
+      "Cmaj9#11"
+    ],
+    [
+      "Bm7b5",
+      "E7alt"
+    ],
+    [
+      "Am9"
+    ],
+    [
+      "Abmaj9#11"
+    ],
+    [
+      "Gm9",
+      "C7alt"
+    ],
+    [
+      "Emaj9#11"
+    ],
+    [
+      "Emaj9#11"
+    ],
+    [
+      "Gmaj9#11"
+    ],
+    [
+      "F#m7b5",
+      "B7alt"
+    ],
+    [
+      "Em9"
+    ],
+    [
+      "A13#11"
+    ],
+    [
+      "Dm9",
+      "G13#11"
+    ],
+    [
+      "Gm9",
+      "C7alt"
+    ],
+    [
+      "Fmaj9#11"
+    ],
+    [
+      "Ebmaj9#11"
+    ],
+    [
+      "Dm9",
+      "G13#11"
+    ],
+    [
+      "Dbmaj9#11",
+      "C7alt"
+    ],
+    [
+      "Fmaj9#11"
+    ],
+    [
+      "D7alt"
+    ],
+    [
+      "Gm9",
+      "C7alt"
+    ],
+    [
+      "F6/9"
+    ]
+  ]
+}

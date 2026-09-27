@@ -1,0 +1,34 @@
+{
+  "bass_active_rms_target": 0.086,
+  "v2_bass_active_rms_target": 0.056,
+  "bass_target_level_increase_db": 3.726208484747345,
+  "bass_source": "Installed Apple Upright Jazz Bass, softer recorded pluck layers rendered directly",
+  "bass_sample_zones_used": 15,
+  "bass_velocities": [
+    68,
+    78
+  ],
+  "bass_peak": 0.23829537630081177,
+  "bass_changes": "Recorded string decay, near-full inter-note gates, gentle attack reduction, body/upper-harmonic EQ, light compression; no synthetic sub-bass",
+  "unchanged_non_bass_stems": [
+    "trumpet",
+    "sax",
+    "piano",
+    "drums"
+  ],
+  "score_unchanged": true,
+  "bass_note_pitch_and_onset_unchanged": true,
+  "duration_seconds": 196.1621768707483,
+  "full_band": {
+    "full_decode_passed": true,
+    "integrated_lufs": -17.0,
+    "true_peak_dbtp": -1.34,
+    "bytes": 7849461
+  },
+  "duo_only": {
+    "full_decode_passed": true,
+    "integrated_lufs": -16.8,
+    "true_peak_dbtp": -1.49,
+    "bytes": 3749282
+  }
+}

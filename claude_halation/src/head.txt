@@ -1,0 +1,40 @@
+% Halation: head melody, concert pitch (trumpet lead).
+% Motifs:  "bloom"  = rest on beat 1, the #11 enters on the & of 1 and rings
+%          "Z"      = up a minor 3rd, down a 4th, up a 5th (A-C-G-D), built from
+%                     the lydian triad pair (F + G triads over Fmaj7#11)
+% --- A
+!mf r/8 B4/4.@- A4/8 C5 G4 D5~ |                 % 1  Fmaj7#11  bloom + Z
+D5/4 B4/8 C5 A4/4 r/4 |                          % 2
+r/8 B4/4.@- D5/8 F5 C5 G5~ |                     % 3  Ebmaj7#5  same B4, now the #5
+G5/4 D5/8 F5 A4/4. r/8 |                         % 4
+r/4 G4/8 Bb4 F4 C5/4 Eb5/8@>~ |                  % 5  D7sus(b9) Z displaced to beat 2
+Eb5/4 C5/8 Bb4 F#4 Ab4 C5 Bb4~ |                 % 6  D7alt
+Bb4/4 A4 F4/8 G4 A4 C5~ |                        % 7  Gm9
+C5/4 Bb4/8 G4~ G4/2~ |                           % 8  C13sus    G is the pivot...
+% --- B
+G4/4. r/8 F4/8 Ab4 C5 Eb5@>~ |                   % 9  ...and becomes the #11 of Db
+Eb5/4 D5/8 Bb4 A4 C5 Eb5 r |                     % 10 Cm7 F7
+r/8 E5/4.@- D5/2 |                               % 11 Bbmaj7#11 bloom on E
+Db5/4 Bb4/8 F4 G4 Bb4 Db5 C5~ |                  % 12 guide tones Db-C-B-Bb
+C5/4 A4/8 E4 F#4 A4 C5 B4~ |                     % 13
+B4/4 Ab4/8 Eb4 F4 Ab4 B4 Bb4~ |                  % 14
+Bb4/4 A4/8 F4 G4/4 r/4 |                         % 15
+Bb4/8 Db5 Ab4 Eb5~ Eb5 Db5 Bb4 Ab4 |             % 16 C7alt  Z on the altered triad pair
+% --- A'
+A4/8 B4/4.@- A4/8 C5 G4 D5~ |                    % 17
+D5/4 B4/8 C5 A4/4 r/4 |                          % 18
+r/8 B4/4.@- D5/8 F5 C5 G5~ |                     % 19
+G5/4 D5/8 F5 B4/4 A4/8 D5~ |                     % 20
+D5/2. Bb4/8 C5 |                                 % 21 Em7b5
+C#5/2 r/8 E5 G5 F5~ |                            % 22 A7(b9)
+F5/4 E5/8 C#5~ C#5/2 |                           % 23 Dm(maj7)
+!cresc Eb5/4 D5/8 Bb4 A4 C5 Eb5 r |              % 24 Cm7 F7
+% --- C
+!f r/8 E5/4.@- D5/8 F5 C5 G5~ |                  % 25 Bbmaj7#11
+G5/4 A5/4.@> G5/8 F5 Eb5 |                       % 26 Eb9(#11)  peak on the #11
+E5/4 r/8 A4 C5 G4 D5 Eb5@>~ |                    % 27 Am7
+!mf Eb5/4 C5/8 Bb4 F#4 Ab4 C5 Bb4~ |             % 28 D7alt  (= bar 6)
+Bb4/4 A4 F4/8 G4 A4 C5~ |                        % 29 Gm9     (= bar 7)
+C5/4 Bb4/8 Ab4 Gb4 Ab4 Bb4 Db5 |                 % 30 Gb7(#11) C is the pivot again
+r/8 B4/4.@- r/8 D5/4.@- |                        % 31 turnaround: each chord's #11 blooms
+r/8 G4/4.@- r/8 C5/4.@- |                        % 32

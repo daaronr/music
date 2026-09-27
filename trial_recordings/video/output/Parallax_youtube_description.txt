@@ -1,0 +1,26 @@
+Who wins the AI jazz game? Three AI agents got the same prompt and wrote three tunes: Halation, Parallax and Glass Meridian. This is Parallax, by Claude Opus 5.5 (a second Claude Code session). Listen to all three, then vote: https://ai-jazz-tune-trial.netlify.app
+(Or do we all lose?)
+
+The prompt asked for an original straight-ahead post-bop tune with some bright, lydian sounds, plus two written choruses of a trumpet and guitar duo solo with counterpoint and theme development, delivered as sheet music, MuseScore files and an iReal Pro chart. The score follows along in the video, with notes on what's happening.
+
+The recording is programmed, not played: sampled trumpet (University of Iowa samples) and alto sax, piano, bass and drums (Apple GarageBand instruments), with the rhythm section generated from the tune's chord chart. The sax plays the score's guitar line. All three tunes were recorded with the same recipe.
+
+I'd love to hear these played live. Record one and send me a link (daaronr@gmail.com). My own attempts go on this playlist: https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk
+
+An informal trial by David Reinstein. A personal project, not connected to The Unjournal.
+
+0:00 Warm-up: band intro
+0:05 Round 1: the head
+0:49 Round 2: duo chorus 1 (trumpet and sax)
+1:32 Round 3: duo chorus 2
+2:16 Final round: head out
+3:04 Your move: vote
+
+The prompt (the same for all three agents):
+Create an original jazz tune in the 'straightahead post-bop' style, incorporating some harmonic and melodic developments from the 1990s and beyond. At least some 'bright sounds' (e.g., lydian triad pairing).  Melody and chord changes, etc.
+
+Also write a 2 chorus '2 instrument solo' for those same changes, for trumpet and guitar, weaving in and out of each other, entering and dropping out using extensive counterpoint, some dramatic lines, and substantial 'theme development' throughout this duo-solo.  Should cite and play with the melody a bit, use a few 'classic licks' (but not too much), and some other modern melodic soloing approaches (see the folder/repo ... things like pentatonic shifting, triad pairs, rythmic displacement, etc.)
+
+Present the 2 choruses of solos in separate sheets. The trumpet one both in concert pitch and in Bb transposition.
+
+For all of this, give it it to me as a pdf as well as  a  format we can import into  musescore score as well as  a chord chart for Ireal.

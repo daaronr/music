@@ -1,0 +1,75 @@
+% Halation duo solo, GUITAR line, SOUNDING pitch (printed an octave higher).
+% ============================ CHORUS 1 ============================
+% --- A
+r/1 |                                   % 1  Fmaj7#11
+!mp r/2 D4/8 B3 E4 A3~ |                % 2           Z inverted (D-B-E-A)
+A3/4 B3/8 D4 F4 A4 G4/4 |               % 3  Ebmaj7#5  G + F triads climbing
+r/2 B3/8 D4 F4 A4~ |                    % 4
+A4/4 G4/8 Eb4 C4/4 r/4 |                % 5  D7sus(b9)
+r/4 C4/4 Eb4 Bb3 |                      % 6  D7alt     Z in augmentation (C-Eb-Bb-F)
+F4/4 r/4 D4/4 C4 |                      % 7  Gm9
+D4/4 r/4 r/4 r/8 Bb3/8 |                % 8  C13sus
+% --- B: bebop line
+F3/8 Ab3 C4 Eb4 G4 F4 Eb4 C4 |          % 9  Dbmaj7#11 3-5-7-9 arpeggio, then the #11
+Eb4/8 D4 C4 Bb3 A3 C4 Eb4 G4 |          % 10 Cm7 F7    classic: down the scale, up the arpeggio
+F4/8 D4 Bb3 C4 E4 A3 C4 E4 |            % 11 Bbmaj7#11
+Bb3/8 C4 Eb4 F4 G4 F4 Eb4 Bb3 |         % 12 Bbm7 Eb7  one cell sequenced down by half steps,
+A3/8 B3 D4 E4 F#4 E4 D4 A3 |            % 13 Am7 D7    leaving out the note the trumpet holds
+Ab3/8 Bb3 Db4 Eb4 F4 Eb4 Db4 Ab3 |      % 14 Abm7 Db7
+G3/8 A3 C4 D4 F4 E4 D4 Bb3 |            % 15 Gm9
+<E3 Bb3 Eb4 Ab4>/8@> r/8 r/4 r/2 |      % 16 C7alt     one stab under the trumpet
+% --- A'
+A3/4. E4/4. D4/4 |                      % 17 Fmaj7#11  dotted quarters against the trumpet's 3s
+C4/4. B3/4. A3/4 |                      % 18
+B2/4. D3/4. F3/4 |                      % 19 Ebmaj7#5  climbs while the trumpet falls
+A3/4. D4/4. F4/4 |                      % 20
+E3/8 G3 Bb3 D4 F#4/4 r/4 |              % 21 Em7b5
+r/2 r/8 F4/8 E4 C#4~ |                  % 22 A7(b9)
+C#4/8 E4 G4 B4 A4/4 r/4 |               % 23 Dm(maj7)  G + A triads (melodic minor)
+G3/8 Bb3 Eb4 D4 C4 A3 C4 Eb4 |          % 24 Cm7 F7    trumpet doubles from beat 2
+% --- C
+r/8 C5/4. A4/4. F4/8~ |                 % 25 Bbmaj7#11 falling against the trumpet's climb
+F4/4 Db4 A3 G3 |                        % 26 Eb9(#11)
+r/4 E4/8 G4 B4 D5 C5 A4 |               % 27 Am7       guitar break
+Ab4/8 F#4 Eb4 C4 Bb3 C4 Eb4 F#4 |       % 28 D7alt     classic: tritone-sub (Ab7) arpeggio
+G4/8 F4 D4 Bb3 A3 C4 E4 G4 |            % 29 Gm9
+r/8 Eb4/8@> Db4 C4 Bb3 C4 Db4 E4 |      % 30 Gb7(#11)  a 6th under the trumpet
+C4/8 A3 F3 r/8 Eb4/8 C4 Ab3 r/8 |       % 31 F | Ab   each triad falls to its root: a tritone under the #11
+Ab3/8 F3 Db3 r/8 Db4/8 Bb3 Gb3 r/8 |    % 32 Db | Gb
+% ============================ CHORUS 2 ============================
+% --- A: Z as a 5-eighth cell, so it slides against the bar line
+!mf A3/8@> C4 G3 D4 r A3@> C4 G3 |      % 33 Fmaj7#11
+D4/8 r A3@> C4 G3 D4 r A3@> |           % 34
+C4/8 G3 D4 r A3@> C4 G3 D4 |            % 35 Ebmaj7#5  (same pitches, new colour)
+r/8 A3@> C4 G3 D4 F4 A4 C5~ |           % 36           breaks out upward
+C5/4 r/4 F4/8 Eb4 C4 A3 |               % 37 D7sus(b9) canon at 2 beats, an octave down
+Bb3/8 C4 Eb4 F4 Ab3 Bb3 C4 Ab3 |        % 38 D7alt
+F4/8 D4 Bb3 C4 A3/4 D3/8 G3 |           % 39 Gm9       leaves the canon
+r/4 r/8 C4/8 A3 F3 <G3 G4>/4~ |         % 40 C13sus    octave G = the pivot
+% --- B
+<G3 G4>/4. r/8 r/2 |                    % 41 Dbmaj7#11
+r/1 |                                   % 42 Cm7 F7
+r/8 <E3 E4>/4.@- <D3 D4>/2 |            % 43 Bbmaj7#11 head's bloom in octaves
+r/2 r/8 Bb3/8 Db4 C4 |                  % 44 Bbm7 Eb7  answers on each dominant,
+r/2 r/8 A3/8 C4 B3 |                    % 45 Am7 D7    ending on the next chord's minor 3rd
+r/2 r/8 Ab3/8 B3 Bb3 |                  % 46 Abm7 Db7
+A3/8 Bb3 D4 F4 E4 D4 Bb3 C4 |           % 47 Gm9       soli in octaves
+Bb3/8 Db4 Ab3 Eb4 Db4 Bb3 Ab3 E3 |      % 48 C7alt     splits downward
+% --- A'
+{ F3/8 A3 C4 } { G3 B3 D4 } { A3 C4 F4 } { B3 D4 G4 } |  % 49 Fmaj7#11  triplet triad pairs
+{ C4/8 F4 A4 } { E4 G4 B4 } <E3 A3 D4>/4@- r/4 |          % 50
+{ G4/8 D4 B3 } { F4 C4 A3 } { D4 B3 G3 } { C4 A3 F3 } |  % 51 Ebmaj7#5  falling against the cantus
+{ G3/8 D3 B2 } { F3 C3 A2 } B2/2 |                        % 52
+E3/4 G3 Bb3 D4 |                        % 53 Em7b5     tenor-range walking line
+Bb3/4 E3 G3 E3 |                        % 54 A7(b9)
+F3/4 A3 C#4 B3 |                        % 55 Dm(maj7)
+Eb4/4 C4 A3 C4 |                        % 56 Cm7 F7
+% --- C
+<F3 A3 D4>/8@> r/8 { C5/8 A4 G4 } { E4 D4 C4 } { A3 G3 E3 } |  % 57 Bbmaj7#11 stab, then a falling cascade
+<G3 Db4 F4 A4>/8@^ r/8 r/8 <G3 Db4 F4>/8@^ r/2 |           % 58 Eb9(#11)
+E4/4 r/8 A3 C4 G3 D4 Eb4~ |             % 59 Am7       head bars 27-30, an octave down
+Eb4/4 C4/8 Bb3 F#3 Ab3 C4 Bb3~ |        % 60 D7alt
+Bb3/4 A3 F3/8 G3 A3 C4~ |               % 61 Gm9
+C4/4 Bb3/8 Ab3 Gb3 Ab3 Bb3 Db4 |        % 62 Gb7(#11)
+r/8 A3/4.@- r/8 C4/4.@- |               % 63 F | Ab   ninths under the trumpet's #11s
+r/8 F3/4.@- r/8 Bb3/4.@- |              % 64 Db | Gb
