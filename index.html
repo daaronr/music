@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blues Progression Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">12-bar blues companion</p>
+      <h1>Explore blues variations with musical guidance</h1>
+      <p class="lede">
+        Compare common 12-bar blues progressions, see where the colors come from,
+        and learn why each variation works. Pick a chorus and the app will label
+        every bar with clear chord families and coaching tips tailored for improvisers and accompanists.
+      </p>
+      <div class="hero__actions">
+        <button id="prevVariation" class="button ghost">Previous</button>
+        <button id="nextVariation" class="button primary">Next variation</button>
+      </div>
+    </div>
+    <div class="hero__card">
+      <p class="label">Why this tool?</p>
+      <ul>
+        <li>Visual bar-by-bar chord map for instant orientation.</li>
+        <li>Color hints that connect harmony to role (tonic, subdominant, turnaround).</li>
+        <li>Plain-language explanations so players can practice smarter.</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="panel__header">
+        <div>
+          <p class="label">Variation</p>
+          <h2 id="variationTitle">Loading…</h2>
+          <p class="subtle" id="variationTagline"></p>
+        </div>
+        <div class="selector">
+          <label for="variationSelect" class="label">Jump to</label>
+          <select id="variationSelect"></select>
+        </div>
+        <div class="selector">
+          <label for="keySelect" class="label">Key</label>
+          <select id="keySelect">
+            <option value="C">C</option>
+            <option value="G">G</option>
+            <option value="D">D</option>
+            <option value="A">A</option>
+            <option value="E">E</option>
+            <option value="B">B</option>
+            <option value="F">F</option>
+            <option value="Bb">Bb</option>
+            <option value="Eb">Eb</option>
+            <option value="Ab">Ab</option>
+            <option value="Db">Db</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid" id="barGrid"></div>
+
+      <div class="practice-hint">
+        <p class="label">What you see</p>
+        <p class="subtle">Top line shows the functional blueprint. The line beneath it translates to concert chords in your selected key.</p>
+      </div>
+
+      <div class="legend">
+        <div class="legend__item"><span class="chip tonic"></span> Tonic family</div>
+        <div class="legend__item"><span class="chip subdominant"></span> Subdominant / plagal colors</div>
+        <div class="legend__item"><span class="chip dominant"></span> Dominant drive</div>
+        <div class="legend__item"><span class="chip minor"></span> Minor ii/v color</div>
+        <div class="legend__item"><span class="chip diminished"></span> Diminished / tension</div>
+        <div class="legend__item"><span class="chip passing"></span> Passing &amp; slash motion</div>
+      </div>
+    </section>
+
+    <section class="panel insights">
+      <div>
+        <p class="label">Why it works</p>
+        <h3>Coaching notes</h3>
+        <p id="explanation"></p>
+      </div>
+      <div class="insight-grid" id="insightGrid"></div>
+    </section>
+
+    <section class="panel flow">
+      <div class="flow__header">
+        <div>
+          <p class="label">Flow cues</p>
+          <h3>How to move through the form</h3>
+          <p class="subtle">Based on the bar-by-bar fork points from the flowchart in <code>blues_flowchart_v2.md</code>.</p>
+        </div>
+      </div>
+      <div class="flow__body" id="flowBody"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Built for musicians who want fast visual feedback while practicing the blues.</p>
+  </footer>
+
+  <script>
+    const variations = [
+      {
+        id: 1,
+        name: "Basic Blues",
+        tagline: "Foundational 12-bar form with two-bar turnback at bars 9–10.",
+        chords: [
+          "I7", "I7", "I7", "I7", "IV7", "IV7", "I7", "I7", "V7", "V7", "I7", "I7"
+        ],
+        explanation: "Classic I–IV–V skeleton. Great for beginners and for turning any groove into a blues. Bars 9–10 push tension with a V that resolves to I for the last two bars.",
+        tips: [
+          "Outline the 3rds and 7ths in bars 5–6 to show the move to IV7.",
+          "Use a dominant bebop scale on bar 9 to highlight the pull back to I." 
+        ]
+      },
+      {
+        id: 2,
+        name: "Classic V–IV Turnaround",
+        tagline: "Bar 10 drops to IV before a V-of-V tag on bar 12.",
+        chords: [
+          "I7", "I7", "I7", "I7", "IV7", "IV7", "I7", "I7", "V7", "IV7", "I7", "V7"
+        ],
+        explanation: "Adds a back-door plagal motion in bar 10 and a V-of-V color in bar 12. Perfect for old-school shuffles and endings that invite a tag chorus.",
+        tips: [
+          "Think mixolydian on bar 10’s IV7 to set up the V back to I.",
+          "Treat the final V7 as a turnaround cue for another chorus." 
+        ]
+      },
+      {
+        id: 3,
+        name: "Dominant II–V",
+        tagline: "Bar 2 goes to IV7 and bars 9–10 become a II–V lift.",
+        chords: [
+          "I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "I7", "II7", "V7", "I7", "V7"
+        ],
+        explanation: "Borrowing II7 in bar 9 creates a strong dominant chain into bar 10. The early IV7 in bar 2 freshens the melody right away.",
+        tips: [
+          "Voice-lead IV7 back to I7 by moving the 7th down a half step.",
+          "Bars 9–10 work great with a dominant bebop line that targets the 3rd of I on bar 11." 
+        ]
+      },
+      {
+        id: 4,
+        name: "Dominant 6–2–5–1",
+        tagline: "A walk-up of VI–II–V late in the form for forward motion.",
+        chords: [
+          "I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "VI7", "II7", "V7", "I7", "V7"
+        ],
+        explanation: "The secondary dominant on VI7 launches a classic 6–2–5–1 turnaround. It propels the soloist toward the top of the form without losing the blues grit.",
+        tips: [
+          "Treat VI7 as V/V: aim for the 3rd of II7 on the downbeat of bar 9.",
+          "Try a Parker-style enclosure over bar 10 to lean into bar 11’s I7." 
+        ]
+      },
+      {
+        id: 5,
+        name: "Diatonic 6–2–5–1",
+        tagline: "Same contour as Variation 4 but with a minor ii in bar 9 and ii–V tag at the end.",
+        chords: [
+          "I7", "IV7", "I7", "I7", "IV7", "IV7", "I7", "VI7", "ii-7", "V7", "I7", "ii- V7"
+        ],
+        explanation: "Using ii-7 in bar 9 softens the sound and sets up the ii–V tag in bar 12. Great for a more jazz-tinged chorus while staying firmly in the blues lane.",
+        tips: [
+          "Play a minor 6 sound on ii-7 to glue it to the dominant in bar 10.",
+          "Let bar 12’s ii–V loop if you want to extend the ending or take a trade." 
+        ]
+      },
+      {
+        id: 6,
+        name: "bVI Turnaround",
+        tagline: "Chromatic surprise with VII7 in bar 6 and bVI7 at bar 9.",
+        chords: [
+          "I7", "IV7", "I7", "I7", "IV7", "VII7", "I7", "VI7", "bVI7", "V7", "I7", "bVI7 V7"
+        ],
+        explanation: "A tritone slide (bVI7) adds gospel edge before resolving through V. The bar-6 VII7 hints at the IV of IV, injecting tension before returning home.",
+        tips: [
+          "Over bVI7, think Lydian dominant or symmetric diminished for color.",
+          "Voice-lead the bVI7 down a half-step into the V7 guide tones." 
+        ]
+      },
+      {
+        id: 7,
+        name: "Minor Subdominant Turns",
+        tagline: "Delayed ii–V motion with minor v and iii passing colors.",
+        chords: [
+          "I7", "IV7", "I7", "v- / I7", "IV7", "VII7", "I7", "iii- VI7", "ii-7", "V7", "iii- VI7", "ii- V7"
+        ],
+        explanation: "Minor v in bar 4 and iii- in bars 8 and 11 add smoky subdominant colors. The delayed ii–V keeps the groove simmering before the turnaround lands.",
+        tips: [
+          "Use Dorian on the minor v to hint at the coming IV sound.",
+          "Sequence a ii–V lick between bars 8–10 to make the delay feel intentional." 
+        ]
+      },
+      {
+        id: 8,
+        name: "Extended Minor Turns",
+        tagline: "Leans into the minor subdominant and stretches the iii–VI idea.",
+        chords: [
+          "I7", "IV7", "I7", "v- / I7", "IV7", "VII7", "iii-", "VI7", "ii-7", "V7", "iii- VI7", "ii- V7"
+        ],
+        explanation: "Starts the minor color earlier (bar 7) and keeps iii–VI cycling. Great for a darker chorus before returning to brighter variations.",
+        tips: [
+          "Treat bar 7’s iii- as a ii substitute and resolve its 3rd down into VI7.",
+          "Let the iii–VI in bars 11–12 act as a runway into the next chorus." 
+        ]
+      },
+      {
+        id: 9,
+        name: "Bebop Plagal Cadence",
+        tagline: "Plagal ii–V with a deceptive vi in bars 8–11.",
+        chords: [
+          "I7", "IV7", "I7", "v- / I7", "IV7", "IV7", "I7", "vi7", "ii7", "V7", "vi7", "I7"
+        ],
+        explanation: "A bebop-style plagal move: vi–ii–V precedes the final I. The repeated vi7 keeps things circular—use it to trade fours without losing the pocket.",
+        tips: [
+          "Target the 5th of vi7 on bar 8 to make the deceptive motion clear.",
+          "Outline the ii–V in bars 9–10 with a simple 3–b9–b7–3 bebop fragment." 
+        ]
+      },
+      {
+        id: 10,
+        name: "Diminished Passing Chords",
+        tagline: "Diminished pivots glue together every plagal move.",
+        chords: [
+          "Imaj", "vii- III7", "vi- II7", "v- I7", "IV7", "#iv-dim7", "I7", "IV7", "iv-dim7", "I7", "IV7", "iv-dim7"
+        ],
+        explanation: "Upper-structure diminished chords (#iv° and iv°) create chromatic motion between I and IV. This reads like a jazz standard while keeping a blues cycle underneath.",
+        tips: [
+          "Think symmetrical diminished over #iv° and resolve the leading tones outward.",
+          "On bar 3 (vi- II7), aim for the 9 of II7 to keep it light and lyrical." 
+        ]
+      },
+      {
+        id: 11,
+        name: "Diminished Pedal Point",
+        tagline: "iv° pedal contrasts with major tonic colors.",
+        chords: [
+          "Imaj", "vii- bvii-", "vi- bvi-", "v- bV7", "IVmaj", "iv-", "iv-dim7", "I7", "Imaj", "iv-dim7", "I7", "Imaj"
+        ],
+        explanation: "The chromatic bass in bars 2–4 and recurring iv° pedal set up a hymn-like contrast. It’s a refined way to reharmonize a blues head without losing the form.",
+        tips: [
+          "Keep the melody on top and let the bass handle the chromatic motion.",
+          "Use whole–half diminished over bar 10’s iv° for a transparent shimmer." 
+        ]
+      },
+      {
+        id: 12,
+        name: "Major Seventh Cycle",
+        tagline: "Bright major extensions with iv° as a soft pivot.",
+        chords: [
+          "Imaj", "IVmaj", "iii- ii-", "#i- bV7", "IVmaj", "Imaj", "iv-dim7", "I7", "Imaj", "iv-dim7", "I7", "Imaj"
+        ],
+        explanation: "Swapping dominant colors for major sevenths mellows the form. The #i- to bV7 in bar 4 adds a slick chromatic approach into IVmaj on bar 5.",
+        tips: [
+          "Play lyrical major-scale ideas on the Imaj bars to keep the mood open.",
+          "Treat iv° as a neighbor chord—don’t overplay, just outline the 1–b3–b5." 
+        ]
+      }
+    ];
+
+    const flowCues = [
+      { title: "Bars 1–4: Tonic lane", detail: "Stay on I7, or try IV7 in bar 2 for a gospel lift (Variation 3). A minor v at bar 4 darkens the turnaround (Variations 7–9)." },
+      { title: "Bars 5–6: Subdominant lane", detail: "IV7 is home. Spice it with VII7 or #iv° (Variations 6 and 10) to point back toward I." },
+      { title: "Bars 7–8: Back to I (or iii–VI)", detail: "Return to I7, or use iii–VI to accelerate into the bridge (Variations 7–9)." },
+      { title: "Bars 9–10: Set up the turnaround", detail: "Choose a straight V7, a II–V, or the diatonic ii–V depending on how jazzy you want it (Variations 3–5)." },
+      { title: "Bars 11–12: Tag & release", detail: "Land on I or loop ii–V/bVI–V if you want another chorus. This is where bVI7 or iv° colors shine (Variations 6, 10–12)." }
+    ];
+
+    const chipClass = (chord) => {
+      const normalized = chord.toLowerCase();
+      if (normalized.includes("dim")) return "diminished";
+      if (normalized.includes("/")) return "passing";
+      if (normalized.includes("maj")) return "tonic";
+      if (normalized.includes("ii") || normalized.includes("iii") || normalized.includes("vi") || normalized.includes("v-")) return "minor";
+      if (normalized.includes("iv")) return "subdominant";
+      return "dominant";
+    };
+
+    const noteMaps = {
+      sharp: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+      flat: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+    };
+
+    const keyOffsets = {
+      C: 0,
+      "G": 7,
+      "D": 2,
+      "A": 9,
+      "E": 4,
+      "B": 11,
+      "F": 5,
+      "Bb": 10,
+      "Eb": 3,
+      "Ab": 8,
+      "Db": 1
+    };
+
+    const numeralOffsets = {
+      I: 0,
+      II: 2,
+      III: 4,
+      IV: 5,
+      V: 7,
+      VI: 9,
+      VII: 11
+    };
+
+    const selectNoteMap = (key) => (key.includes("b") || key === "F" ? noteMaps.flat : noteMaps.sharp);
+
+    const parseRomanToken = (token, key) => {
+      const trimmed = token.trim();
+      if (!trimmed || trimmed === "/") return trimmed;
+
+      const accidentalMatch = trimmed.match(/^[b#]+/);
+      const accidental = accidentalMatch ? accidentalMatch[0] : "";
+      const baseNumeral = trimmed
+        .replace(/^[b#]+/, "")
+        .match(/(i{1,3}|iv|v|vi{0,2}|vii)/i);
+
+      if (!baseNumeral) return trimmed;
+
+      const numeralKey = baseNumeral[0].toUpperCase();
+      const baseOffset = numeralOffsets[numeralKey];
+      if (baseOffset === undefined) return trimmed;
+
+      const accidentalShift = accidental.split("").reduce((acc, symbol) => acc + (symbol === "#" ? 1 : -1), 0);
+      const keyOffset = keyOffsets[key] ?? 0;
+      const semitone = (keyOffset + baseOffset + accidentalShift + 12) % 12;
+      const note = selectNoteMap(key)[semitone];
+
+      const quality = (() => {
+        const lower = trimmed.toLowerCase();
+        if (lower.includes("dim")) return "dim7";
+        if (lower.includes("maj")) return "maj7";
+        if (lower.includes("-")) return lower.includes("7") ? "m7" : "m";
+        if (lower.match(/7/)) return "7";
+        return "";
+      })();
+
+      return `${note}${quality}`;
+    };
+
+    const transposeChordText = (chordText, key) =>
+      chordText
+        .split(/\s+/)
+        .map((part) => parseRomanToken(part, key))
+        .join(" ");
+
+    const renderVariation = (id) => {
+      const variation = variations.find((v) => v.id === id);
+      if (!variation) return;
+      document.getElementById("variationTitle").textContent = `${variation.id}. ${variation.name}`;
+      document.getElementById("variationTagline").textContent = variation.tagline;
+      document.getElementById("variationSelect").value = variation.id;
+
+      const selectedKey = document.getElementById("keySelect").value;
+
+      const barGrid = document.getElementById("barGrid");
+      barGrid.innerHTML = "";
+      variation.chords.forEach((chord, index) => {
+        const cell = document.createElement("div");
+        cell.className = `bar-cell ${chipClass(chord)}`;
+
+        const label = document.createElement("div");
+        label.className = "bar-label";
+        label.textContent = `Bar ${index + 1}`;
+
+        const chordText = document.createElement("div");
+        chordText.className = "bar-chord";
+        const chordRoman = document.createElement("div");
+        chordRoman.className = "bar-chord__roman";
+        chordRoman.textContent = chord;
+
+        const chordConcert = document.createElement("div");
+        chordConcert.className = "bar-chord__concert";
+        chordConcert.textContent = transposeChordText(chord, selectedKey);
+
+        chordText.append(chordRoman, chordConcert);
+        cell.append(label, chordText);
+        barGrid.appendChild(cell);
+      });
+
+      document.getElementById("explanation").textContent = variation.explanation;
+
+      const insightGrid = document.getElementById("insightGrid");
+      insightGrid.innerHTML = "";
+      variation.tips.forEach((tip) => {
+        const card = document.createElement("div");
+        card.className = "insight-card";
+        card.textContent = tip;
+        insightGrid.appendChild(card);
+      });
+    };
+
+    const renderFlow = () => {
+      const flowBody = document.getElementById("flowBody");
+      flowBody.innerHTML = "";
+      flowCues.forEach((cue) => {
+        const card = document.createElement("div");
+        card.className = "flow-card";
+
+        const title = document.createElement("h4");
+        title.textContent = cue.title;
+        const detail = document.createElement("p");
+        detail.textContent = cue.detail;
+
+        card.append(title, detail);
+        flowBody.appendChild(card);
+      });
+    };
+
+    const registerSelector = () => {
+      const select = document.getElementById("variationSelect");
+      select.innerHTML = variations
+        .map((v) => `<option value="${v.id}">${v.id}. ${v.name}</option>`)
+        .join("");
+      select.addEventListener("change", (evt) => renderVariation(Number(evt.target.value)));
+
+      const keySelect = document.getElementById("keySelect");
+      keySelect.addEventListener("change", () => {
+        const current = Number(select.value);
+        renderVariation(current);
+      });
+
+      document.getElementById("prevVariation").addEventListener("click", () => {
+        const current = Number(select.value);
+        const prev = current === 1 ? variations[variations.length - 1] : variations.find((v) => v.id === current - 1);
+        renderVariation(prev.id);
+      });
+
+      document.getElementById("nextVariation").addEventListener("click", () => {
+        const current = Number(select.value);
+        const next = current === variations.length ? variations[0] : variations.find((v) => v.id === current + 1);
+        renderVariation(next.id);
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      registerSelector();
+      renderFlow();
+      renderVariation(1);
+    });
+  </script>
+</body>
+</html>

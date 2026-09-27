@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-House Site Inputs</title>
+<meta name="description" content="K-House bandmate input page for gathering bios, photos, repertoire, recordings, availability, and comments for the band website.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<script async src="https://hypothes.is/embed.js"></script>
+<style>
+  :root {
+    --brass: #c99238;
+    --ink: #101418;
+    --night: #17201d;
+    --green: #1f3a31;
+    --paper: #f4efe6;
+    --text: #ece7dc;
+    --muted: #b8afa2;
+    --line: rgba(244,239,230,0.16);
+    --field: rgba(255,255,255,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--ink);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: var(--brass); }
+  header {
+    background: linear-gradient(135deg, rgba(31,58,49,0.95), rgba(16,20,24,0.96));
+    border-bottom: 1px solid var(--line);
+    padding: 3rem 1.25rem 2.5rem;
+  }
+  main { padding: 2.5rem 1.25rem 4rem; }
+  .container { width: min(980px, 100%); margin: 0 auto; }
+  .topnav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2.25rem;
+  }
+  .brand {
+    color: var(--paper);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .topnav a {
+    text-decoration: none;
+    color: var(--brass);
+    font-size: 0.9rem;
+  }
+  h1 {
+    color: var(--paper);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    max-width: 760px;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    color: var(--paper);
+    font-size: 1.55rem;
+    margin: 2.5rem 0 0.75rem;
+  }
+  h3 {
+    color: var(--paper);
+    font-size: 1.08rem;
+    margin-bottom: 0.35rem;
+  }
+  p { margin-bottom: 1rem; }
+  .lead {
+    max-width: 760px;
+    font-size: 1.08rem;
+  }
+  .muted { color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.045);
+    padding: 1.2rem;
+  }
+  .checklist {
+    display: grid;
+    gap: 0.8rem;
+    list-style: none;
+    margin-top: 1rem;
+  }
+  .checklist strong {
+    color: var(--brass);
+    display: block;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  form {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.04);
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+  fieldset {
+    border: 0;
+    display: grid;
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+  }
+  legend {
+    color: var(--brass);
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+  label {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--paper);
+    font-size: 0.95rem;
+  }
+  input,
+  textarea,
+  select {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--field);
+    color: var(--text);
+    font: inherit;
+    padding: 0.75rem;
+  }
+  textarea { min-height: 112px; resize: vertical; }
+  input[type="file"] {
+    padding: 0.65rem;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .hint {
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  .upload-status {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    padding: 0.8rem;
+  }
+  .upload-status.error {
+    border-color: #c96f52;
+    color: #f2c2b4;
+  }
+  .action-link {
+    align-items: center;
+    background: var(--brass);
+    border: 2px solid var(--brass);
+    border-radius: 4px;
+    color: var(--ink);
+    display: inline-flex;
+    font-size: 0.85rem;
+    font-weight: 700;
+    justify-content: center;
+    letter-spacing: 0.12em;
+    min-height: 44px;
+    padding: 0.8rem 1.35rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+  .action-link:hover {
+    background: var(--paper);
+    border-color: var(--paper);
+  }
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+  .checkbox input {
+    width: auto;
+    margin-top: 0.35rem;
+  }
+  button {
+    min-height: 44px;
+    border: 2px solid var(--brass);
+    border-radius: 4px;
+    background: var(--brass);
+    color: var(--ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.8rem 1.35rem;
+    text-transform: uppercase;
+  }
+  button:hover {
+    background: var(--paper);
+    border-color: var(--paper);
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    padding: 1.6rem 1.25rem;
+    text-align: center;
+  }
+  @media (max-width: 720px) {
+    .grid,
+    .two {
+      grid-template-columns: 1fr;
+    }
+    .topnav {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="topnav">
+      <div class="brand">K-House</div>
+      <a href="index.html">Back to public site</a>
+    </div>
+    <h1>K-House site materials</h1>
+    <p class="lead">This unlisted page collects the practical bits: names, instruments, short bios, photos, recordings, sample repertoire, booking details, and corrections. Everything is optional, and you can submit the form more than once as you think of new material.</p>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <section>
+      <h2>Minimum Useful Package</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Public identity</h3>
+          <p class="muted">Final band name, one-line description, location, and contact person. Current draft: K-House, live jazz from Exeter, contact daaronr@gmail.com.</p>
+        </article>
+        <article class="card">
+          <h3>People</h3>
+          <p class="muted">For each person: preferred name, instrument or vocal role, one short 2-4 sentence bio, and any links they are happy to share publicly.</p>
+        </article>
+        <article class="card">
+          <h3>Media</h3>
+          <p class="muted">One strong group photo, optional individual photos, and 2-4 short sound or video samples. Informal rehearsal clips are fine for a first pass.</p>
+        </article>
+        <article class="card">
+          <h3>Booking facts</h3>
+          <p class="muted">Lineup options, setup needs, travel range, private-event comfort level, jam-session format, and a sensible rate range or sliding-scale policy.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Content Checklist</h2>
+      <ul class="checklist">
+        <li><strong>Photos</strong> A usable landscape hero image, preferably with the whole group visible and enough empty space for text.</li>
+        <li><strong>Samples</strong> 30-90 second clips that show time feel, sound, vocals if used, and the difference between compact and expanded lineups.</li>
+        <li><strong>Repertoire</strong> 12-20 representative tunes, not necessarily a full setlist.</li>
+        <li><strong>Events</strong> A few plain-language examples: restaurant set, house party, listening room, hosted jam, wedding reception, outdoor gathering.</li>
+        <li><strong>Constraints</strong> Any limits we should state clearly: travel radius, power needs, weather cover, earliest setup time, noise/volume expectations.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Send Inputs / Comments</h2>
+      <p class="muted">All fields are optional. Submit a quick note now, then come back later with photos, recordings, bios, or corrections. Multiple submissions are fine. You can also comment inline with Hypothes.is or email anything directly to <a href="mailto:daaronr@gmail.com">daaronr@gmail.com</a>.</p>
+
+      <form id="bandmate-input-form" name="bandmate-input" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="bandmate-input">
+        <p style="display:none;">
+          <label>Do not fill this out: <input name="bot-field"></label>
+        </p>
+
+        <fieldset>
+          <legend>Website feedback</legend>
+          <label>
+            General feedback on the website
+            <textarea name="website_feedback" placeholder="What should change? What feels wrong, missing, too vague, too much, or useful?"></textarea>
+          </label>
+          <label>
+            Suggestions for promotion
+            <textarea name="promotion_suggestions" placeholder="Places to share it, people to contact, wording for posts, venues, communities, mailing lists, local groups, etc."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Who are you?</legend>
+          <div class="two">
+            <label>
+              Name
+              <input name="name" autocomplete="name">
+            </label>
+            <label>
+              Email or phone
+              <input name="contact" autocomplete="email">
+            </label>
+          </div>
+          <label>
+            Instrument, voice, or role
+            <input name="role" placeholder="e.g. trumpet, vocals, guitar, percussion">
+          </label>
+          <label>
+            Social media or public links
+            <textarea name="social_links" placeholder="Instagram, Facebook, YouTube, Bandcamp, SoundCloud, website, teaching page, etc."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Public bio</legend>
+          <label>
+            Short bio or notes for your bio
+            <textarea name="bio" placeholder="2-4 sentences is enough. Musical background, projects, teaching, local links, anything public-facing."></textarea>
+          </label>
+          <label>
+            Links you are happy to share publicly
+            <textarea name="links" placeholder="Website, Instagram, YouTube, Bandcamp, teaching page, etc."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Media</legend>
+          <label>
+            Photo links or notes
+            <textarea name="photos" placeholder="Paste Google Drive, Dropbox, iCloud, or other shared links; or describe which photo should be used. Landscape group photos are most useful for the homepage."></textarea>
+          </label>
+          <label>
+            Audio/video sample links or notes
+            <textarea name="samples" placeholder="Paste YouTube, Google Drive, Dropbox, SoundCloud, Bandcamp, phone video links, etc. For each audio/video item, say which seconds are best, e.g. 0:42-1:18."></textarea>
+            <span class="hint">For audio, video, or larger files, use the Dropbox request below and then describe what you uploaded here.</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Audio, video, and larger files</legend>
+          <p class="hint">Please use the Dropbox request for audio, video, and any larger photo collections. After uploading, use this form to say what you sent and which timestamps are best for clips.</p>
+          <a class="action-link" href="https://www.dropbox.com/request/ty9jbryt3oce82e4mdj7" target="_blank" rel="noopener">Open Dropbox Upload</a>
+          <label>
+            Dropbox upload notes and timestamps
+            <textarea name="dropbox_upload_notes" placeholder="What did you upload to Dropbox? For audio/video, give best clip ranges: file name, tune, 0:42-1:18, avoid intro, best solo starts around 2:05, etc."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Small photo uploads</legend>
+          <p class="hint">You can attach a few small photos here and then use the single "Send Site Input" button at the bottom. Audio, video, and bigger files should go through Dropbox above.</p>
+          <p class="hint">Direct photo uploads must stay under about 7 MB total because the website form has a small upload limit.</p>
+          <div id="upload-size-message" class="upload-status" aria-live="polite">No photo files selected.</div>
+          <label>
+            Photo upload note
+            <input name="upload_note" placeholder="Who is sending these photos, and what should we know about them?">
+          </label>
+          <label>
+            Photo 1
+            <input type="file" name="photo_file_1" accept="image/*">
+          </label>
+          <label>
+            Photo 2
+            <input type="file" name="photo_file_2" accept="image/*">
+          </label>
+          <label>
+            Photo 3
+            <input type="file" name="photo_file_3" accept="image/*">
+          </label>
+          <label>
+            Photo notes
+            <textarea name="photo_upload_notes" placeholder="Which photo is strongest? Who is in it? Anything to crop out or avoid?"></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Music and gigs</legend>
+          <label>
+            Tunes, styles, or repertoire we should mention
+            <textarea name="repertoire" placeholder="Standards, originals, adaptations, styles, sample set ideas."></textarea>
+          </label>
+          <label>
+            Events we should say yes to
+            <textarea name="event_types" placeholder="Restaurants, private parties, jam sessions, weddings, outdoor events, listening rooms, etc."></textarea>
+          </label>
+          <label>
+            Availability, travel, setup, or rate comments
+            <textarea name="logistics" placeholder="Anything that affects bookings or what we can promise publicly."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>General comments</legend>
+          <label>
+            Corrections, objections, suggestions
+            <textarea name="comments" placeholder="What is wrong, missing, too vague, or too much?"></textarea>
+          </label>
+        </fieldset>
+
+        <button type="submit">Send Site Input</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>K-House site inputs - Exeter, UK</p>
+</footer>
+<script>
+  (function () {
+    const form = document.getElementById("bandmate-input-form");
+    const status = document.getElementById("upload-size-message");
+    const maxBytes = 7 * 1024 * 1024;
+    const fileInputs = Array.from(document.querySelectorAll('input[type="file"]'));
+
+    function formatSize(bytes) {
+      if (!bytes) return "0 MB";
+      return (bytes / 1024 / 1024).toFixed(1) + " MB";
+    }
+
+    function selectedFileTotal() {
+      return fileInputs.reduce((total, input) => {
+        return total + Array.from(input.files || []).reduce((sum, file) => sum + file.size, 0);
+      }, 0);
+    }
+
+    function updateUploadStatus() {
+      const total = selectedFileTotal();
+      status.classList.toggle("error", total > maxBytes);
+      if (!total) {
+        status.textContent = "No photo files selected.";
+        return true;
+      }
+      if (total > maxBytes) {
+        status.textContent = "Selected photos total " + formatSize(total) + ". That is too large for this form. Please remove files and use the Dropbox upload link above instead.";
+        return false;
+      }
+      status.textContent = "Selected photos total " + formatSize(total) + ". This should be small enough to submit.";
+      return true;
+    }
+
+    fileInputs.forEach((input) => input.addEventListener("change", updateUploadStatus));
+    form.addEventListener("submit", function (event) {
+      if (!updateUploadStatus()) {
+        event.preventDefault();
+        status.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }());
+</script>
+</body>
+</html>

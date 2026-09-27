@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /bandmates.html
+Disallow: /thanks.html
+
+Sitemap: https://kay-house.netlify.app/sitemap.xml

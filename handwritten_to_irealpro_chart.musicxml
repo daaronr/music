@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE score-partwise PUBLIC
+  "-//Recordare//DTD MusicXML 4.0 Partwise//EN"
+  "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="4.0">
+  <work>
+    <work-title>Exeter / Eugenio's Gangs</work-title>
+  </work>
+  <identification>
+    <creator type="composer">Unknown</creator>
+    <encoding>
+      <software>OpenAI Codex</software>
+      <encoding-date>2026-04-27</encoding-date>
+    </encoding>
+  </identification>
+  <part-list>
+    <score-part id="P1">
+      <part-name>Lead Sheet</part-name>
+    </score-part>
+  </part-list>
+  <part id="P1">
+    <measure number="1">
+      <attributes>
+        <divisions>2</divisions>
+        <key>
+          <fifths>-2</fifths>
+        </key>
+        <time>
+          <beats>4</beats>
+          <beat-type>4</beat-type>
+        </time>
+        <clef>
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
+      </attributes>
+      <direction placement="above">
+        <direction-type><rehearsal>Vamp</rehearsal></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-6">minor-sixth</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="2">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="maj(addb13)">major</kind>
+        <degree><degree-value>13</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="3">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="4">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="7">dominant</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="5">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-6">minor-sixth</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="6">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="maj(addb13)">major</kind>
+        <degree><degree-value>13</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="7">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>G</root-step></root>
+        <kind text="ø7">half-diminished</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="8">
+      <harmony>
+        <root><root-step>C</root-step></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="+7">augmented-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+
+    <measure number="9">
+      <direction placement="above">
+        <direction-type><rehearsal>A</rehearsal></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="10">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="11">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="12">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="13">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-">minor</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="14">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="15">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="maj7">major-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="16">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="maj7">major-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+
+    <measure number="17">
+      <direction placement="above">
+        <direction-type><rehearsal>A</rehearsal></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="18">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="19">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="20">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="21">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-">minor</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="22">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="23">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="maj7">major-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="24">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="maj7">major-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+
+    <measure number="25">
+      <direction placement="above">
+        <direction-type><rehearsal>B</rehearsal></direction-type>
+      </direction>
+      <harmony><root><root-step>E</root-step></root><kind text="-7">minor-seventh</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="26">
+      <harmony><root><root-step>A</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="27">
+      <harmony><root><root-step>D</root-step></root><kind text="-7">minor-seventh</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="28">
+      <harmony><root><root-step>G</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony><root><root-step>D</root-step><root-alter>-1</root-alter></root><kind text="7">dominant</kind></harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="29">
+      <harmony><root><root-step>C</root-step></root><kind text="-7">minor-seventh</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="30">
+      <harmony><root><root-step>F</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="31">
+      <harmony><root><root-step>B</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="32">
+      <harmony><root><root-step>E</root-step></root><kind text="+7">augmented-seventh</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+
+    <measure number="35">
+      <direction placement="above">
+        <direction-type><rehearsal>A'</rehearsal></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="36">
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-6">minor-sixth</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>E</root-step></root>
+        <kind text="sus7">suspended-fourth</kind>
+        <degree><degree-value>7</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="37">
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="5">power</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="38">
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="5">power</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>E</root-step></root>
+        <kind text="sus7">suspended-fourth</kind>
+        <degree><degree-value>7</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="39">
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="40">
+      <harmony>
+        <root><root-step>A</root-step></root>
+        <kind text="-6">minor-sixth</kind>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony>
+        <root><root-step>E</root-step></root>
+        <kind text="sus7">suspended-fourth</kind>
+        <degree><degree-value>7</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="41">
+      <harmony>
+        <root><root-step>E</root-step></root>
+        <kind text="sus7">suspended-fourth</kind>
+        <degree><degree-value>7</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="42">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="7alt">dominant</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+
+    <measure number="43">
+      <direction placement="above">
+        <direction-type><rehearsal>A</rehearsal></direction-type>
+      </direction>
+      <direction placement="above">
+        <direction-type><words>1:47 back up a half-step</words></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-maj7">minor-major</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="44">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="45">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-6">minor-sixth</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="46">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="47">
+      <harmony>
+        <root><root-step>E</root-step><root-alter>-1</root-alter></root>
+        <kind text="sus7">suspended-fourth</kind>
+        <degree><degree-value>7</degree-value><degree-alter>-1</degree-alter><degree-type>add</degree-type></degree>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="48">
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="-7">minor-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="49">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="7alt">dominant</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="50">
+      <harmony>
+        <root><root-step>F</root-step></root>
+        <kind text="7alt">dominant</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+
+    <measure number="51">
+      <direction placement="above">
+        <direction-type><rehearsal>Interlude</rehearsal></direction-type>
+      </direction>
+      <direction placement="above">
+        <direction-type><words>1:59 interlude</words></direction-type>
+      </direction>
+      <harmony>
+        <root><root-step>B</root-step><root-alter>-1</root-alter></root>
+        <kind text="maj7">major-seventh</kind>
+      </harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="52">
+      <harmony><root><root-step>G</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="53">
+      <harmony><root><root-step>C</root-step></root><kind text="-7">minor-seventh</kind></harmony>
+      <note><rest/><duration>4</duration></note>
+      <harmony><root><root-step>F</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest/><duration>4</duration></note>
+    </measure>
+    <measure number="54">
+      <harmony><root><root-step>B</root-step><root-alter>-1</root-alter></root><kind text="maj7">major-seventh</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="55">
+      <harmony><root><root-step>A</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="56">
+      <harmony><root><root-step>D</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="57">
+      <harmony><root><root-step>G</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+    </measure>
+    <measure number="58">
+      <harmony><root><root-step>C</root-step></root><kind text="7">dominant</kind></harmony>
+      <note><rest measure="yes"/><duration>8</duration></note>
+      <barline location="right"><bar-style>light-heavy</bar-style></barline>
+    </measure>
+  </part>
+</score-partwise>
