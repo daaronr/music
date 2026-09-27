@@ -30,6 +30,7 @@ const TEMPO = Number(args.get('tempo') ?? 126);
 const KEY = args.get('key') ?? 'F';
 const OUT = resolve(APP, args.get('out') ?? 'public/audio/blues-18-forms.mp3');
 const VOICE = args.get('voice') ?? 'kokoro';
+const SPEAKER = args.get('speaker') ?? 'am_santa'; // Kokoro voice
 const GAP = Number(args.get('gap') ?? 3);
 const TIMELINE = args.get('timeline');
 
@@ -75,7 +76,7 @@ function speechTexts(): string[] {
 }
 
 function renderSpeech(texts: string[]): string[] {
-  const dir = join(CACHE, `speech-${VOICE}`);
+  const dir = join(CACHE, `speech-${VOICE}-${SPEAKER}`);
   mkdirSync(dir, { recursive: true });
   const manifest = join(dir, 'texts.json');
   const files = texts.map((_, i) => join(dir, `speech_${String(i).padStart(3, '0')}.wav`));
@@ -89,7 +90,7 @@ function renderSpeech(texts: string[]): string[] {
     const python = join(tools, '.venv_kokoro/bin/python');
     if (existsSync(python)) {
       console.log('Narration: Kokoro');
-      const r = spawnSync(python, [join(tools, 'render_kokoro_segments.py'), manifest, dir], { stdio: 'inherit' });
+      const r = spawnSync(python, [join(APP, 'scripts', 'kokoro_segments.py'), manifest, dir, SPEAKER], { stdio: 'ignore' });
       if (r.status === 0 && files.every(existsSync)) return files;
       console.warn('Kokoro failed; falling back to say');
     }

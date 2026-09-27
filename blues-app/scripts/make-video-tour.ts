@@ -20,6 +20,7 @@ const URL = 'http://localhost:5178/music/';
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const TEMPO = 126;
 const PLAY_FORM = 10;
+const SPEAKER = process.argv[2] ?? 'am_santa'; // Kokoro voice
 
 // ---------------------------------------------------------------- narration
 
@@ -32,6 +33,7 @@ const SCENES: Array<{ id: string; say: string }> = [
   { id: 'flow', say: 'The flowchart shows every chord the chart uses in each bar, with a line for each form. Open it full screen and zoom in to follow the paths. Click a chord to swap it into your progression, and hear how it sounds.' },
   { id: 'table', say: 'Or see all eighteen forms side by side, with the changes in bold.' },
   { id: 'vote', say: 'Vote for your favourite form, and then see how everyone else voted.' },
+  { id: 'suggest', say: 'Know a blues form that is not on the list? Outline it here, try it on the lead sheet, and send it in.' },
   { id: 'extras', say: 'There is also a narrated recording of all eighteen, and printable posters of the whole map, in several keys or in roman numerals.' },
   { id: 'support', say: 'It is free. If you find it useful, please consider a donation to The Unjournal or to GiveWell, and let David know, so he can thank you and put your suggestions first. Feedback is very welcome.' },
 ];
@@ -39,14 +41,14 @@ const OUTRO_SAY = 'Blues Flow. Find it at blues flow dot netlify dot app.';
 
 function narration(): string[] {
   const texts = [...SCENES.map((s) => s.say), OUTRO_SAY];
-  const dir = join(DIR, 'speech');
+  const dir = join(DIR, `speech-${SPEAKER}`);
   mkdirSync(dir, { recursive: true });
   const manifest = join(dir, 'texts.json');
   const files = texts.map((_, i) => join(dir, `speech_${String(i).padStart(3, '0')}.wav`));
   if (existsSync(manifest) && readFileSync(manifest, 'utf8') === JSON.stringify(texts) && files.every(existsSync)) return files;
   writeFileSync(manifest, JSON.stringify(texts));
   const tools = join(homedir(), 'githubs/claude_code_misc_work/brass_playing_next_step');
-  const r = spawnSync(join(tools, '.venv_kokoro/bin/python'), [join(tools, 'render_kokoro_segments.py'), manifest, dir], { stdio: 'ignore' });
+  const r = spawnSync(join(tools, '.venv_kokoro/bin/python'), [join(APP, 'scripts', 'kokoro_segments.py'), manifest, dir, SPEAKER], { stdio: 'ignore' });
   if (r.status !== 0) throw new Error('Kokoro failed');
   return files;
 }
@@ -225,12 +227,18 @@ await scene(7, async () => {
   await cursorTo(page, '.vote-form .chips .chip:nth-child(14)', false);
 });
 await scene(8, async () => {
+  await smoothScrollTo(page, '#suggest', 40);
+  await cursorTo(page, '.suggest-grid label:nth-child(2) input', false);
+  await sleep(1200);
+  await cursorTo(page, '.suggest-actions button:first-child', false);
+});
+await scene(9, async () => {
   await smoothScrollTo(page, '.about', 40);
   await cursorTo(page, '.listen audio', false);
   await sleep(1500);
   await cursorTo(page, '.poster-list li:first-child a', false);
 });
-await scene(9, async () => {
+await scene(10, async () => {
   await smoothScrollTo(page, '.support', 40);
   await cursorTo(page, '.support .panel:nth-child(3) a', false);
   await sleep(2500);
@@ -293,7 +301,7 @@ const stamp = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60))
 // YouTube only shows chapters that are all at least 10 seconds long, so short scenes fold into their neighbours.
 const chapterNames: Record<string, string> = {
   intro: 'What it is', forms: 'The 18 forms and chord tones', play: 'Play along', keys: 'Keys, B♭/E♭ parts, roman numerals',
-  flow: 'Flowchart, mixing, all 18 side by side', vote: 'Vote, MP3 and posters', support: 'Support and feedback',
+  flow: 'Flowchart, mixing, all 18 side by side', vote: 'Vote, suggest a form, MP3 and posters', support: 'Support and feedback',
 };
 writeFileSync(
   join(DIR, 'youtube-description.txt'),
