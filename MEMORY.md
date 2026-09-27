@@ -26,6 +26,7 @@
 ## Blues Flow app (blues-app/)
 
 - Live at https://daaronr.github.io/music/ via the Pages workflow. Chart data lives only in `blues-app/src/music/progressions.ts`, transcribed from `blues_variations_in_F.JPG`; forms 9-18 were wrong before Sep 2026 because they came from `blues_variations_wrong.md`. The root `blues_variations.md`, `blues_flowchart*.md` and `index.html` still carry old errors.
+- Primary copy is https://blues-flow.netlify.app (Netlify site `blues-flow`, `bash blues-app/deploy-netlify.sh`); it hosts the vote/feedback/usage functions the GitHub Pages copy also calls. Read results with `node blues-app/netlify/stats.mjs [notes|votes]`.
 - `npm run render:tour` rebuilds the narrated 18-form MP3 in `blues-app/public/audio/` with the app's own arranger. It borrows the Kokoro venv from `claude_code_misc_work/brass_playing_next_step/`.
 
 ## Notation and audio pipeline (claude_halation/)

@@ -2,8 +2,16 @@
 
 Play and study the 18 twelve-bar blues progressions from a printed chart in F
 (photo: `../blues_variations_in_F.JPG`), from three chords up to Parker-style
-changes. Live at https://daaronr.github.io/music/ (deployed by
-`../.github/workflows/deploy.yml` on every push to `main`).
+changes. By David Reinstein.
+
+Two copies, same code:
+
+- **https://blues-flow.netlify.app** (the one to share): deployed by hand with
+  `bash blues-app/deploy-netlify.sh "message"`. Also hosts the functions below.
+- https://daaronr.github.io/music/: deployed by `../.github/workflows/deploy.yml`
+  on every push to `main`. It calls the Netlify functions for votes etc.
+
+So after a change: push, and run `deploy-netlify.sh`.
 
 What it does:
 
@@ -17,6 +25,11 @@ What it does:
 - A flowchart of every chord option in every bar. Click one to swap it into
   the progression, as the chart's own note suggests; mixes are kept in the URL.
 - The full chart as a table in the chosen key.
+- A vote on favourite forms; results (a bar chart) only after voting.
+- Credit and links (K-House, YouTube), a feedback form, and a nudge to donate
+  to The Unjournal or GiveWell instead of paying, with a form to say you did.
+- Printable posters in `public/posters/` (map of every option per bar,
+  flowchart, table), in several keys and in roman numerals only.
 - `public/audio/blues-18-forms.mp3`: all 18 forms with a short narrated intro
   to each, rendered offline from the same arranger.
 
@@ -33,6 +46,23 @@ been filled in from `../blues_variations_wrong.md`, and the `#iv°7` "fix" in
 commit a171c74 was built on that wrong data). They were re-transcribed from the
 photo in September 2026. `../blues_variations.md`, `../blues_flowchart*.md` and
 the older static page `../index.html` still carry some of the old errors.
+
+## Votes, feedback, donations and usage counts
+
+Netlify functions in `netlify/functions/`, data in Netlify Blobs (site
+`blues-flow`): `vote` and `results` (store `votes`), `note` (store `notes`:
+feedback and "I donated" messages, never served back), `hit` (store `hits`:
+cookie-free usage counter; skipped under Do Not Track). Ids starting `test-`
+(all ids in `npm run dev`) are kept out of results and counts.
+
+```bash
+node blues-app/netlify/stats.mjs            # visits, events, devices, referrers, votes
+node blues-app/netlify/stats.mjs notes      # feedback and donation notes (names, emails)
+node blues-app/netlify/stats.mjs votes      # every vote with comments
+node blues-app/netlify/stats.mjs --days 7
+```
+
+There are no notifications yet: check `stats.mjs notes` to see new feedback.
 
 ## Layout
 
@@ -55,6 +85,7 @@ npm run dev          # http://localhost:5173/music/
 npm test             # theory, data and arranger checks
 npm run build
 npm run render:tour  # rebuild public/audio/blues-18-forms.mp3 (needs ffmpeg; narration via local Kokoro, else macOS say)
+node scripts/make-poster.ts  # rebuild public/posters/*.pdf (needs Google Chrome); --key Eb --for Bb --paper A3 --roman yes for one-offs
 ```
 
 `render:tour` takes `--tempo`, `--key`, `--out` and `--voice say|kokoro`.

@@ -709,7 +709,7 @@ button.link:hover {
 
 .about {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
   margin-top: 22px;
   align-items: start;
@@ -941,4 +941,230 @@ kbd {
   .view-controls select {
     width: 100%;
   }
+}
+
+/* ------------------------------------------------------------ vote, feedback, support */
+
+.title a,
+.panel a,
+.foot a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+.small-link {
+  font-size: 14px;
+  color: var(--muted);
+  text-underline-offset: 2px;
+}
+
+input[type='text'],
+input[type='email'],
+textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
+  justify-self: start;
+}
+
+button.primary:disabled {
+  opacity: 0.7;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.panel h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.panel > p {
+  margin-bottom: 8px;
+}
+
+.vote {
+  margin-top: 22px;
+  scroll-margin-top: 16px;
+}
+
+.vote-form,
+.note-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.vote-form label,
+.note-form label:not(.check):not(.hp) {
+  display: grid;
+  gap: 3px;
+  max-width: 560px;
+}
+
+.vote-form label > span,
+.note-form label > span,
+.vote-form legend {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.vote-form select {
+  justify-self: start;
+  max-width: 100%;
+}
+
+fieldset {
+  border: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.chip.on {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.vote-form .chip {
+  padding: 3px 11px;
+  font-size: 14px;
+}
+
+.bars {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.bars li {
+  display: grid;
+  grid-template-columns: minmax(150px, 280px) 1fr 64px;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.bar-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bars li.is-mine .bar-label {
+  font-weight: 700;
+}
+
+.bar-track {
+  height: 14px;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  background: var(--faint);
+  border-radius: 0 4px 4px 0;
+}
+
+.bars li.is-mine .bar-fill {
+  background: var(--accent);
+}
+
+.bar-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.bar-value .also {
+  color: var(--faint);
+}
+
+@media (max-width: 560px) {
+  .bars li {
+    grid-template-columns: minmax(0, 1fr) 90px 44px;
+    gap: 6px;
+    font-size: 13px;
+  }
+}
+
+.support {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+  align-items: start;
+  scroll-margin-top: 16px;
+}
+
+@media (max-width: 1000px) {
+  .support {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.note-form .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.note-form select {
+  width: 100%;
+}
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.thanks {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.foot p + p {
+  margin-top: 6px;
+}
+
+.tabs-opt {
+  margin-left: auto;
+  padding-bottom: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.poster-list {
+  list-style: none;
+  display: grid;
+  gap: 4px;
 }

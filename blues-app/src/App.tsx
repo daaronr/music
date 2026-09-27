@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { track } from './api.ts';
 import { Engine, type Position } from './audio/engine.ts';
 import { ChartTable } from './components/ChartTable.tsx';
 import { FlowChart } from './components/FlowChart.tsx';
 import { LeadSheet } from './components/LeadSheet.tsx';
 import { Notes } from './components/Notes.tsx';
+import { Support } from './components/Support.tsx';
 import { Transport, type SoundPrefs } from './components/Transport.tsx';
+import { Vote } from './components/Vote.tsx';
 import { View, decodeMix, encodeMix } from './music/display.ts';
 import { INTRO, VARIATIONS } from './music/progressions.ts';
 import { KEYS, TRANSPOSITIONS, type Notation, type Transposition } from './music/theory.ts';
@@ -15,6 +18,8 @@ interface ViewPrefs {
   key: string;
   transposition: Transposition;
   notation: Notation;
+  romanOnly: boolean;
+  lowerRoman: boolean; // flowchart and table only
   showRoman: boolean;
   showGuide: boolean;
   compare: 'prev' | 'basic' | 'off';
@@ -22,7 +27,7 @@ interface ViewPrefs {
 }
 
 const PREFS_KEY = 'blues-flow-prefs-v2';
-const DEFAULT_VIEW: ViewPrefs = { key: 'F', transposition: 'C', notation: 'chart', showRoman: true, showGuide: false, compare: 'prev', tab: 'flow' };
+const DEFAULT_VIEW: ViewPrefs = { key: 'F', transposition: 'C', notation: 'chart', romanOnly: false, lowerRoman: false, showRoman: true, showGuide: false, compare: 'prev', tab: 'flow' };
 const DEFAULT_SOUND: SoundPrefs = {
   tempo: 120,
   swing: 0.64,
@@ -57,6 +62,21 @@ function readHash() {
 }
 
 const keyLabel = (k: string) => k.replace('b', '♭');
+
+// In-page links that scroll without touching the hash, which holds the app state.
+const jumpTo = (id: string) => (e: React.MouseEvent) => {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+const POSTERS: Array<[string, string]> = [
+  ['blues-map_roman-numerals_A4.pdf', 'Roman numerals, any key (A4)'],
+  ['blues-map_roman-numerals_A3.pdf', 'Roman numerals, any key (A3)'],
+  ['blues-map_F_concert_A4.pdf', 'F, concert (A4)'],
+  ['blues-map_F_concert_A3.pdf', 'F, concert (A3)'],
+  ['blues-map_Bb_concert_A4.pdf', 'B♭, concert (A4)'],
+  ['blues-map_F_for-Bb-instruments_A4.pdf', 'Concert F for B♭ trumpet, clarinet, tenor (A4)'],
+  ['blues-map_Bb_for-Bb-instruments_A4.pdf', 'Concert B♭ for B♭ trumpet, clarinet, tenor (A4)'],
+];
 const AUDIO_URL = `${import.meta.env.BASE_URL}audio/blues-18-forms.mp3`;
 
 export default function App() {
@@ -83,9 +103,24 @@ export default function App() {
 
   const variation = VARIATIONS[variationId - 1];
   const bars = mix ?? variation.bars;
-  const view = useMemo(() => new View({ key: vp.key, transposition: vp.transposition, notation: vp.notation }), [vp.key, vp.transposition, vp.notation]);
+  const view = useMemo(
+    () => new View({ key: vp.key, transposition: vp.transposition, notation: vp.notation, romanOnly: vp.romanOnly }),
+    [vp.key, vp.transposition, vp.notation, vp.romanOnly],
+  );
+  const lowerView = useMemo(
+    () => (vp.lowerRoman && !vp.romanOnly ? new View({ ...view.opts, romanOnly: true }) : view),
+    [view, vp.lowerRoman, vp.romanOnly],
+  );
+  // With roman numerals as the main label, a second roman line (or letter-name guide tones) would just repeat or confuse.
+  const showRoman = vp.showRoman && !vp.romanOnly;
+  const showGuide = vp.showGuide && !vp.romanOnly;
   const setView = (patch: Partial<ViewPrefs>) => setVp((p) => ({ ...p, ...patch }));
   const setSound = useCallback((patch: Partial<SoundPrefs>) => setSp((p) => ({ ...p, ...patch })), []);
+
+  useEffect(() => track('view', `form ${initial.v}`), [initial.v]);
+  useEffect(() => {
+    if (vp.key !== 'F') track('key', vp.key);
+  }, [vp.key]);
 
   // ------------------------------------------------------------ persistence
   useEffect(() => {
@@ -98,6 +133,7 @@ export default function App() {
 
   useEffect(() => {
     const onHash = () => {
+      if (!location.hash.includes('=')) return;
       const h = readHash();
       if (h.v) setVariationId(h.v);
       setMix(h.mix);
@@ -162,6 +198,7 @@ export default function App() {
     engine.setLevel('bass', sp.levels.bass);
     engine.setLevel('drums', sp.levels.drums);
     if (engine.ctx) engine.setKeysSound(sp.sound).catch(() => setError('Could not load that sound.'));
+    if (sp.sound !== 'piano') track('instrument', sp.sound);
   }, [engine, sp]);
 
   const toggle = useCallback(async () => {
@@ -177,6 +214,7 @@ export default function App() {
       await engine.setKeysSound(sp.sound);
       await engine.start();
       setPlaying(true);
+      track(live.current.mode === 'tour' ? 'tour' : 'play', live.current.mix ? 'mix' : String(live.current.variationId));
     } catch {
       setLoading(null);
       setError('Could not load the sounds. Check your connection and try again.');
@@ -210,6 +248,7 @@ export default function App() {
       setMix(null);
     } else {
       setMix(nextBars);
+      track('mix', `bar ${i + 1}`);
     }
     if (sp.mode === 'tour') setSound({ mode: 'loop' });
     setSelectedBar(i);
@@ -220,6 +259,7 @@ export default function App() {
     const r = () => VARIATIONS[Math.floor(Math.random() * 18)].bars;
     const [a, b, c] = [r(), r(), r()];
     setMix([...a.slice(0, 4), ...b.slice(4, 8), ...c.slice(8, 12)]);
+    track('mix', 'random');
     if (sp.mode === 'tour') setSound({ mode: 'loop' });
   };
 
@@ -265,7 +305,12 @@ export default function App() {
       <header className="top">
         <div className="title">
           <h1>Blues Flow</h1>
-          <p>18 ways through a 12-bar blues</p>
+          <p>
+            18 ways through a 12-bar blues · by{' '}
+            <a href="#about" onClick={jumpTo('about')}>
+              David Reinstein
+            </a>
+          </p>
         </div>
         <div className="view-controls">
           <label>
@@ -290,9 +335,17 @@ export default function App() {
           </label>
           <label>
             <span>Symbols</span>
-            <select value={vp.notation} onChange={(e) => setView({ notation: e.target.value as Notation })}>
+            <select
+              value={vp.romanOnly ? `roman-${vp.notation}` : vp.notation}
+              onChange={(e) => {
+                const v = e.target.value;
+                setView(v.startsWith('roman-') ? { romanOnly: true, notation: v.slice(6) as Notation } : { romanOnly: false, notation: v as Notation });
+              }}
+            >
               <option value="chart">C− FΔ B° (as on the chart)</option>
               <option value="standard">Cm7 Fmaj7 B°7</option>
+              <option value="roman-chart">Roman numerals: ii−7 IΔ7</option>
+              <option value="roman-standard">Roman numerals: iim7 Imaj7</option>
             </select>
           </label>
           <label>
@@ -304,10 +357,10 @@ export default function App() {
             </select>
           </label>
           <label className="check">
-            <input type="checkbox" checked={vp.showRoman} onChange={(e) => setView({ showRoman: e.target.checked })} /> Roman numerals
+            <input type="checkbox" checked={vp.showRoman} disabled={vp.romanOnly} onChange={(e) => setView({ showRoman: e.target.checked })} /> Roman numerals
           </label>
           <label className="check">
-            <input type="checkbox" checked={vp.showGuide} onChange={(e) => setView({ showGuide: e.target.checked })} /> Guide tones
+            <input type="checkbox" checked={vp.showGuide} disabled={vp.romanOnly} onChange={(e) => setView({ showGuide: e.target.checked })} /> Guide tones
           </label>
         </div>
       </header>
@@ -339,6 +392,9 @@ export default function App() {
         <button className="small" onClick={randomMix} title="Bars 1–4, 5–8 and 9–12 from three random forms">
           Random mix
         </button>
+        <a className="small-link" href="#vote" onClick={jumpTo('vote')}>
+          Vote for your favourite
+        </a>
       </nav>
 
       <main className="main">
@@ -347,8 +403,8 @@ export default function App() {
             bars={bars}
             view={view}
             changed={changed}
-            showRoman={vp.showRoman}
-            showGuide={vp.showGuide}
+            showRoman={showRoman}
+            showGuide={showGuide}
             activeBar={activeBar}
             activeBeat={activeBeat}
             selectedBar={selectedBar}
@@ -369,7 +425,7 @@ export default function App() {
           mix={mix}
           bars={bars}
           view={view}
-          showRoman={vp.showRoman}
+          showRoman={showRoman}
           selectedBar={selectedBar}
           onSelectBar={selectBar}
           onHear={hearBar}
@@ -385,11 +441,20 @@ export default function App() {
           <button role="tab" aria-selected={vp.tab === 'table'} className={vp.tab === 'table' ? 'on' : ''} onClick={() => setView({ tab: 'table' })}>
             All 18
           </button>
+          <label className="check tabs-opt">
+            <input
+              type="checkbox"
+              checked={vp.romanOnly || vp.lowerRoman}
+              disabled={vp.romanOnly}
+              onChange={(e) => setView({ lowerRoman: e.target.checked })}
+            />{' '}
+            Roman numerals only
+          </label>
         </div>
         {vp.tab === 'flow' ? (
-          <FlowChart bars={bars} view={view} activeBar={activeBar} selectedBar={selectedBar} onPick={pick} />
+          <FlowChart bars={bars} view={lowerView} activeBar={activeBar} selectedBar={selectedBar} onPick={pick} />
         ) : (
-          <ChartTable view={view} currentId={mix ? null : variationId} activeBar={activeBar} onSelect={goTo} />
+          <ChartTable view={lowerView} currentId={mix ? null : variationId} activeBar={activeBar} onSelect={goTo} />
         )}
       </section>
 
@@ -404,7 +469,7 @@ export default function App() {
         <div className="listen">
           <h2>Listen to all 18</h2>
           <p>One chorus of each form in F at 126 bpm, with a short spoken introduction to each (11½ minutes).</p>
-          <audio controls preload="none" src={AUDIO_URL} />
+          <audio controls preload="none" src={AUDIO_URL} onPlay={() => track('mp3')} />
           <p>
             <a href={AUDIO_URL} download>
               Download the MP3
@@ -412,12 +477,36 @@ export default function App() {
             · <a href={AUDIO_URL.replace(/\.mp3$/, '.txt')}>Track list</a>
           </p>
         </div>
+        <div className="listen">
+          <h2>Posters to print</h2>
+          <p>Three landscape pages: every chord option bar by bar, the flowchart, and all 18 forms as a table.</p>
+          <ul className="poster-list">
+            {POSTERS.map(([file, label]) => (
+              <li key={file}>
+                <a href={`${import.meta.env.BASE_URL}posters/${file}`} onClick={() => track('poster', file)}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
+
+      <div id="vote">
+        <Vote currentId={variationId} />
+      </div>
+
+      <Support context={mix ? `mix of form ${variationId}` : `form ${variationId}`} />
 
       <footer className="foot">
         <p>
-          Progressions transcribed from a printed chart of 18 blues progressions in F. Samples: Splendid Grand Piano; 1958 Otto
-          Rubner double bass, pizzicato (D. Smolken); cymbals from the Versilian Community Sample Library; via smplr.
+          Made by David Reinstein. Progressions transcribed from a printed chart of 18 blues progressions in F. Samples: Splendid
+          Grand Piano; 1958 Otto Rubner double bass, pizzicato (D. Smolken); cymbals from the Versilian Community Sample Library; via
+          smplr.
+        </p>
+        <p>
+          Privacy: the page counts visits and which features get used (no cookies, no IP addresses, nothing personal), and skips even
+          that if your browser sends Do Not Track.
         </p>
       </footer>
 

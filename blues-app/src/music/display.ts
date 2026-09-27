@@ -22,6 +22,8 @@ export interface ViewOptions {
   key: string; // concert key
   transposition: Transposition;
   notation: Notation;
+  /** Show every chord as its roman numeral instead of a letter name. */
+  romanOnly?: boolean;
 }
 
 export interface ShownChord {
@@ -49,7 +51,7 @@ export class View {
     return {
       chart,
       shown,
-      symbol: chordSymbol(shown, this.opts.notation),
+      symbol: this.opts.romanOnly ? romanNumeral(chart, this.opts.notation) : chordSymbol(shown, this.opts.notation),
       roman: romanNumeral(chart, this.opts.notation),
       quality: chart.quality,
       guide: guideTones(shown, this.dk.preferFlats),

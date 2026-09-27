@@ -1,0 +1,9 @@
+{
+  "name": "blues-flow-netlify",
+  "private": true,
+  "type": "module",
+  "description": "Netlify functions for Blues Flow: votes, results, feedback/donation notes, usage counts",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

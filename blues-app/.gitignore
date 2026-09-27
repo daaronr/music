@@ -25,3 +25,8 @@ dist-ssr
 
 # Offline render cache (samples, narration)
 .cache
+
+# Netlify build output and CLI state
+dist-netlify
+netlify/node_modules
+netlify/.netlify
