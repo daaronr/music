@@ -23,6 +23,11 @@
 - GTD Trio is a separate nested Git repo at `gtd-trio/`, remote `daaronr/gtd-trio`, published by GitHub Pages from `main` `/` at `https://daaronr.github.io/gtd-trio/`.
 - Kay House Trio scaffold lives in `K-house/` in this repo. The `music` GitHub Pages workflow builds `blues-app` and copies `K-house/` into `blues-app/dist/`, so after push/deploy it should publish at `https://daaronr.github.io/music/K-house/`.
 
+## Blues Flow app (blues-app/)
+
+- Live at https://daaronr.github.io/music/ via the Pages workflow. Chart data lives only in `blues-app/src/music/progressions.ts`, transcribed from `blues_variations_in_F.JPG`; forms 9-18 were wrong before Sep 2026 because they came from `blues_variations_wrong.md`. The root `blues_variations.md`, `blues_flowchart*.md` and `index.html` still carry old errors.
+- `npm run render:tour` rebuilds the narrated 18-form MP3 in `blues-app/public/audio/` with the app's own arranger. It borrows the Kokoro venv from `claude_code_misc_work/brass_playing_next_step/`.
+
 ## Notation and audio pipeline (claude_halation/)
 
 - `claude_halation/` holds Claude's original tune "Halation" plus a written trumpet/guitar duo solo (a parallel GPT attempt lives in a different subfolder). Rebuild steps are in its README.

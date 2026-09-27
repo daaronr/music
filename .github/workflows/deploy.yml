@@ -28,6 +28,10 @@ jobs:
         working-directory: blues-app
         run: npm install
 
+      - name: Test
+        working-directory: blues-app
+        run: npm test
+
       - name: Build
         working-directory: blues-app
         run: npm run build

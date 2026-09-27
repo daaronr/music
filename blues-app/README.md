@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# Blues Flow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Play and study the 18 twelve-bar blues progressions from a printed chart in F
+(photo: `../blues_variations_in_F.JPG`), from three chords up to Parker-style
+changes. Live at https://daaronr.github.io/music/ (deployed by
+`../.github/workflows/deploy.yml` on every push to `main`).
 
-Currently, two official plugins are available:
+What it does:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Shows any form as a 12-bar lead sheet in any key, with chord names for concert,
+  B♭, E♭ or F instruments, roman numerals and guide tones (3rds and 7ths).
+- Plays it with a backing trio: grand piano comping, a walking (or two-feel)
+  upright bass and ride cymbal, swung, at any tempo, with a count-in. "Step
+  through all 18" plays one chorus of each form in turn.
+- Marks which bars changed from the previous form (or from the basic blues),
+  explains what each form adds, and gives chord tones for any bar you click.
+- A flowchart of every chord option in every bar. Click one to swap it into
+  the progression, as the chart's own note suggests; mixes are kept in the URL.
+- The full chart as a table in the chosen key.
+- `public/audio/blues-18-forms.mp3`: all 18 forms with a short narrated intro
+  to each, rendered offline from the same arranger.
 
-## React Compiler
+## Source of truth
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+`src/music/progressions.ts` holds the chart exactly as printed (F, with `-`,
+`Δ`, `°`, `C-/F`). Roman numerals, other keys and transposed parts are all
+derived from it, and `src/music/music.test.ts` checks the data prints back
+unchanged and matches the photo in hand-checked places. If a chord looks wrong,
+compare that file with the photo; nothing else needs changing.
 
-## Expanding the ESLint configuration
+Forms 9 to 18 were wrong in earlier versions of this app (bars 6 to 12 had
+been filled in from `../blues_variations_wrong.md`, and the `#iv°7` "fix" in
+commit a171c74 was built on that wrong data). They were re-transcribed from the
+photo in September 2026. `../blues_variations.md`, `../blues_flowchart*.md` and
+the older static page `../index.html` still carry some of the old errors.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Layout
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `src/music/theory.ts`: letter-based spelling, transposition, chord symbols,
+  roman numerals, chord and guide tones.
+- `src/music/arranger.ts`: voicings (rootless A/B forms, voice-led), walking
+  bass (scored search over chord, scale and approach tones), comping rhythms,
+  ride pattern. Deterministic for a seed.
+- `src/audio/engine.ts`: look-ahead scheduler on the Web Audio clock; samples
+  are defined in `src/audio/samples.ts` (Splendid Grand Piano, D. Smolken
+  pizzicato bass, VCSL cymbals, all via smpldsnds.github.io; the electric
+  piano, guitar and organ are General MIDI soundfonts through smplr).
+- `scripts/render-tour.ts`: offline renderer for the MP3.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Commands
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev          # http://localhost:5173/music/
+npm test             # theory, data and arranger checks
+npm run build
+npm run render:tour  # rebuild public/audio/blues-18-forms.mp3 (needs ffmpeg; narration via local Kokoro, else macOS say)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+`render:tour` takes `--tempo`, `--key`, `--out` and `--voice say|kokoro`.
+Narration text is in the script; samples and speech are cached in `.cache/`.
