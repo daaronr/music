@@ -4,7 +4,7 @@
 import { getStore } from '@netlify/blobs';
 import { body, clean, json, preflight } from '../shared/http.mjs';
 
-const EVENTS = ['view', 'play', 'tour', 'mix', 'vote', 'results', 'feedback', 'donation', 'donate-click', 'mp3', 'key', 'instrument', 'poster', 'suggestion', 'suggest-try'];
+const EVENTS = ['view', 'play', 'tour', 'mix', 'vote', 'results', 'feedback', 'donation', 'donate-click', 'mp3', 'key', 'instrument', 'poster', 'suggestion', 'suggest-try', 'video', 'video-link', 'video-form'];
 
 export default async (req) => {
   if (req.method === 'OPTIONS') return preflight(req);

@@ -8,6 +8,7 @@ import { Notes } from './components/Notes.tsx';
 import { Suggest } from './components/Suggest.tsx';
 import { Support } from './components/Support.tsx';
 import { Transport, type SoundPrefs } from './components/Transport.tsx';
+import { Videos } from './components/Videos.tsx';
 import { Vote } from './components/Vote.tsx';
 import { View, decodeMix, encodeMix } from './music/display.ts';
 import { INTRO, VARIATIONS } from './music/progressions.ts';
@@ -320,6 +321,10 @@ export default function App() {
             18 ways through a 12-bar blues · by{' '}
             <a href="#about" onClick={jumpTo('about')}>
               David Reinstein
+            </a>{' '}
+            ·{' '}
+            <a href="#videos" onClick={jumpTo('videos')}>
+              videos
             </a>
           </p>
         </div>
@@ -472,6 +477,15 @@ export default function App() {
         )}
       </section>
 
+      <Videos
+        currentId={variationId}
+        onPause={() => {
+          if (!engine.playing) return;
+          engine.stop();
+          setPlaying(false);
+        }}
+      />
+
       <section className="about">
         <details>
           <summary>How the chart works</summary>
@@ -528,7 +542,7 @@ export default function App() {
         </p>
         <p>
           Privacy: the page counts visits and which features get used (no cookies, no IP addresses, nothing personal), and skips even
-          that if your browser sends Do Not Track.
+          that if your browser sends Do Not Track. The videos load from YouTube (its no-cookie player) only when you press play.
         </p>
       </footer>
 

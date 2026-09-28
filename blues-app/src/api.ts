@@ -43,7 +43,7 @@ const referrer = safe(() => (document.referrer ? new URL(document.referrer).host
 const optedOut = navigator.doNotTrack === '1' || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl;
 
 export type TrackEvent =
-  | 'view' | 'play' | 'tour' | 'mix' | 'vote' | 'results' | 'feedback' | 'donation' | 'donate-click' | 'mp3' | 'key' | 'instrument' | 'poster' | 'suggestion' | 'suggest-try';
+  | 'view' | 'play' | 'tour' | 'mix' | 'vote' | 'results' | 'feedback' | 'donation' | 'donate-click' | 'mp3' | 'key' | 'instrument' | 'poster' | 'suggestion' | 'suggest-try' | 'video' | 'video-link' | 'video-form';
 
 /** Count a use of the app. Fire and forget; never blocks or throws. */
 export function track(e: TrackEvent, detail = '') {
@@ -114,6 +114,8 @@ export const sendNote = (n: NoteInput) => post('/api/note', { voter: voterId, ..
 export const LINKS = {
   youtube: 'https://www.youtube.com/@daaronr',
   playlist: 'https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk',
+  videoForms: 'hvldOdFz0wY', // "18 Ways Through a 12-Bar Blues"
+  videoTour: '_ciNDOVZBzk', // "Blues Flow: a free app for learning 18 blues forms (quick tour)"
   kHouse: 'https://kay-house.netlify.app/',
   unjournalDonate: 'https://info.unjournal.org/donate.html',
   unjournal: 'https://unjournal.org',

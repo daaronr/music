@@ -37,6 +37,13 @@ What it does:
   flowchart, table), in several keys and in roman numerals only.
 - `public/audio/blues-18-forms.mp3`: all 18 forms with a short narrated intro
   to each, rendered offline from the same arranger.
+- A Videos section (`src/components/Videos.tsx`) embedding the two YouTube
+  videos, [the 18 forms](https://youtu.be/hvldOdFz0wY) and
+  [the app tour](https://youtu.be/_ciNDOVZBzk). Each shows a local poster
+  (`public/video/`) and loads the youtube-nocookie player only on click; the
+  18-forms one can be cued at the form on screen (chapter times in
+  `FORM_START`, from the video's description). Their YouTube descriptions link
+  back to the app and to each other.
 
 ## Source of truth
 
