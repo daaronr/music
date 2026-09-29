@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { track } from './api.ts';
+import { LINKS, track } from './api.ts';
 import { Engine, type Position } from './audio/engine.ts';
 import { ChartTable } from './components/ChartTable.tsx';
 import { FlowChart } from './components/FlowChart.tsx';
@@ -540,6 +540,10 @@ export default function App() {
           Grand Piano; 1958 Otto Rubner double bass, pizzicato (D. Smolken); cymbals from the Versilian Community Sample Library; via
           smplr.{' '}
           <a href="https://projects.davidreinstein.org/">More projects by David Reinstein</a>
+        </p>
+        <p>
+          Comments or suggestions? Annotate with <a href="https://web.hypothes.is/">Hypothes.is</a> (panel at the right edge), use the
+          feedback form above, or email {LINKS.email}.
         </p>
         <p>
           Privacy: the page counts visits and which features get used (no cookies, no IP addresses, nothing personal), and skips even

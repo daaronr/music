@@ -879,6 +879,18 @@ kbd {
   border-top: 1px solid var(--line);
 }
 
+/* Hypothes.is (embed.js in index.html) pins a 33px toolbar to the top right of the window.
+   Once it has loaded, keep the controls out from under it. */
+@media (max-width: 1300px) {
+  body:has(> hypothesis-sidebar) .app {
+    padding-right: 38px;
+  }
+  body:has(> hypothesis-sidebar) .dock {
+    margin-right: -38px;
+    padding-right: 38px;
+  }
+}
+
 .error {
   color: var(--changed);
   margin-bottom: 6px;
