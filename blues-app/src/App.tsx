@@ -538,7 +538,8 @@ export default function App() {
         <p>
           Made by David Reinstein. Progressions transcribed from a printed chart of 18 blues progressions in F. Samples: Splendid
           Grand Piano; 1958 Otto Rubner double bass, pizzicato (D. Smolken); cymbals from the Versilian Community Sample Library; via
-          smplr.
+          smplr.{' '}
+          <a href="https://projects.davidreinstein.org/">More projects by David Reinstein</a>
         </p>
         <p>
           Privacy: the page counts visits and which features get used (no cookies, no IP addresses, nothing personal), and skips even
