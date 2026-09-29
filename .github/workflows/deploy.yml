@@ -1,4 +1,4 @@
-name: Deploy Blues Flow App
+name: Test Blues Flow and publish Pages redirects
 
 on:
   push:
@@ -36,8 +36,14 @@ jobs:
         working-directory: blues-app
         run: npm run build
 
-      - name: Add Kay House Trio static site
-        run: cp -R K-house blues-app/dist/
+      # The live copies are on Netlify (blues-flow, kay-house). Pages now only
+      # redirects old daaronr.github.io/music/ links there, so there is one
+      # version of each site. index.html and 404.html are the same redirect page.
+      - name: Assemble redirect site
+        run: |
+          mkdir -p pages_out
+          cp pages_redirect/index.html pages_out/index.html
+          cp pages_redirect/index.html pages_out/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -45,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: blues-app/dist
+          path: pages_out
 
   deploy:
     environment:

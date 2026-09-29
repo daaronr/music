@@ -21,12 +21,13 @@
 ## Music Sites
 
 - GTD Trio is a separate nested Git repo at `gtd-trio/`, remote `daaronr/gtd-trio`, published by GitHub Pages from `main` `/` at `https://daaronr.github.io/gtd-trio/`.
-- Kay House Trio scaffold lives in `K-house/` in this repo. The `music` GitHub Pages workflow builds `blues-app` and copies `K-house/` into `blues-app/dist/`, so after push/deploy it should publish at `https://daaronr.github.io/music/K-house/`.
+- K-House site lives in `K-house/` in this repo. The one live copy is https://kay-house.netlify.app (Netlify site `kay-house`, which holds the bandmate form submissions); `K-house/.netlify/state.json` links there. Deploy with `netlify deploy --prod --dir K-house` from the repo root, or `--site kay-house`.
+- **One live version per site (Sep 2026).** The `music` GitHub Pages workflow still tests and builds `blues-app`, but it now publishes only `pages_redirect/index.html` (as index and 404), which sends `daaronr.github.io/music/...` to blues-flow.netlify.app and `/music/K-house/...` to kay-house.netlify.app. The old duplicate Netlify sites `k-house-jazz`, `delicate-taffy-42ae49` and `benevolent-maamoul-de8109` were collapsed: the last was renamed to `jazz-practice-hub` (the Jazz Practice Hub, source `jazz_hub/index.html`), and the other two now 301 to the canonical copies. Don't redeploy to the redirect sites.
 
 ## Blues Flow app (blues-app/)
 
-- Live at https://daaronr.github.io/music/ via the Pages workflow. Chart data lives only in `blues-app/src/music/progressions.ts`, transcribed from `blues_variations_in_F.JPG`; forms 9-18 were wrong before Sep 2026 because they came from `blues_variations_wrong.md`. The root `blues_variations.md`, `blues_flowchart*.md` and `index.html` still carry old errors.
-- Primary copy is https://blues-flow.netlify.app (Netlify site `blues-flow`, `bash blues-app/deploy-netlify.sh`); it hosts the vote/feedback/usage functions the GitHub Pages copy also calls. Read results with `node blues-app/netlify/stats.mjs [notes|votes]`.
+- Live at https://blues-flow.netlify.app (daaronr.github.io/music/ now only redirects there). Chart data lives only in `blues-app/src/music/progressions.ts`, transcribed from `blues_variations_in_F.JPG`; forms 9-18 were wrong before Sep 2026 because they came from `blues_variations_wrong.md`. The root `blues_variations.md`, `blues_flowchart*.md` and `index.html` still carry old errors.
+- The only copy is https://blues-flow.netlify.app (Netlify site `blues-flow`, `bash blues-app/deploy-netlify.sh`); it hosts the vote/feedback/usage functions. Read results with `node blues-app/netlify/stats.mjs [notes|votes]`.
 - `npm run render:tour` rebuilds the narrated 18-form MP3 in `blues-app/public/audio/` with the app's own arranger. It borrows the Kokoro venv from `claude_code_misc_work/brass_playing_next_step/`.
 
 ## Notation and audio pipeline (claude_halation/)

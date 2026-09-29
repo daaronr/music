@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://blues-flow.netlify.app/">
+<script>
+  // GitHub Pages copy retired Sep 2026: one live version per project.
+  // /music/...          -> Blues Flow on Netlify (path, query and hash kept)
+  // /music/K-house/...  -> K-House on Netlify
+  var p = location.pathname.replace(/^\/music\/?/, '');
+  var dest = /^K-house(\/|$)/i.test(p)
+    ? 'https://kay-house.netlify.app/' + p.replace(/^K-house\/?/i, '')
+    : 'https://blues-flow.netlify.app/' + p;
+  location.replace(dest + location.search + location.hash);
+</script>
+</head>
+<body>
+<p>This page has moved. <a href="https://blues-flow.netlify.app/">Blues Flow</a> · <a href="https://kay-house.netlify.app/">K-House</a></p>
+</body>
+</html>
