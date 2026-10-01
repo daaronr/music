@@ -177,7 +177,7 @@ def main():
             page = Template(fh.read()).substitute(subs)
         with open(os.path.join(PUB, name), "w", encoding="utf-8") as fh:
             fh.write(tipify(page))
-    for name in ("style.css", "app.js", "results.js"):
+    for name in ("style.css", "app.js", "results.js", "robots.txt", "sitemap.xml", "llms.txt"):
         shutil.copy2(os.path.join(SRC, name), os.path.join(PUB, name))
     size = subprocess.run(["du", "-sh", PUB], capture_output=True, text=True).stdout.split()[0]
     print(f"built {os.path.relpath(PUB, REPO)} ({size})")

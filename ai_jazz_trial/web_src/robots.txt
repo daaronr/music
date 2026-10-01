@@ -1,0 +1,5 @@
+# seo_kit.py
+User-agent: *
+Allow: /
+
+Sitemap: https://ai-jazz-tune-trial.netlify.app/sitemap.xml
