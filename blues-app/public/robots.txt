@@ -1,0 +1,5 @@
+# seo_kit.py
+User-agent: *
+Allow: /
+
+Sitemap: https://blues-flow.netlify.app/sitemap.xml
