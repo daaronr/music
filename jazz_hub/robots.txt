@@ -1,0 +1,5 @@
+# seo_kit.py
+User-agent: *
+Allow: /
+
+Sitemap: https://jazz-practice-hub.netlify.app/sitemap.xml
