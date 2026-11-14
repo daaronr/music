@@ -9,8 +9,8 @@ generic method is the `agent-trial-run` skill (`../../skills/agent-trial-run/`).
 |---|---|---|---|---|
 | `fable_bright` | `claude-fable-5-2`, max | `prompts/bright_01_compose.txt` (round 1's Claude prompt) | `bright` | Shared round-1 pipeline, afterwards |
 | `fable_dark` | `claude-fable-5-2`, max; then high | `../waltz_prompts/01_compose.txt`, then `02_recording.txt` in the same session | `dark` | Its own, from prompt 2 (as Tenebrae and Noctilucent) |
-| `opus_threes_company` | `claude-opus-5-5`, max | `prompts/tv_threes_company_01_compose.txt` | `tv` | Shared round-1 pipeline, afterwards |
-| `opus_all_in_the_family` | `claude-opus-5-5`, max | `prompts/tv_all_in_the_family_01_compose.txt` | `tv` | Shared round-1 pipeline, afterwards |
+| `opus_threes_company` | `claude-opus-5-5`, max | `prompts/tv_threes_company_01_compose.txt` | `tv` | Shared round-1 pipeline, afterwards (private) |
+| `opus_all_in_the_family` | `claude-opus-5-5`, max | `prompts/tv_all_in_the_family_01_compose.txt` | `tv` | Shared round-1 pipeline, afterwards (private) |
 
 All five are independent: separate clean copies under `~/githubs/music_trial_runs/<run>/`,
 unattended, no questions answered, no feedback between prompts. They can run in parallel.
@@ -70,8 +70,10 @@ Global `~/.claude/CLAUDE.md` has grown since September; that can't be undone, so
 2. Write `RUN_RECORD.md` next to the logs, in the style of
    `../waltz_prompts/astra_logs/RUN_RECORD.md`: setup, times, tokens, cost, session ids, audit
    findings, any deviation.
-3. `git -C <copy> status` shows what the run made. Copy its output subfolder into
-   `~/githubs/music/` as `fable_<name>/` or `claude_<name>/`.
+3. `git -C <copy> status` shows what the run made. Copy a Fable run's output subfolder into
+   `~/githubs/music/` as `fable_<name>/`. Leave the TV runs' outputs where they are (see the
+   last section): render their recordings by pointing the shared pipeline at the copy, writing
+   output inside `~/githubs/music_trial_runs/`.
 4. Keep the `.jsonl` logs out of the public repo: they contain the system prompt with David's
    private global instructions. `~/githubs/music_trial_runs/` is outside the repo; leave them there.
 
@@ -94,10 +96,16 @@ Global `~/.claude/CLAUDE.md` has grown since September; that can't be undone, so
 - Keep blind judging: listen cards and videos never name the model; models appear only on tune
   cards and in a SPOILER line in YouTube descriptions.
 
-## Copyright choice for the TV themes
+## The TV themes are arrangements of copyrighted songs: keep them private
 
-The prompts ask for contrafacts: the themes' form and harmony as the basis, a new melody, at most
-a brief quote of the original, no lyrics. A note-for-note arrangement of either theme would
-reproduce a copyrighted melody, and the results are meant to be published on the page and
-YouTube. If David wants arrangements of the actual melodies for private use, change the prompts
-and keep those outputs off the public page.
+David asked (14 Nov) for arrangements that use the themes' actual melodies, not contrafacts. Both
+songs are under copyright, so the arrangements, sheets and recordings stay private:
+
+- Don't commit the TV outputs to `~/githubs/music` (a **public** GitHub repo). Keep them in
+  `~/githubs/music_trial_runs/` (outside any repo) or a private repo, and don't push their
+  renders anywhere public.
+- Don't put them on the public page, YouTube or other public sites. Publishing an arrangement or a
+  recording of it needs a licence (arrangement permission from the publisher, plus a mechanical
+  or sync licence for a recording or video). Tell David this before he decides on a round 3.
+- No lyrics in any output (the prompts say so); check the sheets and READMEs for stray lyric text.
+- Only the Fable runs' outputs (original tunes) may go into the public repo and page as before.
