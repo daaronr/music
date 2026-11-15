@@ -13,9 +13,14 @@ REC = os.path.join(RUNS_DIR, "private_recordings/output")
 TC = os.path.join(RUNS_DIR, "opus_threes_company/claude_threes_company/output")
 AF = os.path.join(RUNS_DIR, "opus_all_in_the_family/claude_those_were_the_days/output")
 
-TV_RECIPE = ("Rendered with the same engine and settings as the round-1 recordings (trumpet on "
-             "top, alto sax on the guitar line, piano, bass and drums), from the run's own lead "
-             "sheet, duo score and iReal chart. The engine's 4-bar intro replaces the written one.")
+TV_RECIPE = ("Rendered with the same engine and settings as the round-1 recordings, from the "
+             "run's own lead sheet, duo score and iReal chart. The engine's 4-bar intro replaces "
+             "the written one.")
+TV_MAIN = ("Band recording: clarinet and harmonica, with piano, bass and drums",
+           "Clarinet on the top line (Logic's solo clarinet samples), harmonica on the guitar "
+           "line (the General MIDI harmonica in MuseScore's soundfont). " )
+TV_ALT = ("Band recording: trumpet and alto sax, as in round 1",
+          "The round-1 instruments: trumpet on the top line, alto sax on the guitar line. ")
 
 TV_PROMPT_NOTE = ("Each run got one prompt, word for word, with no follow-ups: arrange the theme's "
                   "actual melody as a post-bop tune in the round-1 style, with a two-chorus trumpet "
@@ -53,7 +58,8 @@ TV_RUNS = [
         ],
         "xml_dir": f"{TC}/musicxml",
         "ireal": f"{TC}/ireal/Three_s_Company_post_bop_arr_iReal_link.txt",
-        "audio": (f"{REC}/threes_company_band_trumpet_alto.mp3", "Twos_Company_Three_band_trumpet_alto.mp3", "2:28"),
+        "audio": [(f"{REC}/threes_company_band_clarinet_harmonica.mp3", "Twos_Company_Three_band_clarinet_harmonica.mp3", "2:28"),
+                  (f"{REC}/threes_company_band_trumpet_alto.mp3", "Twos_Company_Three_band_trumpet_alto.mp3", "2:28")],
     },
     {
         "key": "those_were_the_days",
@@ -77,6 +83,7 @@ TV_RUNS = [
         ],
         "xml_dir": f"{AF}/musicxml",
         "ireal": f"{AF}/ireal/Those_Were_the_Days_iReal_link.txt",
-        "audio": (f"{REC}/those_were_the_days_band_trumpet_alto.mp3", "Those_Were_the_Days_band_trumpet_alto.mp3", "3:19"),
+        "audio": [(f"{REC}/those_were_the_days_band_clarinet_harmonica.mp3", "Those_Were_the_Days_band_clarinet_harmonica.mp3", "3:19"),
+                  (f"{REC}/those_were_the_days_band_trumpet_alto.mp3", "Those_Were_the_Days_band_trumpet_alto.mp3", "3:19")],
     },
 ]
