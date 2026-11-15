@@ -23,4 +23,6 @@ if [ ! -x "$BIN/claude" ]; then
   mv "$BIN/claude.tmp.$$" "$BIN/claude"
 fi
 export PATH="$BIN:$PATH"
-exec bash "$RUNNER" "$@"
+# caffeinate stops idle sleep while the run is alive. It cannot stop lid-close sleep: the first
+# attempt (14 Nov, 16:45) died when the network dropped and the lid was then closed on battery.
+exec caffeinate -i -s bash "$RUNNER" "$@"
