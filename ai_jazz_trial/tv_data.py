@@ -26,8 +26,8 @@ TV_PROMPT_NOTE = ("Each run got one prompt, word for word, with no follow-ups: a
 TV_RUNS = [
     {
         "key": "threes_company",
-        "name": "Three's Company",
-        "credit": "Theme from Three's Company (Joe Raposo, 1977), arranged by Claude Opus 5.5",
+        "name": "Two's Company Three",
+        "credit": "On the theme from Three's Company (Joe Raposo, 1977), arranged by Claude Opus 5.5",
         "meta": ["F major", "about 176 bpm", "A A B, 24 bars", "68 minutes, unattended"],
         "idea": ("The long notes of the tune become the bright note of a lydian chord, and the "
                  "lydian chords are chained a whole step apart (F, E♭, D♭), so each chord's triad "
@@ -53,7 +53,7 @@ TV_RUNS = [
         ],
         "xml_dir": f"{TC}/musicxml",
         "ireal": f"{TC}/ireal/Three_s_Company_post_bop_arr_iReal_link.txt",
-        "audio": (f"{REC}/threes_company_band_trumpet_alto.mp3", "Threes_Company_band_trumpet_alto.mp3", "2:28"),
+        "audio": (f"{REC}/threes_company_band_trumpet_alto.mp3", "Twos_Company_Three_band_trumpet_alto.mp3", "2:28"),
     },
     {
         "key": "those_were_the_days",
