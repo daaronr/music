@@ -139,11 +139,11 @@ def notes_from_bars(bars, start_bar: int, rng: random.Random, lag=0.0, jitter=0.
 
 # ------------------------------------------------------------------ harmony helpers
 
-def chord_timeline(changes, n_bars, start_bar, form_offset=0):
+def chord_timeline(changes, n_bars, start_bar, form_offset=0, form=32):
     """List of (abs_bar_float_start, chord) for the given span."""
     tl = []
     for b in range(n_bars):
-        form_bar = (b + form_offset) % 32
+        form_bar = (b + form_offset) % form
         for c in changes[form_bar]:
             pos = (c.tick % BAR) / 24.0
             tl.append((start_bar + b + pos / 4.0, c))
@@ -198,7 +198,9 @@ def walking_bass(segments, rng, two_feel_bars=set()):
     for (beat0, beats, ch, nxt, kind) in segments:
         tones = pcs(ch, "tones")
         first_pc = ch.root_pc
-        if kind == "second-bar":     # same chord continues: start on the 3rd or 5th
+        if getattr(ch, "bass_pc", None) is not None:   # slash chord: the named bass note
+            first_pc = ch.bass_pc
+        elif kind == "second-bar":   # same chord continues: start on the 3rd or 5th
             third = next(((ch.root_pc + i) % 12 for i in (4, 3) if (ch.root_pc + i) % 12 in tones),
                          ch.root_pc)
             fifth = next(((ch.root_pc + i) % 12 for i in (7, 8, 6) if (ch.root_pc + i) % 12 in tones),
@@ -305,18 +307,24 @@ COMP_PATTERNS = {   # (position in 8ths, length in beats, accent)
     "one": [(0, 1.0, 0)],
     "three": [(4, 1.5, 0)],
     "rest": [],
+    # added 28 Sep for variety (groove.py)
+    "dotted": [(0, 1.3, 0), (3, 1.3, 1)],
+    "offs": [(1, 0.3, 0), (3, 0.3, 0), (7, 0.6, 1)],
+    "and3": [(3, 0.4, 1), (5, 1.2, 0)],
 }
 
 
 def piano_comp(tl, bars, start_bar, density, rng):
     """density: function(abs_bar) -> dict of pattern weights."""
+    import groove
     notes: list[Note] = []
     prev = None
+    recent = []
     for b in range(bars):
         abs_bar = start_bar + b
         weights = density(abs_bar)
-        names = list(weights)
-        pat = rng.choices(names, weights=[weights[n] for n in names])[0]
+        names = [n for n in weights if n in COMP_PATTERNS]
+        pat = groove.pick_pattern(names, [weights[n] for n in names], recent, rng)
         for pos8, length, acc in COMP_PATTERNS[pat]:
             beat_pos = warp(pos8 * 12, 0.62)
             when_bar = abs_bar + beat_pos / 4

@@ -308,8 +308,9 @@ def main():
                    release=0.07, curve=1.1).render(perf["bass"], length)
     print("rendering drums...")
     hh_ok = lambda key, g: (not g.name.startswith("AnKit2:HH:o")) or g.name.startswith("AnKit2:HH:o1")
-    piece = {99: 1.0, 51: 1.0, 53: 0.9, 33: 0.55, 36: 0.9, 38: 0.55, 49: 0.6, 57: 0.6,
-             43: 0.6, 47: 0.6, 48: 0.6}
+    # ride down within the kit (28 Sep: it was too loud); closed hat and cross-stick for groove.py
+    piece = {99: 0.7, 51: 0.7, 53: 0.9, 33: 0.55, 36: 0.9, 38: 0.6, 49: 0.6, 57: 0.6,
+             43: 0.6, 47: 0.6, 48: 0.6, 42: 0.45, 37: 0.6}
     kit_notes = [n for n in perf["drums"]]
     for n in kit_notes:
         if n.midi == 51:
@@ -317,7 +318,7 @@ def main():
     drums = Sampled(KIT_EXS, curve=1.8).render(kit_notes, length, key_filter=hh_ok, gains=piece)
 
     # ---- balance: active-level targets relative to the trumpet
-    targets = {"tpt": 0.0, "alto": -0.5, "piano": -7.5, "bass": -4.0, "drums": -6.5}
+    targets = {"tpt": 0.0, "alto": -0.5, "piano": -7.5, "bass": -4.0, "drums": -8.0}   # drums were -6.5
     tracks = {"tpt": pan_mono(tpt, -0.22), "alto": shape_stereo(alto, 0.25, 0.22),
               "piano": shape_stereo(piano, 0.75, 0.12), "bass": pan_mono(bass.mean(axis=1, keepdims=True), 0.0),
               "drums": shape_stereo(drums, 0.85, -0.03)}

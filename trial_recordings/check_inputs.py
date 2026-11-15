@@ -16,11 +16,11 @@ import arrange  # noqa: E402
 import tunes  # noqa: E402
 
 for key, t in tunes.ALL.items():
-    form = parse_ireal(t.ireal_url, 32)
-    xml_roots = harmony_roots(t.solo_xml, t.solo_parts[0], list(range(64)))
+    form = parse_ireal(t.ireal_url, t.form)
+    xml_roots = harmony_roots(t.solo_xml, t.solo_parts[0], list(range(2 * t.form)))
     bad = []
-    for b in range(64):
-        want = [c.root_pc for c in form[b % 32]]
+    for b in range(2 * t.form):
+        want = [c.root_pc for c in form[b % t.form]]
         got = xml_roots[b]
         if got and got != want:
             bad.append((b + 1, want, got))

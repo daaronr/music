@@ -41,6 +41,11 @@ QUALITY = {
     "9#11": ({0, 4, 7, 10, 2}, LYD_DOM, [4, 10, 2, 6]),                    # Halation 9(#11)
     "7#11": ({0, 4, 7, 10}, LYD_DOM, [4, 10, 6, 9]),                       # Halation 7(#11)
     "13#11": ({0, 4, 7, 10}, LYD_DOM, [4, 10, 6, 9]),
+    # added 15 Nov 2026 for the TV-theme arrangements (no round-1 chart uses them)
+    "7sus": ({0, 5, 7, 10}, {0, 2, 5, 7, 9, 10}, [5, 10, 2, 9]),          # as 13sus
+    "9sus": ({0, 5, 7, 10}, {0, 2, 5, 7, 9, 10}, [5, 10, 2, 9]),          # as 13sus
+    "o7": ({0, 3, 6, 9}, {0, 2, 3, 5, 6, 8, 9, 11}, [3, 6, 9, 2]),        # whole-half diminished
+    "": ({0, 4, 7}, ION, [4, 9, 2, 7]),                                   # plain triad, as 6
 }
 
 NOTE_PC = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
@@ -52,6 +57,7 @@ class Chord:
     quality: str
     name: str
     tick: int = 0
+    bass_pc: int | None = None      # slash chord: the bass plays this on the chord's downbeat
 
     def text(self):
         return self.name
@@ -80,7 +86,13 @@ def parse_chord(tok: str) -> Chord:
     q = m.group(3)
     if q not in QUALITY:
         raise ValueError(f"no rhythm-section recipe for quality {q!r} ({tok})")
-    return Chord(pc, q, tok)
+    bass = None
+    if m.group(4):
+        b = re.match(r"^/([A-G])(b|#)?$", m.group(4))
+        if not b:
+            raise ValueError(f"bad slash bass {tok!r}")
+        bass = (NOTE_PC[b.group(1)] + {None: 0, "b": -1, "#": 1}[b.group(2)]) % 12
+    return Chord(pc, q, tok, bass_pc=bass)
 
 
 def parse_ireal(url: str, n_bars: int = 32) -> list[list[Chord]]:

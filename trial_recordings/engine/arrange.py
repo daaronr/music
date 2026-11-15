@@ -22,6 +22,7 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass, field
 
+import groove as G
 import perform as P
 from chords import Chord, parse_chord, parse_ireal
 from musiclib import BAR
@@ -35,13 +36,16 @@ class Tune:
     ireal_url: str
     head_xml: str
     head_part: int
-    head_in: list[int]              # lead-sheet measure indices, 32 bars
+    head_in: list[int]              # lead-sheet measure indices, one form (`form` bars)
     head_out: list[int]             # lead-sheet measure indices, head out incl. written ending
-    head_out_form_bars: int         # how many of head_out follow the 32-bar form
-    ending_chords: list[str]        # chords of the written-ending bars (after the form bars)
+    head_out_form_bars: int         # how many of head_out follow the form
+    ending_chords: list[str]        # chords of the written-ending bars (after the form bars);
+                                    # "Gm9 C13sus4" = two chords in one bar
     solo_xml: str
     solo_parts: tuple[int, int]     # (trumpet, guitar) part indices
     sections: dict = field(default_factory=dict)   # form bar -> label
+    form: int = 32                  # bars per chorus. Positions tied to the 32-bar form scale with it:
+                                    # chorus boundaries, "last 8 bars" and "second half" of a chorus
 
 
 def fit_alto(bars, lo=49, hi=80):
@@ -70,7 +74,7 @@ def with_ticks(bars_of_chords):
     for bi, bar in enumerate(bars_of_chords):
         k = len(bar)
         offs = {1: [0], 2: [0, 48], 3: [0, 48, 72], 4: [0, 24, 48, 72]}[k]
-        out.append([Chord(c.root_pc, c.quality, c.name, bi * BAR + o) for c, o in zip(bar, offs)])
+        out.append([Chord(c.root_pc, c.quality, c.name, bi * BAR + o, c.bass_pc) for c, o in zip(bar, offs)])
     return out
 
 
@@ -79,19 +83,22 @@ def build(t: Tune, seed: int = 7):
     BEAT = P.BEAT
     Note = P.Note
     rng = random.Random(seed)
-    changes = with_ticks(parse_ireal(t.ireal_url, 32))
+    F = t.form
+    changes = with_ticks(parse_ireal(t.ireal_url, F))
     head = read_part(t.head_xml, t.head_part, t.head_in)
     head_out = read_part(t.head_xml, t.head_part, t.head_out)
-    tpt_solo = read_part(t.solo_xml, t.solo_parts[0], list(range(64)))
-    sax_solo = read_part(t.solo_xml, t.solo_parts[1], list(range(64)))
-    assert len(head) == 32
+    tpt_solo = read_part(t.solo_xml, t.solo_parts[0], list(range(2 * F)))
+    sax_solo = read_part(t.solo_xml, t.solo_parts[1], list(range(2 * F)))
+    assert len(head) == F
 
     # the last note of the performance carries the fermata
     last = [e for bar in head_out for e in bar if e.kind == "note"][-1]
     if "F" not in last.flags:
         last.flags += "F"
 
-    INTRO, HEAD_IN, SOLO, HEAD_OUT = 0, 4, 36, 100
+    INTRO, HEAD_IN = 0, 4
+    SOLO = HEAD_IN + F
+    HEAD_OUT = SOLO + 2 * F
     END_BAR = HEAD_OUT + len(t.head_out) - 1
 
     # ---- horns (same order of random draws as the Halation build)
@@ -107,12 +114,12 @@ def build(t: Tune, seed: int = 7):
         n.db -= 1.5 if n.t < SOLO * 4 * BEAT or n.t > HEAD_OUT * 4 * BEAT else 0
 
     # ---- chord timeline
-    ending = [[parse_chord(c)] for c in t.ending_chords]
+    ending = [[parse_chord(x) for x in c.split()] for c in t.ending_chords]
     ending = with_ticks(ending)
-    tl = P.chord_timeline(changes, 4, INTRO, form_offset=28)
-    tl += P.chord_timeline(changes, 32, HEAD_IN)
-    tl += P.chord_timeline(changes, 64, SOLO)
-    tl += P.chord_timeline(changes, t.head_out_form_bars, HEAD_OUT)
+    tl = P.chord_timeline(changes, 4, INTRO, form_offset=F - 4, form=F)
+    tl += P.chord_timeline(changes, F, HEAD_IN, form=F)
+    tl += P.chord_timeline(changes, 2 * F, SOLO, form=F)
+    tl += P.chord_timeline(changes, t.head_out_form_bars, HEAD_OUT, form=F)
     for k, bar in enumerate(ending):
         for c in bar:
             tl.append((HEAD_OUT + t.head_out_form_bars + k + (c.tick % BAR) / 96, c))
@@ -136,10 +143,12 @@ def build(t: Tune, seed: int = 7):
     two_feel = set()
     labels = sorted(t.sections.items())
     for i, (start, label) in enumerate(labels):
-        end = labels[i + 1][0] if i + 1 < len(labels) else 32
+        end = labels[i + 1][0] if i + 1 < len(labels) else F
         if label.startswith("A"):
             two_feel |= set(range(HEAD_IN + start, HEAD_IN + end))
     bass = P.walking_bass(P.bass_segments(tl, END_BAR), rng, two_feel)
+    groove_rng = random.Random(seed + 1000)          # 28 Sep: livelier bass and drums (groove.py)
+    bass = G.bass_life(bass, BEAT, groove_rng)
     low_root = next(m for m in range(28, 40) if m % 12 == final.root_pc)
     bass.append(Note(t=END_BAR * 4 * BEAT, dur=6.0, midi=low_root, vel=100))
 
@@ -151,13 +160,13 @@ def build(t: Tune, seed: int = 7):
             return {"charleston": 3, "reverse": 2, "push4": 3, "twoand": 2, "long": 1}
         if ab < SOLO + 8:
             return {"rest": 1}
-        if ab < SOLO + 32:
-            return {"rest": 3, "one": 2, "long": 2, "push4": 1, "reverse": 1}
-        if ab < SOLO + 56:
-            return {"rest": 2, "charleston": 2, "push4": 2, "reverse": 1, "long": 1}
+        if ab < SOLO + F:
+            return {"rest": 3, "one": 2, "long": 2, "push4": 1, "reverse": 1, "dotted": 1, "and3": 1}
+        if ab < SOLO + 2 * F - 8:
+            return {"rest": 2, "charleston": 2, "push4": 2, "reverse": 1, "long": 1, "offs": 1, "dotted": 1}
         if ab < HEAD_OUT:
-            return {"charleston": 2, "twoand": 2, "push4": 2, "stabs": 1}
-        return {"charleston": 3, "reverse": 2, "push4": 3, "twoand": 2}
+            return {"charleston": 2, "twoand": 2, "push4": 2, "stabs": 1, "offs": 1, "and3": 1}
+        return {"charleston": 3, "reverse": 2, "push4": 3, "twoand": 2, "dotted": 1, "and3": 1}
     piano = P.piano_comp(tl, END_BAR, 0, density, rng)
     voicing = P.choose_voicing(final, None, rng)
     root2 = next(m for m in range(36, 48) if m % 12 == final.root_pc)
@@ -171,15 +180,33 @@ def build(t: Tune, seed: int = 7):
             return 0.25
         if ab < SOLO:
             return 0.45
-        if ab < SOLO + 32:
-            return 0.30 + 0.25 * (ab - SOLO) / 32
-        if ab < SOLO + 64:
-            x = (ab - SOLO - 32) / 32
-            return 0.55 + 0.4 * min(1, x * 1.6) if ab < SOLO + 59 else 0.6
+        if ab < SOLO + F:
+            return 0.30 + 0.25 * (ab - SOLO) / F
+        if ab < SOLO + 2 * F:
+            x = (ab - SOLO - F) / F
+            return 0.55 + 0.4 * min(1, x * 1.6) if ab < SOLO + 2 * F - 5 else 0.6
         return 0.5
-    fills = {HEAD_IN - 1, SOLO - 1, SOLO + 31, HEAD_OUT - 1, SOLO + 55}
-    crashes = {HEAD_IN, SOLO, SOLO + 32, HEAD_OUT, SOLO + 56, HEAD_IN + 24, SOLO + 24}
-    kit = P.drums(END_BAR, 0, intensity, rng, fills=fills, crashes=crashes)
+    fills = {HEAD_IN - 1, SOLO - 1, SOLO + F - 1, HEAD_OUT - 1, SOLO + 2 * F - 9}
+    crashes = {HEAD_IN, SOLO, SOLO + F, HEAD_OUT, SOLO + 2 * F - 8, HEAD_IN + F - 8, SOLO + F - 8}
+    # 28 Sep: groove.py drummer. Textures: closed hat on the head's non-A sections going in,
+    # cross-stick on them coming out, sparse under the duo's opening 8 bars, driving late in chorus 2
+    heads = [(HEAD_IN + s, lab) for s, lab in labels] + [(HEAD_OUT + s, lab) for s, lab in labels]
+    starts = sorted({HEAD_IN, SOLO, SOLO + F, HEAD_OUT} | {a for a, _ in heads} |
+                    {SOLO + s for s, _ in labels} | {SOLO + F + s for s, _ in labels})
+
+    def texture(ab):
+        if ab < HEAD_IN:
+            return "time"
+        if SOLO <= ab < HEAD_OUT:
+            if ab < SOLO + 8:
+                return "sparse"
+            return "drive" if ab >= SOLO + F + F // 2 else "time"
+        lab = max((h for h in heads if h[0] <= ab), key=lambda h: h[0])[1]
+        if lab.startswith("A"):
+            return "time"
+        return "hats" if ab < SOLO else "sidestick"
+    kit = G.drums(END_BAR, 4, BEAT, groove_rng, intensity, texture, section_starts=starts,
+                  fills=fills, crashes=crashes, note_cls=Note)
     for i in range(24):
         kit.append(Note(t=END_BAR * 4 * BEAT + i * 0.11, dur=0.5, midi=P.RIDE, vel=int(30 + i * 3)))
     kit.append(Note(t=END_BAR * 4 * BEAT + 24 * 0.11, dur=2, midi=P.CRASH, vel=110))
