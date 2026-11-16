@@ -89,6 +89,94 @@ def horn_note(x, ratio, dur, gain, flags, legato_in, vib_cents, vib_rate, releas
     return y * env[:, None] * gain
 
 
+# ------------------------------------------------------------------ expressive horns (--expressive)
+# Off by default, so the published recordings are unchanged. Uses its own random stream.
+
+EXPRESSIVE = False
+xrng = np.random.default_rng(23)
+
+
+def note_context(notes, i, slur_overlap):
+    """Duration (overlapping into slurs), slur glide in cents, scoop, phrase end."""
+    n = notes[i]
+    prv = notes[i - 1] if i > 0 else None
+    nxt = notes[i + 1] if i + 1 < len(notes) else None
+    dur = n.dur
+    if nxt and nxt.legato_in and nxt.t - (n.t + n.dur) < 0.05:
+        dur = max(dur, nxt.t - n.t + slur_overlap)
+    phrase_start = prv is None or n.t - (prv.t + prv.dur) > 0.25
+    phrase_end = nxt is None or nxt.t - (n.t + n.dur) > 0.25
+    glide = 0.0
+    if n.legato_in and prv is not None:
+        glide = -float(np.clip((n.midi - prv.midi) * 30, -70, 70))   # arrive from the last pitch
+    scoop = float(xrng.uniform(50, 110)) if (phrase_start and dur >= 0.3 and xrng.random() < 0.25) else 0.0
+    return dur, glide, scoop, phrase_end
+
+
+def horn_note_x(x, ratio, dur, gain, flags, legato_in, vib_cents, vib_rate, release,
+                glide=0.0, scoop=0.0, phrase_end=False):
+    """horn_note with varied attacks and vibrato, slur glides, and phrase-end tails."""
+    ext = 0.30 if ("f" in flags or "d" in flags) else 0.0
+    rel = release * (1.8 if phrase_end else 1.0)
+    n_out = int((dur + rel + ext) * SR)
+    t = np.arange(n_out) / SR
+    cents = np.zeros(n_out)
+    vc = vib_cents * xrng.uniform(0.6, 1.3)
+    vr = vib_rate + xrng.uniform(-0.4, 0.4)
+    if dur >= 0.6 and vc > 0:
+        onset = min(0.45, 0.35 * dur)
+        cents += vc * np.clip((t - onset) / 0.4, 0, 1) * np.sin(2 * np.pi * vr * t + xrng.uniform(0, 6.28))
+    if "s" in flags:
+        cents += -150 * np.clip(1 - t / 0.08, 0, 1) ** 1.5
+    elif scoop:
+        cents += -scoop * np.clip(1 - t / 0.07, 0, 1) ** 1.5
+    if glide:
+        cents += glide * np.exp(-t / 0.018)
+    if "f" in flags:
+        cents += -800 * np.clip((t - dur * 0.8) / 0.32, 0, 1) ** 2
+    if "d" in flags:
+        cents += 450 * np.clip((t - dur * 0.8) / 0.30, 0, 1) ** 1.5
+    if phrase_end and not ext:
+        cents += -18 * np.clip((t - dur * 0.9) / 0.15, 0, 1)
+    rate = ratio * 2 ** (cents / 1200)
+    skip = int(0.035 * SR) if legato_in else int(xrng.uniform(0, 0.006) * SR)
+    y = stretch(x[skip:], rate, n_out)
+    env = np.ones(len(y), dtype=np.float32)
+    if legato_in:
+        k = min(len(env), int(0.020 * SR))
+        env[:k] = np.linspace(0.5, 1, k)
+    r0 = int(dur * SR)
+    if r0 < len(env):
+        env[r0:] *= np.exp(-np.arange(len(env) - r0) / SR / ((rel + ext) / 4.6)).astype(np.float32)
+    return y * env[:, None] * gain * db2lin(xrng.normal(0, 0.8))
+
+
+def shape_note(y, dur, legato_in):
+    """A dynamic shape on long notes (swell or fade), a tongued accent, darker when softer.
+    Returns the shaped note and its envelope."""
+    t = np.arange(len(y)) / SR
+    e = np.ones(len(y))
+    if dur >= 0.45:
+        if xrng.random() < 0.6:
+            e = np.interp(t, [0, 0.35 * dur, dur], [1.0, 0.84, 1.06])
+        else:
+            e = np.interp(t, [0, 0.3 * dur, dur], [1.0, 0.95, 0.78])
+    if not legato_in:
+        e = e * (1 + 0.12 * np.clip(1 - t / 0.07, 0, 1))
+    e = e.astype(np.float32)
+    w = np.clip((e - 0.72) / 0.3, 0, 1)[:, None]
+    dark = lowpass(y, 1800)
+    return (w * y + (1 - w) * dark) * e[:, None], e
+
+
+def air_noise(y, e, level_db=-30):
+    """Breath noise under a sax note, following its envelope."""
+    nz = xrng.standard_normal(len(y)).astype(np.float32)
+    nz = sig.sosfilt(sig.butter(2, [1800, 7000], "bandpass", fs=SR, output="sos"), nz).astype(np.float32)
+    nz *= rms(y) * db2lin(level_db) / rms(nz) * e
+    return y + nz[:, None]
+
+
 class Trumpet:
     def __init__(self):
         d = np.load(CACHE / "trumpet_notes.npz")
@@ -108,8 +196,14 @@ class Trumpet:
             tune = float(self.notes[key + "_tune"])
             ratio = 2 ** ((n.midi - midi - tune) / 12)
             level = db2lin(n.db) * (0.10 / float(self.notes[key + "_rms"])) ** 0.75
-            y = horn_note(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=16, vib_rate=5.6,
-                          release=0.07)
+            if EXPRESSIVE:
+                dur, glide, scoop, pend = note_context(notes, i, 0.03)
+                y = horn_note_x(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=16, vib_rate=5.6,
+                                release=0.07, glide=glide, scoop=scoop, phrase_end=pend)
+                y, _ = shape_note(y, dur, n.legato_in)
+            else:
+                y = horn_note(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=16, vib_rate=5.6,
+                              release=0.07)
             fc = np.interp(n.db, [-14, -8, -4, 0], [2600, 4200, 7000, 16000])
             y = lowpass(y, fc)
             for g_i, g in enumerate(n.graces):
@@ -140,8 +234,15 @@ class Alto:
             root = z.key - z.coarse - z.fine / 100      # EXS tuning is added to the pitch
             ratio = 2 ** ((n.midi - root) / 12)
             level = db2lin(n.db) * 0.10 / r
-            y = horn_note(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=20, vib_rate=5.2,
-                          release=0.09)
+            if EXPRESSIVE:
+                dur, glide, scoop, pend = note_context(notes, i, 0.03)
+                y = horn_note_x(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=20, vib_rate=5.2,
+                                release=0.09, glide=glide, scoop=scoop, phrase_end=pend)
+                y, e = shape_note(y, dur, n.legato_in)
+                y = air_noise(y, e)
+            else:
+                y = horn_note(x, ratio, dur, level, n.flags, n.legato_in, vib_cents=20, vib_rate=5.2,
+                              release=0.09)
             fc = np.interp(n.db, [-14, -8, -4, 0], [2400, 3800, 6500, 15000])
             place(buf, n.t, lowpass(y, fc))
         return buf
@@ -283,7 +384,11 @@ def main():
     ap.add_argument("--seconds", type=float, default=None)
     ap.add_argument("--out", default=None)
     ap.add_argument("--stems", action="store_true")
+    ap.add_argument("--expressive", action="store_true",
+                    help="varied attacks and vibrato, slur glides, swells, sax breath (default off)")
     args = ap.parse_args()
+    global EXPRESSIVE
+    EXPRESSIVE = args.expressive
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     tune = tunes.ALL[args.tune]
