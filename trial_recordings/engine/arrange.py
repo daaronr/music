@@ -46,6 +46,9 @@ class Tune:
     sections: dict = field(default_factory=dict)   # form bar -> label
     form: int = 32                  # bars per chorus. Positions tied to the 32-bar form scale with it:
                                     # chorus boundaries, "last 8 bars" and "second half" of a chorus
+    piano_solo_xml: str | None = None   # optional written piano solo (right hand), played after the
+    piano_solo_part: int = 0            # duo choruses while the horns rest; None = no piano solo
+    piano_solo_choruses: int = 2
 
 
 def fit_alto(bars, lo=49, hi=80):
@@ -98,8 +101,13 @@ def build(t: Tune, seed: int = 7):
 
     INTRO, HEAD_IN = 0, 4
     SOLO = HEAD_IN + F
-    HEAD_OUT = SOLO + 2 * F
+    PSOLO = SOLO + 2 * F                       # piano solo (only when the tune has one)
+    PS_BARS = t.piano_solo_choruses * F if t.piano_solo_xml else 0
+    HEAD_OUT = PSOLO + PS_BARS
     END_BAR = HEAD_OUT + len(t.head_out) - 1
+
+    def in_psolo(ab):
+        return PS_BARS > 0 and PSOLO <= ab < HEAD_OUT
 
     # ---- horns (same order of random draws as the Halation build)
     trumpet = P.notes_from_bars(head, HEAD_IN, rng, lag=0.010, base_dyn="mf")
@@ -119,6 +127,8 @@ def build(t: Tune, seed: int = 7):
     tl = P.chord_timeline(changes, 4, INTRO, form_offset=F - 4, form=F)
     tl += P.chord_timeline(changes, F, HEAD_IN, form=F)
     tl += P.chord_timeline(changes, 2 * F, SOLO, form=F)
+    if PS_BARS:
+        tl += P.chord_timeline(changes, PS_BARS, PSOLO, form=F)
     tl += P.chord_timeline(changes, t.head_out_form_bars, HEAD_OUT, form=F)
     for k, bar in enumerate(ending):
         for c in bar:
@@ -154,6 +164,8 @@ def build(t: Tune, seed: int = 7):
 
     # ---- piano (Halation densities)
     def density(ab):
+        if in_psolo(ab):                     # left hand under the piano's own solo
+            return {"one": 3, "push4": 2, "long": 2, "rest": 1, "reverse": 1}
         if ab < HEAD_IN:
             return {"charleston": 3, "long": 2, "push4": 2}
         if ab < SOLO:
@@ -168,6 +180,21 @@ def build(t: Tune, seed: int = 7):
             return {"charleston": 2, "twoand": 2, "push4": 2, "stabs": 1, "offs": 1, "and3": 1}
         return {"charleston": 3, "reverse": 2, "push4": 3, "twoand": 2, "dotted": 1, "and3": 1}
     piano = P.piano_comp(tl, END_BAR, 0, density, rng)
+    if PS_BARS:
+        # left hand: comping chords in the piano-solo bars sit below the right hand
+        t0, t1 = PSOLO * 4 * BEAT - 0.3, HEAD_OUT * 4 * BEAT - 0.3
+        for n in piano:
+            if t0 <= n.t < t1 and n.midi >= 60:
+                n.midi -= 12
+                n.vel = max(30, n.vel - 8)
+        ps_rng = random.Random(seed + 2000)
+        ps_bars = read_part(t.piano_solo_xml, t.piano_solo_part, list(range(PS_BARS)))
+        rh = P.notes_from_bars(ps_bars, PSOLO, ps_rng, lag=0.004, base_dyn="mf")
+        for n in rh:
+            n.vel = int(max(40, min(118, 84 + 3 * n.db)))
+            n.db = 0.0
+            n.flags += "R"                  # right-hand line: not pedalled like the comping
+        piano += rh
     voicing = P.choose_voicing(final, None, rng)
     root2 = next(m for m in range(36, 48) if m % 12 == final.root_pc)
     ninth = next(m for m in range(74, 86) if m % 12 == (final.root_pc + 2) % 12)
@@ -176,6 +203,9 @@ def build(t: Tune, seed: int = 7):
 
     # ---- drums (Halation curve and form positions)
     def intensity(ab):
+        if in_psolo(ab):
+            x = (ab - PSOLO) / PS_BARS
+            return 0.35 + 0.3 * x
         if ab < HEAD_IN:
             return 0.25
         if ab < SOLO:
@@ -188,13 +218,20 @@ def build(t: Tune, seed: int = 7):
         return 0.5
     fills = {HEAD_IN - 1, SOLO - 1, SOLO + F - 1, HEAD_OUT - 1, SOLO + 2 * F - 9}
     crashes = {HEAD_IN, SOLO, SOLO + F, HEAD_OUT, SOLO + 2 * F - 8, HEAD_IN + F - 8, SOLO + F - 8}
+    if PS_BARS:
+        fills |= {PSOLO - 1, PSOLO + F - 1}
+        crashes |= {PSOLO, PSOLO + F}
     # 28 Sep: groove.py drummer. Textures: closed hat on the head's non-A sections going in,
     # cross-stick on them coming out, sparse under the duo's opening 8 bars, driving late in chorus 2
     heads = [(HEAD_IN + s, lab) for s, lab in labels] + [(HEAD_OUT + s, lab) for s, lab in labels]
     starts = sorted({HEAD_IN, SOLO, SOLO + F, HEAD_OUT} | {a for a, _ in heads} |
-                    {SOLO + s for s, _ in labels} | {SOLO + F + s for s, _ in labels})
+                    {SOLO + s for s, _ in labels} | {SOLO + F + s for s, _ in labels} |
+                    ({PSOLO + c * F + s for c in range(t.piano_solo_choruses) for s, _ in labels}
+                     if PS_BARS else set()))
 
     def texture(ab):
+        if in_psolo(ab):
+            return "time"
         if ab < HEAD_IN:
             return "time"
         if SOLO <= ab < HEAD_OUT:

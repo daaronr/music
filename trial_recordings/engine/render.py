@@ -182,7 +182,8 @@ def pedal_piano(notes, max_hold=1.6):
     Longer chords are usually pedalled (ringing until just after the next chord lands, up to
     max_hold), short stabs usually played dry; dynamics are wider than written, with a slow
     swell across phrases; the top note of each voicing is brought out, inner notes softened."""
-    notes = sorted(notes, key=lambda n: n.t)
+    everything = notes
+    notes = sorted((n for n in notes if "R" not in n.flags), key=lambda n: n.t)   # R: a solo line
     groups, cur = [], []
     for n in notes:
         if cur and n.t - cur[0].t > 0.03:
@@ -208,7 +209,7 @@ def pedal_piano(notes, max_hold=1.6):
             bump = (8 if n.midi == top else (2 if n.midi == bottom else -4)) if len(g) > 1 else 0
             v = 62 + (n.vel - 62) * 1.3 + swell + bump + xrng.integers(-3, 4)
             n.vel = int(max(28, min(120, v)))
-    return notes
+    return sorted(everything, key=lambda n: n.t)
 
 
 class Trumpet:
