@@ -97,8 +97,13 @@ def notes_from_bars(bars, start_bar: int, rng: random.Random, lag=0.0, jitter=0.
         t0 = (start_bar + bar0) * 4 * BEAT + b0 * BEAT
         t1 = (start_bar + bar1) * 4 * BEAT + b1 * BEAT
         pitches = [p.midi for p in first.pitches]
+        extra = []
         if len(pitches) > 1:
-            pitches = [max(pitches)] if chord_pick == "top" else [min(pitches)]
+            if chord_pick == "all":            # a pianist's octave or chord: play every note
+                extra = sorted(pitches)[:-1]
+                pitches = [max(pitches)]
+            else:
+                pitches = [max(pitches)] if chord_pick == "top" else [min(pitches)]
         midi = pitches[0] + 12 * octave
         if clamp:
             while midi < clamp[0]:
@@ -115,6 +120,9 @@ def notes_from_bars(bars, start_bar: int, rng: random.Random, lag=0.0, jitter=0.
         jit = rng.gauss(0, jitter)
         out.append(Note(t=t0 + lag + jit, dur=max(0.05, t1 - t0), midi=midi, db=db, flags=flags,
                         graces=[g.midi + 12 * octave for g in first.graces]))
+        for m in extra:                        # lower notes of a written chord ("all" only)
+            out.append(Note(t=t0 + lag + jit, dur=max(0.05, t1 - t0), midi=m + 12 * octave,
+                            db=db - 2, flags=flags + "C"))
         i = j + 1
     # phrasing: legato between touching notes, bebop upbeat lift, contour accents
     for k, n in enumerate(out):

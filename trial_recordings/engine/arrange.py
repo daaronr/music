@@ -210,9 +210,24 @@ def build(t: Tune, seed: int = 7):
                 n.flags += "L"                 # left hand under a solo: stays soft
         ps_rng = random.Random(seed + 2000)
         ps_bars = read_part(t.piano_solo_xml, t.piano_solo_part, list(range(PS_BARS)))
-        rh = P.notes_from_bars(ps_bars, PSOLO, ps_rng, lag=0.004, base_dyn="mf")
-        for n in rh:
-            n.vel = int(max(40, min(118, 84 + 3 * n.db)))
+        rh = P.notes_from_bars(ps_bars, PSOLO, ps_rng, lag=0.004, base_dyn="mf", chord_pick="all")
+        # right-hand touch: the written dynamics over a wide range (p ~ 54, ff ~ 114), shaped
+        # within each phrase - higher notes louder, weak off-beat eighths ghosted, notes that
+        # land after a run leaned on, fast runs a touch lighter
+        line = [n for n in rh if "C" not in n.flags]
+        for k, n in enumerate(rh):
+            pos = (n.t / BEAT) % 1.0
+            v = 102 + 4.0 * n.db
+            near = [m.midi for m in line if abs(m.t - n.t) < 2.0]
+            v += 0.9 * (n.midi - sum(near) / len(near))
+            if 0.45 < pos < 0.85 and n.dur < 0.6 * BEAT:
+                v -= 8                          # ghosted upbeat
+            if n.dur >= 1.4 * BEAT:
+                v += 6                          # a landing note
+            if n.dur < 0.3 * BEAT:
+                v -= 3                          # 16ths: lighter, even
+            v += ps_rng.gauss(0, 3)
+            n.vel = int(max(34, min(122, v)))
             n.db = 0.0
             n.flags += "R"                  # right-hand line: not pedalled like the comping
         piano += rh
