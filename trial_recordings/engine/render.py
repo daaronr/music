@@ -241,6 +241,8 @@ def pedal_piano(notes, max_hold=1.6):
             bump = (8 if n.midi == top else (2 if n.midi == bottom else -5)) if len(g) > 1 else 0
             v = 60 + (n.vel - 62) * 1.2 + swell + accent + bump + xrng.integers(-3, 4)
             n.vel = int(max(26, min(118, v)))
+            if "L" in n.flags:                          # left hand under a piano solo: soft
+                n.vel = int(min(n.vel, 50))
     everything = [n for n in everything if n.vel > 0] + added
     return sorted(everything, key=lambda n: n.t)
 

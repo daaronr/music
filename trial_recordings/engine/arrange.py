@@ -49,6 +49,8 @@ class Tune:
     piano_solo_xml: str | None = None   # optional written piano solo (right hand), played after the
     piano_solo_part: int = 0            # duo choruses while the horns rest; None = no piano solo
     piano_solo_choruses: int = 2
+    reactive: bool = False              # bass and drums react to the soloists (two-feel and space
+                                        # at the start of a solo, snare/kick answers to accents)
 
 
 def fit_alto(bars, lo=49, hi=80):
@@ -156,6 +158,10 @@ def build(t: Tune, seed: int = 7):
         end = labels[i + 1][0] if i + 1 < len(labels) else F
         if label.startswith("A"):
             two_feel |= set(range(HEAD_IN + start, HEAD_IN + end))
+    if t.reactive:                     # each solo opens in two, then walks
+        two_feel |= set(range(SOLO, SOLO + 8))
+        if PS_BARS:
+            two_feel |= set(range(PSOLO, PSOLO + 8))
     bass = P.walking_bass(P.bass_segments(tl, END_BAR), rng, two_feel)
     groove_rng = random.Random(seed + 1000)          # 28 Sep: livelier bass and drums (groove.py)
     bass = G.bass_life(bass, BEAT, groove_rng)
@@ -164,8 +170,8 @@ def build(t: Tune, seed: int = 7):
 
     # ---- piano (Halation densities)
     def density(ab):
-        if in_psolo(ab):                     # left hand under the piano's own solo
-            return {"one": 3, "push4": 2, "long": 2, "rest": 1, "reverse": 1}
+        if in_psolo(ab):                     # left hand under the piano's own solo: sparse
+            return {"one": 3, "push4": 2, "long": 2, "rest": 4, "three": 1}
         if ab < HEAD_IN:
             return {"charleston": 3, "long": 2, "push4": 2}
         if ab < SOLO:
@@ -182,11 +188,26 @@ def build(t: Tune, seed: int = 7):
     piano = P.piano_comp(tl, END_BAR, 0, density, rng)
     if PS_BARS:
         # left hand: comping chords in the piano-solo bars sit below the right hand
+        # left hand: soft two-note shells (bottom and top of each voicing), below middle C
         t0, t1 = PSOLO * 4 * BEAT - 0.3, HEAD_OUT * 4 * BEAT - 0.3
+        lh = sorted((n for n in piano if t0 <= n.t < t1), key=lambda n: n.t)
+        keep = set()
+        i = 0
+        while i < len(lh):
+            j = i
+            while j + 1 < len(lh) and lh[j + 1].t - lh[i].t < 0.03:
+                j += 1
+            g = sorted(lh[i:j + 1], key=lambda n: n.midi)
+            for n in (g[0], g[-1]) if len(g) > 1 else g:
+                keep.add(id(n))
+            i = j + 1
+        piano = [n for n in piano if not (t0 <= n.t < t1) or id(n) in keep]
         for n in piano:
-            if t0 <= n.t < t1 and n.midi >= 60:
-                n.midi -= 12
-                n.vel = max(30, n.vel - 8)
+            if t0 <= n.t < t1:
+                while n.midi >= 60:
+                    n.midi -= 12
+                n.vel = max(28, min(52, n.vel - 22))
+                n.flags += "L"                 # left hand under a solo: stays soft
         ps_rng = random.Random(seed + 2000)
         ps_bars = read_part(t.piano_solo_xml, t.piano_solo_part, list(range(PS_BARS)))
         rh = P.notes_from_bars(ps_bars, PSOLO, ps_rng, lag=0.004, base_dyn="mf")
@@ -203,9 +224,13 @@ def build(t: Tune, seed: int = 7):
 
     # ---- drums (Halation curve and form positions)
     def intensity(ab):
-        if in_psolo(ab):
-            x = (ab - PSOLO) / PS_BARS
-            return 0.35 + 0.3 * x
+        if in_psolo(ab):                   # quiet start, build through chorus 2, settle for home
+            k = ab - PSOLO
+            if k < F:
+                return 0.28 + 0.14 * k / F
+            if k < 2 * F - 8:
+                return 0.45 + 0.4 * (k - F) / (F - 8)
+            return 0.5
         if ab < HEAD_IN:
             return 0.25
         if ab < SOLO:
@@ -231,7 +256,10 @@ def build(t: Tune, seed: int = 7):
 
     def texture(ab):
         if in_psolo(ab):
-            return "time"
+            k = ab - PSOLO
+            if k < 8:
+                return "sparse"
+            return "drive" if F + F // 2 <= k < 2 * F - 8 else "time"
         if ab < HEAD_IN:
             return "time"
         if SOLO <= ab < HEAD_OUT:
@@ -244,6 +272,26 @@ def build(t: Tune, seed: int = 7):
         return "hats" if ab < SOLO else "sidestick"
     kit = G.drums(END_BAR, 4, BEAT, groove_rng, intensity, texture, section_starts=starts,
                   fills=fills, crashes=crashes, note_cls=Note)
+    if t.reactive:
+        # the drummer answers the soloists: snare (sometimes with kick) on their anticipations
+        # and on long notes that land after a run
+        r_rng = random.Random(seed + 3000)
+        lines = [[n for n in trumpet if SOLO * 4 * BEAT <= n.t < PSOLO * 4 * BEAT],
+                 [n for n in alto if SOLO * 4 * BEAT <= n.t < PSOLO * 4 * BEAT],
+                 [n for n in piano if "R" in n.flags]]
+        for line in lines:
+            for k, n in enumerate(line):
+                ab = int(n.t / (4 * BEAT))
+                pos = (n.t / BEAT) % 1.0
+                antic = 0.55 < pos < 0.85 and n.dur >= 0.8 * BEAT
+                landing = n.dur >= 1.5 * BEAT and k > 2 and line[k - 1].dur < 0.6 * BEAT
+                if not (antic or landing) or r_rng.random() > 0.45:
+                    continue
+                lvl = intensity(ab)
+                kit.append(Note(t=n.t + r_rng.gauss(0, 0.004), dur=0.2, midi=P.SNARE,
+                                vel=int(40 + 45 * lvl + r_rng.gauss(0, 5))))
+                if r_rng.random() < 0.35:
+                    kit.append(Note(t=n.t, dur=0.2, midi=P.KICK, vel=int(45 + 40 * lvl)))
     for i in range(24):
         kit.append(Note(t=END_BAR * 4 * BEAT + i * 0.11, dur=0.5, midi=P.RIDE, vel=int(30 + i * 3)))
     kit.append(Note(t=END_BAR * 4 * BEAT + 24 * 0.11, dur=2, midi=P.CRASH, vel=110))
