@@ -24,6 +24,11 @@ TV_ALT = ("Band recording: the round-1 trumpet and alto sax",
           "The same instruments as the round-1 recordings: the University of Iowa trumpet and "
           "GarageBand's alto sax. ")
 
+TV_WHISTLE = ("Band recording: whistle and clarinet, with piano, organ, bass and drums",
+              "A synthesized whistle on the melody (an octave up), the VSCO 2 Community Edition "
+              "clarinet (CC0) on the guitar line. The piano mixes pedalled and dry chords; a smooth "
+              "jazz organ (also synthesized) takes over the comping in both bridges and the second "
+              "solo chorus. ")
 TV_PROMPT_NOTE = ("Each run got one prompt, word for word, with no follow-ups: arrange the theme's "
                   "actual melody as a post-bop tune in the round-1 style, with a two-chorus trumpet "
                   "and guitar duo solo, sheet music and an iReal Pro chart, and no lyrics. "
@@ -60,8 +65,10 @@ TV_RUNS = [
         ],
         "xml_dir": f"{TC}/musicxml",
         "ireal": f"{TC}/ireal/Three_s_Company_post_bop_arr_iReal_link.txt",
-        "audio": [(f"{REC}/threes_company_band_vsco_weresax.mp3", "Twos_Company_Three_band_trumpet_alto_v2.mp3", "2:28"),
-                  (f"{REC}/threes_company_band_trumpet_alto.mp3", "Twos_Company_Three_band_trumpet_alto.mp3", "2:28")],
+        "audio": [(f"{REC}/threes_company_band_whistle_vscoclarinet_organ3sections.mp3",
+                   "Twos_Company_Three_band_whistle_clarinet.mp3", "2:28") + TV_WHISTLE,
+                  (f"{REC}/threes_company_band_vsco_weresax.mp3", "Twos_Company_Three_band_trumpet_alto_v2.mp3", "2:28") + TV_MAIN,
+                  (f"{REC}/threes_company_band_trumpet_alto.mp3", "Twos_Company_Three_band_trumpet_alto.mp3", "2:28") + TV_ALT],
     },
     {
         "key": "those_were_the_days",
