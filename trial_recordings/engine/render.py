@@ -192,23 +192,56 @@ def pedal_piano(notes, max_hold=1.6):
         cur.append(n)
     if cur:
         groups.append(cur)
+    beat = arrange.P.BEAT
+    Note = arrange.P.Note
     phase = xrng.uniform(0, 6.28)
+    phase2 = xrng.uniform(0, 6.28)
+    added = []
     for gi, g in enumerate(groups):
         nxt = groups[gi + 1][0].t if gi + 1 < len(groups) else g[0].t + max_hold
-        hold = min(nxt - g[0].t + 0.03, max_hold)
+        gap = nxt - g[0].t
+        hold = min(gap + 0.03, max_hold)
         longest = max(n.dur for n in g)
-        pedal = xrng.random() < (0.75 if longest >= 0.45 else 0.3)
-        swell = 9 * np.sin(2 * np.pi * g[0].t / 5.6 + phase) + xrng.normal(0, 4)
+        short = longest < 0.6 * beat
+        stab = short and xrng.random() < 0.25          # a real dry stab now and then
+        pedal = (not stab) and xrng.random() < (0.85 if not short else 0.5)
+        # dynamics: a slow phrase swell and a faster breath, accented anticipations, soft pads
+        swell = 12 * np.sin(2 * np.pi * g[0].t / 5.6 + phase) + 5 * np.sin(2 * np.pi * g[0].t / 2.3 + phase2)
+        pos = (g[0].t / beat) % 1.0
+        accent = 8 if 0.45 < pos < 0.85 else 0
+        if longest >= 2.5 * beat:
+            accent -= 8                                 # whole-bar pads sit underneath
+        accent += xrng.normal(0, 5)
+        # voicing: spread (drop-2), a doubled bass note, or a thinner shell
+        g.sort(key=lambda n: n.midi)
+        r = xrng.random()
+        if len(g) >= 3 and r < 0.35 and g[-2].midi - 12 >= 45:
+            g[-2].midi -= 12                            # drop the second-highest voice an octave
+            g.sort(key=lambda n: n.midi)
+        elif len(g) >= 3 and r < 0.55 and g[0].midi - 12 >= 36:
+            low = Note(t=g[0].t - 0.008, dur=g[0].dur, midi=g[0].midi - 12, vel=g[0].vel - 6,
+                       db=g[0].db)
+            added.append(low)
+            g.insert(0, low)                            # left hand doubles the bottom an octave down
+        elif len(g) >= 4 and r < 0.7:
+            gone = g.pop(1)                             # thin to a shell: drop an inner voice
+            gone.vel = 0
+        roll = longest >= 0.9 * beat and xrng.random() < 0.4
         top = max(n.midi for n in g)
         bottom = min(n.midi for n in g)
-        for n in g:
-            if pedal:
-                n.dur = max(n.dur, hold - (n.t - g[0].t))
-            elif longest < 0.45:
-                n.dur *= 0.85                                  # a dry stab, slightly clipped
-            bump = (8 if n.midi == top else (2 if n.midi == bottom else -4)) if len(g) > 1 else 0
-            v = 62 + (n.vel - 62) * 1.3 + swell + bump + xrng.integers(-3, 4)
-            n.vel = int(max(28, min(120, v)))
+        for k, n in enumerate(g):
+            if roll:
+                n.t = g[0].t + k * xrng.uniform(0.012, 0.024)     # a gentle upward roll
+            if stab:
+                n.dur = min(n.dur, 0.45 * beat)
+            else:
+                n.dur = max(n.dur, 0.75 * beat if gap >= 0.75 * beat else n.dur)
+                if pedal:
+                    n.dur = max(n.dur, hold - (n.t - g[0].t))
+            bump = (8 if n.midi == top else (2 if n.midi == bottom else -5)) if len(g) > 1 else 0
+            v = 60 + (n.vel - 62) * 1.2 + swell + accent + bump + xrng.integers(-3, 4)
+            n.vel = int(max(26, min(118, v)))
+    everything = [n for n in everything if n.vel > 0] + added
     return sorted(everything, key=lambda n: n.t)
 
 
