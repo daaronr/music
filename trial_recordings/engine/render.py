@@ -177,6 +177,33 @@ def air_noise(y, e, level_db=-30):
     return y + nz[:, None]
 
 
+def pedal_piano(notes, max_hold=1.6):
+    """Expressive mode: legato pedalling and voicing balance for the comping.
+    Each chord rings until just after the next chord sounds (the pedal is changed as the new
+    chord lands), up to max_hold; the top note of each voicing is brought out, inner notes
+    softened."""
+    notes = sorted(notes, key=lambda n: n.t)
+    groups, cur = [], []
+    for n in notes:
+        if cur and n.t - cur[0].t > 0.03:
+            groups.append(cur)
+            cur = []
+        cur.append(n)
+    if cur:
+        groups.append(cur)
+    for gi, g in enumerate(groups):
+        nxt = groups[gi + 1][0].t if gi + 1 < len(groups) else g[0].t + max_hold
+        hold = min(nxt - g[0].t + 0.03, max_hold)
+        top = max(n.midi for n in g)
+        bottom = min(n.midi for n in g)
+        for n in g:
+            n.dur = max(n.dur, hold - (n.t - g[0].t))
+            if len(g) > 1:
+                bump = 8 if n.midi == top else (2 if n.midi == bottom else -4)
+                n.vel = int(max(30, min(118, n.vel + bump + xrng.integers(-3, 4))))
+    return notes
+
+
 class Trumpet:
     def __init__(self):
         d = np.load(CACHE / "trumpet_notes.npz")
@@ -406,8 +433,9 @@ def main():
     print("rendering alto sax...")
     alto = Alto().render(perf["alto"], length)
     print("rendering piano...")
-    piano = Sampled(PIANO_EXS, group_filter=lambda g: not g.name.startswith("p"), release=0.22,
-                    curve=1.5).render(perf["piano"], length)
+    piano_notes = pedal_piano(perf["piano"]) if EXPRESSIVE else perf["piano"]
+    piano = Sampled(PIANO_EXS, group_filter=lambda g: not g.name.startswith("p"),
+                    release=0.45 if EXPRESSIVE else 0.22, curve=1.5).render(piano_notes, length)
     print("rendering bass...")
     bass = Sampled(BASS_EXS, group_filter=lambda g: not g.name.startswith("NOTE"), transpose=12,
                    release=0.07, curve=1.1).render(perf["bass"], length)
