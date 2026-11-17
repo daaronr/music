@@ -420,6 +420,8 @@ def main():
     ap.add_argument("--stems", action="store_true")
     ap.add_argument("--expressive", action="store_true",
                     help="varied attacks and vibrato, slur glides, swells, sax breath (default off)")
+    ap.add_argument("--piano-db", type=float, default=-7.5,
+                    help="piano level relative to the top horn, in dB (default -7.5)")
     args = ap.parse_args()
     global EXPRESSIVE
     EXPRESSIVE = args.expressive
@@ -458,7 +460,7 @@ def main():
     drums = Sampled(KIT_EXS, curve=1.8).render(kit_notes, length, key_filter=hh_ok, gains=piece)
 
     # ---- balance: active-level targets relative to the trumpet
-    targets = {"tpt": 0.0, "alto": -0.5, "piano": -7.5, "bass": -4.0, "drums": -8.0}   # drums were -6.5
+    targets = {"tpt": 0.0, "alto": -0.5, "piano": args.piano_db, "bass": -4.0, "drums": -8.0}   # drums were -6.5
     tracks = {"tpt": pan_mono(tpt, -0.22), "alto": shape_stereo(alto, 0.25, 0.22),
               "piano": shape_stereo(piano, 0.75, 0.12), "bass": pan_mono(bass.mean(axis=1, keepdims=True), 0.0),
               "drums": shape_stereo(drums, 0.85, -0.03)}
