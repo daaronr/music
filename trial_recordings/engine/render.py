@@ -178,10 +178,10 @@ def air_noise(y, e, level_db=-30):
 
 
 def pedal_piano(notes, max_hold=1.6):
-    """Expressive mode: legato pedalling and voicing balance for the comping.
-    Each chord rings until just after the next chord sounds (the pedal is changed as the new
-    chord lands), up to max_hold; the top note of each voicing is brought out, inner notes
-    softened."""
+    """Expressive mode: pedalling, dynamics and voicing balance for the comping.
+    Longer chords are usually pedalled (ringing until just after the next chord lands, up to
+    max_hold), short stabs usually played dry; dynamics are wider than written, with a slow
+    swell across phrases; the top note of each voicing is brought out, inner notes softened."""
     notes = sorted(notes, key=lambda n: n.t)
     groups, cur = [], []
     for n in notes:
@@ -191,16 +191,23 @@ def pedal_piano(notes, max_hold=1.6):
         cur.append(n)
     if cur:
         groups.append(cur)
+    phase = xrng.uniform(0, 6.28)
     for gi, g in enumerate(groups):
         nxt = groups[gi + 1][0].t if gi + 1 < len(groups) else g[0].t + max_hold
         hold = min(nxt - g[0].t + 0.03, max_hold)
+        longest = max(n.dur for n in g)
+        pedal = xrng.random() < (0.75 if longest >= 0.45 else 0.3)
+        swell = 9 * np.sin(2 * np.pi * g[0].t / 5.6 + phase) + xrng.normal(0, 4)
         top = max(n.midi for n in g)
         bottom = min(n.midi for n in g)
         for n in g:
-            n.dur = max(n.dur, hold - (n.t - g[0].t))
-            if len(g) > 1:
-                bump = 8 if n.midi == top else (2 if n.midi == bottom else -4)
-                n.vel = int(max(30, min(118, n.vel + bump + xrng.integers(-3, 4))))
+            if pedal:
+                n.dur = max(n.dur, hold - (n.t - g[0].t))
+            elif longest < 0.45:
+                n.dur *= 0.85                                  # a dry stab, slightly clipped
+            bump = (8 if n.midi == top else (2 if n.midi == bottom else -4)) if len(g) > 1 else 0
+            v = 62 + (n.vel - 62) * 1.3 + swell + bump + xrng.integers(-3, 4)
+            n.vel = int(max(28, min(120, v)))
     return notes
 
 
