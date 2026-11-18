@@ -29,6 +29,12 @@ TV_WHISTLE = ("Band recording: whistle and clarinet, with piano, organ, bass and
               "clarinet (CC0) on the guitar line. The piano mixes pedalled and dry chords; a smooth "
               "jazz organ (also synthesized) takes over the comping in both bridges and the second "
               "solo chorus. ")
+PS = os.path.join(RUNS_DIR, "private_recordings/piano_solo/output")
+TV_PSOLO = ("Band recording with a two-chorus piano solo: trumpet, alto sax, piano, bass and drums",
+            "Not part of the run: the piano solo (2:23-3:54) was written afterwards by Claude Opus 5.5 "
+            "at David's request, as a lesson in choosing pentatonic scales over these changes; its "
+            "sheet is in the list below. Bass and drums react to the soloists. Trumpet: VSCO 2 "
+            "Community Edition samples (CC0); alto: Karoryfer's Weresax (CC0). ")
 TV_PROMPT_NOTE = ("Each run got one prompt, word for word, with no follow-ups: arrange the theme's "
                   "actual melody as a post-bop tune in the round-1 style, with a two-chorus trumpet "
                   "and guitar duo solo, sheet music and an iReal Pro chart, and no lyrics. "
@@ -89,10 +95,14 @@ TV_RUNS = [
             ("Trumpet part, concert, both choruses", f"{AF}/pdf/Those_Were_the_Days_DuoSolo_Trumpet_Concert_BothChoruses.pdf"),
             ("Trumpet part, B♭, both choruses", f"{AF}/pdf/Those_Were_the_Days_DuoSolo_Trumpet_Bb_BothChoruses.pdf"),
             ("Guitar part, both choruses", f"{AF}/pdf/Those_Were_the_Days_DuoSolo_Guitar_BothChoruses.pdf"),
+            ("Piano solo, two choruses: choosing pentatonic scales (added later, see the recording note)",
+             f"{PS}/Those_Were_the_Days_PianoSolo.pdf"),
         ],
         "xml_dir": f"{AF}/musicxml",
         "ireal": f"{AF}/ireal/Those_Were_the_Days_iReal_link.txt",
-        "audio": [(f"{REC}/those_were_the_days_band_vsco_weresax.mp3", "Those_Were_the_Days_band_trumpet_alto_v2.mp3", "3:19"),
-                  (f"{REC}/those_were_the_days_band_trumpet_alto.mp3", "Those_Were_the_Days_band_trumpet_alto.mp3", "3:19")],
+        "audio": [(f"{REC}/those_were_the_days_psolo_band_vsco_weresax.mp3",
+                   "Those_Were_the_Days_band_with_piano_solo.mp3", "4:51") + TV_PSOLO,
+                  (f"{REC}/those_were_the_days_band_vsco_weresax.mp3", "Those_Were_the_Days_band_trumpet_alto_v2.mp3", "3:19") + TV_MAIN,
+                  (f"{REC}/those_were_the_days_band_trumpet_alto.mp3", "Those_Were_the_Days_band_trumpet_alto.mp3", "3:19") + TV_ALT],
     },
 ]
