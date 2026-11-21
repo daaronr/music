@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Can AI write a modern jazz tune?</title>
-  <meta name="description" content="An informal one-hour trial: three AI agents (two Claude Opus 5.5 sessions, one GPT-6 Astra in Codex) each wrote a post-bop tune and a trumpet and guitar duo solo. Listen, read the sheets, and vote.">
+  <meta name="description" content="An informal trial in two rounds: AI agents (Claude Opus 5.5 and GPT-6 Astra) each wrote a bright post-bop tune, then a dark jazz waltz, with written duo solos. Listen blind, read the sheets, and vote.">
   <meta property="og:title" content="Can AI write a modern jazz tune?">
-  <meta property="og:description" content="Three AI-written post-bop tunes with trumpet and guitar duo solos. Listen and vote.">
+  <meta property="og:description" content="Five AI-written jazz tunes in two rounds, bright and dark, with written duo solos. Listen blind and vote.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,20 +16,21 @@
   <link rel="canonical" href="https://ai-jazz-tune-trial.netlify.app/">
   <meta property="og:url" content="https://ai-jazz-tune-trial.netlify.app/">
   <meta name="twitter:card" content="summary">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Can AI write a modern jazz tune?", "url": "https://ai-jazz-tune-trial.netlify.app/", "author": {"@type": "Person", "name": "David Reinstein", "url": "https://www.davidreinstein.org/"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Can AI write a modern jazz tune?", "url": "https://ai-jazz-tune-trial.netlify.app/", "author": {"@type": "Person", "name": "David Reinstein", "url": "https://www.davidreinstein.org/"}, "description": "An informal trial in two rounds: AI agents (Claude Opus 5.5 and GPT-6 Astra) each wrote a bright post-bop tune, then a dark jazz waltz, with written duo solos. Listen blind, read the sheets, and vote."}</script>
 </head>
 <body>
 <header class="band">
   <div class="wrap">
-    <p class="kicker">An informal trial &middot; 26 September 2026 &middot; David Reinstein</p>
+    <p class="kicker">An informal trial &middot; 26&ndash;28 September 2026 &middot; David Reinstein</p>
     <h1>Can AI write a modern jazz tune?</h1>
-    <p class="dek">I gave three AI agents the same prompt: write an original [[post-bop]] tune and a two-[[chorus]] trumpet and guitar [[duo solo]] over its [[changes]], with sheet music, [[MuseScore]] files and an [[iReal Pro]] chart. Here&rsquo;s what came back. Have a listen, then tell me which you prefer.</p>
+    <p class="dek">Two rounds. In round 1 I gave three AI agents the same prompt: an original, bright [[post-bop]] tune with a two-[[chorus]] trumpet and guitar [[duo solo]] over its [[changes]], plus sheet music, [[MuseScore]] files and an [[iReal Pro]] chart. In round 2 two agents got a darker brief: a jazz waltz, a duo built on classical counterpoint, and a solo etude. Have a listen, then tell me which you prefer.</p>
     <nav class="jump" aria-label="Sections"><ul>
       <li><a href="#listen">Listen</a></li>
       <li><a class="primary" href="#vote">Vote</a></li>
       <li><a href="#about">What this is</a></li>
       <li><a href="#play">Play them</a></li>
       <li><a href="#tunes">The tunes and sheets</a></li>
+      <li><a href="#tv">TV themes</a></li>
       <li><a href="#how">How it was made</a></li>
     </ul></nav>
   </div>
@@ -39,13 +40,18 @@
 <main class="wrap">
   <section id="listen" aria-labelledby="listen-h">
     <h2 id="listen-h">TL;DR: just hear the recordings</h2>
-    <p class="note">These are [[mocked-up]] recordings of each run&rsquo;s own sheet music, all made with one recipe: the audio instructions behind the Halation recording, applied unchanged to the other two. The order is shuffled for each visitor. If you&rsquo;d like to listen blind, vote before reading the tune notes further down: they say which AI wrote which.</p>
+    <p class="note">These are [[mocked-up]] recordings of each run&rsquo;s own sheet music. Each card has a video that follows the score with notes on the theory, bar by bar, and the audio on its own. The order is shuffled for each visitor, and nothing up here (videos included) says which AI wrote which. If you&rsquo;d like to listen blind, vote before reading the tune notes further down, which do.</p>
+    <h3 class="round-h" id="listen-round-1">Round 1: bright <span class="round-sub">three agents, one prompt: a post-bop tune with lydian colour, and a trumpet and guitar duo</span></h3>
+    <p class="note">Recorded with one recipe: the audio instructions behind the Halation recording, applied unchanged to the other two. Trumpet on top, alto sax on the guitar line.</p>
     <div class="listen-grid" id="listen-grid">$listen_cards</div>
+    <h3 class="round-h dark" id="listen-round-2">Round 2: dark <span class="round-sub">two agents, one prompt: a jazz waltz with Phrygian, sus&#9837;9 sounds, a counterpoint duo and a solo etude</span></h3>
+    <p class="note">Each session also made its own recording from one identical audio request: clarinet on the top line, trombone on the lower one.</p>
+    <div class="listen-grid dark-grid" id="listen-grid-2">$listen_cards_2</div>
   </section>
 
   <section id="vote" class="vote-box" aria-labelledby="vote-h">
     <h2 id="vote-h">Which do you prefer?</h2>
-    <p class="note">One vote per browser, and you can change it later. You&rsquo;ll see how others voted once you&rsquo;ve voted.</p>
+    <p class="note">All five are in the vote. One vote per browser, and you can change it later. You&rsquo;ll see how others voted once you&rsquo;ve voted. (Round 2 joined the vote on 28 September; earlier votes covered round 1 only.)</p>
     <form id="vote-form" novalidate>
       <fieldset>
         <legend>Your favourite overall</legend>
@@ -81,7 +87,8 @@
   <section id="about" aria-labelledby="about-h">
     <h2 id="about-h">What this is</h2>
     <div class="prose">
-      <p>One evening I gave the same composition prompt to three AI coding agents: two separate [[Claude Code]] sessions running Claude Opus 5.5 at [[max effort]], and one [[Codex]] session running GPT-6 Astra. Each worked in its own folder of my music repo, and the whole thing took about an hour, with a few follow-up prompts about audio.</p>
+      <p>Round 1: one evening I gave the same composition prompt to three AI coding agents: two separate [[Claude Code]] sessions running Claude Opus 5.5 at [[max effort]], and one [[Codex]] session running GPT-6 Astra. Each worked in its own folder of my music repo, and the whole thing took about an hour, with a few follow-up prompts about audio.</p>
+      <p>Round 2: a day later I wrote a darker brief (a jazz waltz, classical counterpoint in the duo, and a technique-by-technique solo etude) and gave it, word for word, to one Claude Opus 5.5 session and one GPT-6 Astra session, each run unattended under matched conditions. Round 2 is the cleaner comparison of the two; see <a href="#how">How it was made</a>.</p>
       <p>This is far from a clean trial, benchmark or comparison. I&rsquo;m sharing it because the results are interesting to read and, I hope, to play.</p>
     </div>
     <details class="big" open>
@@ -91,7 +98,7 @@
           <li>One attempt per setup. The two Claude sessions share an opening move but otherwise came out quite differently, so a single run says little about a model.</li>
           <li>The follow-ups differed, mostly about audio. The Codex run got four rounds of audio feedback; the other two got one audio request each. See <a href="#how">How it was made</a>.</li>
           <li>Nobody has played these or rated them blind. The descriptions of motifs and devices come from each run&rsquo;s own notes; treat them as claims to check against the scores.</li>
-          <li>The recordings are programmed sample performances, not people playing.</li>
+          <li>The recordings are programmed sample performances, not people playing. After listening I had some things fixed by hand (a louder bass, a softer ride cymbal, less repetitive drums, bass and piano), always the same way for every tune in a round.</li>
           <li>This was an hour of me switching between windows, and the prompts have my typos in them.</li>
         </ol>
       </div>
@@ -111,16 +118,25 @@
   </section>
 
   <section id="tunes" aria-labelledby="tunes-h">
-    <h2 id="tunes-h">The three tunes and their sheets</h2>
+    <h2 id="tunes-h">The five tunes and their sheets</h2>
     <p class="note">Each card says which AI wrote the tune. Open the folds for the PDFs, recordings, editable files and the iReal Pro chart.</p>
+    <h3 class="round-h" id="tunes-round-1">Round 1: bright</h3>
     <div class="tune-grid">$tune_cards</div>
+    <h3 class="round-h dark" id="tunes-round-2">Round 2: dark</h3>
+    <div class="tune-grid">$tune_cards_2</div>
+  </section>
+
+  <section id="tv" aria-labelledby="tv-h">
+    <h2 id="tv-h">Bonus: two TV themes, arranged</h2>
+    <p class="note">Not originals, and not in the vote. In November I asked Claude Opus 5.5 to arrange two sitcom themes in the round-1 style. $tv_prompt_note The melodies belong to their composers and publishers; these arrangements are shared for study and private practice.</p>
+    <div class="tune-grid">$tv_cards</div>
   </section>
 
   <section id="how" aria-labelledby="how-h">
     <h2 id="how-h">How it was made</h2>
 
     <details class="big">
-      <summary>What I asked for</summary>
+      <summary>What I asked for in round 1</summary>
       <div class="inner">
         <p class="note">Hover over or tap a line to see my exact words.</p>
         <ul class="asks">$asks</ul>
@@ -132,9 +148,18 @@
     </details>
 
     <details class="big">
+      <summary>Round 2: what I asked for, and how it was run</summary>
+      <div class="inner">
+        <p class="note">Hover over or tap a line to see my exact words.</p>
+        <ul class="asks">$asks2</ul>
+        <div class="prose">$round2_notes</div>
+      </div>
+    </details>
+
+    <details class="big">
       <summary>Prompts, in order, for each run</summary>
       <div class="inner">
-        <p class="note">UK time, the evening of 26 September (times after 00:00 are the 27th). Every run started from the prompt above. Open a prompt to read it as I typed it. For the Codex run I&rsquo;ve added the [[reasoning effort]] its log shows for each turn.</p>
+        <p class="note">UK time. Round 1 ran on the evening of 26 September (times after 00:00 are the 27th) and every round-1 run started from the prompt above; round 2 ran on 27 and 28 September. Open a prompt to read it as I typed it. For the Codex run I&rsquo;ve added the [[reasoning effort]] its log shows for each turn.</p>
         <div class="tls">$timelines</div>
       </div>
     </details>
@@ -143,13 +168,14 @@
       <summary>Recordings: who got which audio request</summary>
       <div class="inner prose">
         <p>Two sessions got one audio request each, in the same words: make an MP3 with something closer to [[Band-in-a-Box]] than &ldquo;cheesy 8-bit MIDI,&rdquo; and swap the guitar for alto sax on the recording (not the score). Halation&rsquo;s session got it at 23:21 and made the Halation recording.</p>
-        <p>So that the three can be heard on equal terms, the headline recordings of Parallax and Glass Meridian were then made by applying the Halation recording&rsquo;s instructions unchanged: same code, samples, mix and random seed, each tune at its composer&rsquo;s own tempo, with its own written ending. Halation&rsquo;s recording is the model and was not remade.</p>
+        <p>So that the three can be heard on equal terms, the headline recordings of Parallax and Glass Meridian were then made by applying the Halation recording&rsquo;s instructions unchanged: same code, samples, mix and random seed, each tune at its composer&rsquo;s own tempo, with its own written ending.</p>
+        <p>On 28 September, after listening, I had the rhythm section redone for all five recordings on this page, in the same way: a softer ride cymbal, drums that change from bar to bar and phrase to phrase (fills, set-ups, a closed hi-hat or cross-stick on some sections), and bass lines and piano comping that repeat less. All three round-1 tunes were re-rendered with it, including Halation; its original demo is kept as an alternate on its card. The two round-2 recordings got the same change.</p>
         <p>The Codex session got the first audio request at 22:52 (without the sax swap), then three more rounds of feedback: sound more natural, use sax instead of guitar, a less clich&eacute;d swing feel, and a fuller upright bass. Its own versions, v1 (trumpet and guitar) and v3 (trumpet and sax), are kept as alternates on the Glass Meridian card.</p>
       </div>
     </details>
 
     <details class="big">
-      <summary>The chord changes side by side, and a few things they share</summary>
+      <summary>The chord changes side by side (both rounds), and a few things round 1 shares</summary>
       <div class="inner">
         <p class="note">[[concert pitch|Concert pitch]], four bars to a line; two chords in a bar split it at beat 3. Chords with a <span class="s11">&#9839;11</span> are marked, since I asked for bright [[lydian]] sounds.</p>
         <div class="charts">$grids</div>
@@ -179,7 +205,7 @@
       <summary>Setup</summary>
       <div class="inner prose">
         <ul>
-          <li>All three ran on my Mac in one Git repo that already had some of my chart work in it. Each session made its own subfolder and was told not to look at the others.</li>
+          <li>Round 1: all three ran on my Mac in one Git repo that already had some of my chart work in it. Each session made its own subfolder and was told not to look at the others.</li>
           <li>Claude: two separate sessions in the Claude Code desktop app, both Claude Opus 5.5 at max effort.</li>
           <li>Codex: the Codex desktop app with GPT-6 Astra. Its log shows reasoning effort &ldquo;xhigh&rdquo; for the composition and the first recording, then &ldquo;medium&rdquo; and &ldquo;high&rdquo; for the audio fixes.</li>
           <li>The machine had MuseScore 3.6.2, iReal Pro and Python. All three wrote their own code to generate the notation and rendered their PDFs through MuseScore.</li>
@@ -190,7 +216,8 @@
   </section>
 
   <footer>
-    <p>Most of all, I&rsquo;d love to hear live recordings of these, on any instruments. Send a link, or watch <a href="https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk">my YouTube playlist</a> for mine. Project by David Reinstein. Page put together by Claude from the three output folders and the session logs; the sheets are as each run left them, and the headline recordings share one recipe (see How it was made). Updated $built.</p>
+    <p>Most of all, I&rsquo;d love to hear live recordings of these, on any instruments. Send a link, or watch <a href="https://www.youtube.com/playlist?list=PLwCHmz77VrK1TvvBeyKYlk52rQ6PeHJzk">my YouTube playlist</a> for mine. Project by David Reinstein. Page put together by Claude from the output folders and the session logs; the sheets are as each run left them, and the recordings in each round share one recipe (see How it was made). Updated $built.</p>
+    <p><a href="https://projects.davidreinstein.org/">More projects by David Reinstein</a></p>
   </footer>
 </main>
 

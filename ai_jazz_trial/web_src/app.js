@@ -1,6 +1,7 @@
 // Voter id, shuffled order, tooltips, copy buttons and the vote form.
 (function () {
-  var TUNES = ["halation", "parallax", "glass_meridian"];
+  var ROUNDS = [["halation", "parallax", "glass_meridian"], ["tenebrae", "noctilucent"]];
+  var TUNES = ROUNDS[0].concat(ROUNDS[1]);
 
   function get(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { /* private mode */ } }
@@ -16,14 +17,19 @@
   var order = null;
   try { order = JSON.parse(get("ajt_order") || "null"); } catch (e) { order = null; }
   if (!order || order.length !== TUNES.length) {
-    order = TUNES.slice();
-    for (var i = order.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = order[i]; order[i] = order[j]; order[j] = t;
-    }
+    // shuffle within each round; round 1 stays ahead of round 2
+    order = [];
+    ROUNDS.forEach(function (r) {
+      var o = r.slice();
+      for (var i = o.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = o[i]; o[i] = o[j]; o[j] = t;
+      }
+      order = order.concat(o);
+    });
     set("ajt_order", JSON.stringify(order));
   }
-  ["listen-grid", "pref-choices", "ratings"].forEach(function (id) {
+  ["listen-grid", "listen-grid-2", "pref-choices", "ratings"].forEach(function (id) {
     var box = document.getElementById(id);
     if (!box) return;
     order.forEach(function (k) {

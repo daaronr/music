@@ -108,7 +108,48 @@ FORMS = {
         ("C", ["Fmaj9#11", "Ebmaj9#11", "Dm9 G13#11", "Dbmaj9#11 C7alt",
                "Fmaj9#11", "D7alt", "Gm9 C7alt", "F6/9"]),
     ],
+    # round 2 (the dark brief)
+    "tenebrae": [
+        ("A", ["D7sus(b9)", "D7sus(b9)", "Ebmaj7#11", "Ebmaj7#11",
+               "Bbmaj7#5", "Bbmaj7#5", "A7sus(b9)", "A7alt"]),
+        ("A′", ["D7sus(b9)", "D7sus(b9)", "Ebmaj7#11", "Ebmaj7#11",
+                "Abmaj7#5", "Abmaj7#5", "Dbmaj7#11", "Dbmaj7#11"]),
+        ("B", ["C7#11", "C7#11", "B7alt", "B7alt", "Bb7#11", "Bb7#11", "A7alt", "A7alt"]),
+        ("C", ["Dm(maj9)", "Dm(maj9)", "Dm(maj9)", "Dm(maj9)",
+               "Bbmaj7#5", "Bbmaj7#5", "Ebmaj7#11", "Ebmaj7#11"]),
+    ],
+    "noctilucent": [
+        ("A", ["E7sus(b9)", "E7sus(b9)", "Fmaj7#11/E", "Fmaj7#11/E",
+               "Am9", "C7alt", "F#m7b5", "B7alt"]),
+        ("B", ["Em9", "Gm9", "Bbmaj7#11", "A7alt", "Dm9", "F7alt", "F#m7b5", "B7alt"]),
+        ("A′", ["E7sus(b9)", "E7sus(b9)", "Fmaj7#11/E", "E7sus(b9)",
+                "A7b9", "Dm9", "B7b9", "Em9"]),
+        ("C", ["Cmaj7#11", "Abmaj7#11", "Am9", "D7alt",
+               "Fmaj7#11/E", "E7sus(b9)", "F#m7b5", "B7alt"]),
+    ],
 }
+
+import os as _os
+_W = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "waltz_prompts")
+WALTZ_COMPOSE = open(_os.path.join(_W, "01_compose.txt"), encoding="utf-8").read().strip()
+WALTZ_RECORDING = open(_os.path.join(_W, "02_recording.txt"), encoding="utf-8").read().strip()
+# one-line summaries of the round-2 brief, with the exact words on hover (like ASKS)
+ASKS2 = [
+    ("An original jazz waltz with a darker tonality and a Wayne Shorter-ish feel, with some "
+     "Phrygian and sus(♭9) sounds",
+     "Create an original jazz waltz (3/4) with a darker tonality and a Wayne Shorter-esque feel, "
+     "e.g., with some Phrygian / sus(b9) sounds.  Melody and chord changes, etc."),
+    ("A two-chorus trumpet and guitar duo, leaning on classical counterpoint",
+     "This time focus a bit more on the principles of classical counterpoint, applied to jazz."),
+    ("Two more choruses for one instrument, demonstrating soloing techniques one 8-bar block at "
+     "a time, each block labelled",
+     "Then write 2 more choruses of solo on a single instrument (trumpet or tenor sax), and have "
+     "that solo illustrate some of the techniques and approaches discussed, doing so block by block."),
+    ("The same formats as round 1: separate sheets, trumpet in concert and B♭, PDF, MuseScore, "
+     "iReal", "Present the 2 duo choruses and the 2 single-instrument choruses in separate sheets."),
+    ("Then a recording: clarinet on the top line, trombone on the lower one, adapting the round-1 "
+     "recording engine to a waltz", WALTZ_RECORDING),
+]
 
 H, P, G = "claude_halation", "claude_parallax/output", "codex_glass_meridian/output"
 
@@ -309,4 +350,106 @@ RUNS = [
              "Two reusable audio skills"),
         ],
     },
+    # ---- round 2: the dark brief, one Claude run and one Codex run (see waltz_prompts/)
+    {
+        "key": "tenebrae",
+        "name": "Tenebrae",
+        "round": 2,
+        "model": "Claude Opus 5.5, max effort",
+        "where": "Claude Code, headless",
+        "meta": ["D phrygian", "♩ = 138", "32 bars · A A′ B C", "intro and coda"],
+        "idea": ("Everything grows from the half step above the root: D7sus(♭9) puts E♭ over D, "
+                 "and the first gesture is that E♭ sighing down to D. In the B section the "
+                 "dominants fall by half steps while the melody climbs against them across the "
+                 "barline; the C section is a lament over Dm(maj9). The duo is written as a "
+                 "fugato, canon, suspensions and stretto, and the etude works through one "
+                 "technique per 8 bars. Named after the Holy Week service in which the candles "
+                 "go out one by one."),
+        "sheets_note": ("Concert pitch and B♭ trumpet throughout; the study scores print the "
+                        "analysis under the staff. The packet has concert pitch first."),
+        "lead": "claude_tenebrae/pdf/Tenebrae_lead_sheet_concert.pdf",
+        "score": "claude_tenebrae/pdf/Tenebrae_duo_score_concert.pdf",
+        "pdfs": [
+            ("Everything in one packet, concert pitch first (27 pp.)", "claude_tenebrae/Tenebrae_complete_packet.pdf"),
+            ("Lead sheet, concert", "claude_tenebrae/pdf/Tenebrae_lead_sheet_concert.pdf"),
+            ("Lead sheet, B♭ trumpet", "claude_tenebrae/pdf/Tenebrae_lead_sheet_Bb_trumpet.pdf"),
+            ("Duo score, concert (4 pp.)", "claude_tenebrae/pdf/Tenebrae_duo_score_concert.pdf"),
+            ("Duo score, B♭ trumpet (4 pp.)", "claude_tenebrae/pdf/Tenebrae_duo_score_Bb.pdf"),
+            ("Duo study score, counterpoint marked", "claude_tenebrae/pdf/Tenebrae_duo_study_score.pdf"),
+            ("Etude, trumpet concert", "claude_tenebrae/pdf/Tenebrae_etude_trumpet_concert.pdf"),
+            ("Etude, trumpet in B♭", "claude_tenebrae/pdf/Tenebrae_etude_trumpet_Bb.pdf"),
+            ("Etude study score, techniques marked", "claude_tenebrae/pdf/Tenebrae_etude_study_score.pdf"),
+            ("Duo trumpet part, concert", "claude_tenebrae/pdf/Tenebrae_duo_part_trumpet_concert.pdf"),
+            ("Duo trumpet part, B♭", "claude_tenebrae/pdf/Tenebrae_duo_part_trumpet_Bb.pdf"),
+            ("Duo guitar part", "claude_tenebrae/pdf/Tenebrae_duo_part_guitar.pdf"),
+        ],
+        "bundle": ("Tenebrae_editable_files.zip",
+                   [f"claude_tenebrae/musicxml/{n}.musicxml" for n in (
+                       "Tenebrae_lead_sheet_concert", "Tenebrae_lead_sheet_Bb_trumpet",
+                       "Tenebrae_duo_score_concert", "Tenebrae_duo_score_Bb",
+                       "Tenebrae_etude_trumpet_concert", "Tenebrae_etude_trumpet_Bb",
+                       "Tenebrae_duo_part_trumpet_concert", "Tenebrae_duo_part_trumpet_Bb",
+                       "Tenebrae_duo_part_guitar")] +
+                   [f"claude_tenebrae/musescore/{n}.mscz" for n in (
+                       "Tenebrae_lead_sheet_concert", "Tenebrae_lead_sheet_Bb_trumpet",
+                       "Tenebrae_duo_score_concert", "Tenebrae_duo_score_Bb",
+                       "Tenebrae_etude_trumpet_concert", "Tenebrae_etude_trumpet_Bb")] +
+                   ["claude_tenebrae/ireal/Tenebrae_iReal.html",
+                    "claude_tenebrae/ireal/Tenebrae_iReal_link.txt", "claude_tenebrae/README.md"]),
+        "ireal": "claude_tenebrae/ireal/Tenebrae_iReal_link.txt",
+        "timeline": [
+            ("27 Sep 18:01", "Write the waltz, the duo and the etude", WALTZ_COMPOSE, "max",
+             "Lead sheet, duo, etude, study scores and packet, done by 18:55"),
+            ("18:55", "Record it: clarinet and trombone, adapting the round-1 engine", WALTZ_RECORDING,
+             "high", "Band recording, done by 19:05"),
+        ],
+    },
+    {
+        "key": "noctilucent",
+        "name": "Noctilucent",
+        "round": 2,
+        "model": "GPT-6 Astra, xhigh effort",
+        "where": "Codex CLI, unattended",
+        "meta": ["E, phrygian colour", "♩ = 144", "32 bars · A B A′ C", "2-bar ending"],
+        "idea": ("Centred on E with F natural on top: E7sus(♭9) and Fmaj7♯11/E share an E pedal "
+                 "and swap upper structures. The main motif is E–F–B–A (a half step, a tritone "
+                 "leap and a step down). The duo uses imitation, contrary and oblique motion, "
+                 "prepared dissonance and voice exchange, and the trumpet study has eight labelled "
+                 "technique blocks. Named after clouds that glow after sunset."),
+        "sheets_note": ("Concert pitch and B♭ trumpet; the B♭ duo score keeps concert chord "
+                        "symbols for the guitarist. Parts have one chorus per page."),
+        "lead": "codex_noctilucent/output/pdf/01_head_concert.pdf",
+        "score": "codex_noctilucent/output/pdf/03_duo_score_concert.pdf",
+        "pdfs": [
+            ("Complete packet (20 pp.)", "codex_noctilucent/output/pdf/00_complete_score_packet.pdf"),
+            ("Head, concert", "codex_noctilucent/output/pdf/01_head_concert.pdf"),
+            ("Head, B♭ trumpet", "codex_noctilucent/output/pdf/02_head_Bb.pdf"),
+            ("Duo score, concert (4 pp.)", "codex_noctilucent/output/pdf/03_duo_score_concert.pdf"),
+            ("Duo score, B♭ trumpet (4 pp.)", "codex_noctilucent/output/pdf/04_duo_score_Bb.pdf"),
+            ("Duo trumpet part, concert", "codex_noctilucent/output/pdf/05_duo_trumpet_concert.pdf"),
+            ("Duo trumpet part, B♭", "codex_noctilucent/output/pdf/06_duo_trumpet_Bb.pdf"),
+            ("Duo guitar part", "codex_noctilucent/output/pdf/07_duo_guitar.pdf"),
+            ("Trumpet study, concert", "codex_noctilucent/output/pdf/08_trumpet_study_concert.pdf"),
+            ("Trumpet study, B♭", "codex_noctilucent/output/pdf/09_trumpet_study_Bb.pdf"),
+        ],
+        "bundle": ("Noctilucent_editable_files.zip",
+                   [f"codex_noctilucent/output/musicxml/{n}.musicxml" for n in (
+                       "01_head_concert", "02_head_Bb", "03_duo_score_concert", "04_duo_score_Bb",
+                       "05_duo_trumpet_concert", "06_duo_trumpet_Bb", "07_duo_guitar",
+                       "08_trumpet_study_concert", "09_trumpet_study_Bb")] +
+                   [f"codex_noctilucent/output/musescore/{n}.mscz" for n in (
+                       "01_head_concert", "02_head_Bb", "03_duo_score_concert", "04_duo_score_Bb",
+                       "08_trumpet_study_concert", "09_trumpet_study_Bb")] +
+                   ["codex_noctilucent/ireal/Noctilucent_iReal.html",
+                    "codex_noctilucent/ireal/Noctilucent_iReal_link.txt", "codex_noctilucent/README.md"]),
+        "ireal": "codex_noctilucent/ireal/Noctilucent_iReal_link.txt",
+        "timeline": [
+            ("28 Sep 12:21", "Write the waltz, the duo and the etude", WALTZ_COMPOSE, "xhigh",
+             "Head, duo, study, parts and packet, done by 12:48"),
+            ("12:49", "Record it: clarinet and trombone, adapting the round-1 engine", WALTZ_RECORDING,
+             "high", "Band recording, done by 13:05"),
+        ],
+    },
 ]
+for _r in RUNS:
+    _r.setdefault("round", 1)

@@ -59,7 +59,7 @@ I'd love a live recording, even a rough phone one, of either part over the iReal
 
 **URL:** https://ai-jazz-tune-trial.netlify.app
 
-Paste the text below as the post text or as the first comment. Before posting: if it's after about Friday 2 October, change "One evening last week" to "Recently." If you're going to record some yourself (tuba/flugelhorn?), add that to the last paragraph.
+Paste the text below as the post text or as the first comment. Before posting: if it's after about Friday 2 October, change "One evening last week" to "Recently." If you're going to record some yourself (tuba/flugelhorn?), add that to the last paragraph. HN has no bold or headings; `*text*` gives italics, which is how the Tenebrae line stands out. If you'd rather put Tenebrae in the title, one option under 80 characters: "Show HN: AI agents wrote jazz tunes with counterpoint duo solos – play or vote".
 
 One evening last week I gave the same prompt to three AI coding agents: two Claude Code sessions (Opus 5.5, max effort) and one Codex session (GPT-6 Astra). The ask was an original post-bop tune with some modern harmony, plus two written choruses of a trumpet and guitar duo solo. They had to deliver PDF sheets, MuseScore files and an iReal Pro chart. Each worked in its own folder, and the whole thing took about an hour.
 
@@ -69,6 +69,12 @@ This is an early, just-for-fun trial and not a benchmark. There's one run per se
 - The unequal follow-ups are spelled out. The Codex run got four rounds of audio feedback and the Claude runs got one each.
 - I didn't want the recordings to decide the vote, so all three headline MP3s use one recipe. The first Claude session built the audio pipeline for its own tune, and I applied it unchanged to the other two: same code, samples, mix and random seed. Codex's own renders are kept as alternates.
 - The listening order is shuffled for each visitor, and you can vote before you scroll down to which model wrote which. Results only show up after you vote.
+
+*The one I'd start with isn't in the vote, though: Tenebrae.*
+
+A day later I asked one Claude session for the opposite of the first brief: a dark jazz waltz in D phrygian with a Wayne Shorter-ish feel, a duo solo built on classical counterpoint, and a two-chorus etude that works through one soloing technique per eight bars. The duo runs through a fugato, a strict canon, chained suspensions, a stretto, a hocket and a cantus firmus. Its own checker reports no parallel fifths, and parallel octaves only in the planned unison. The whole thing ends on an unresolved flat 9. I think it's the best of the four, and there's a video that follows the score with the theory bar by bar: https://youtu.be/Lzt6AEMYJp4
+
+But it isn't a fair comparison, so it's kept out of the vote. It's a single run with no comparator yet. It got a different brief, and it had help the first three didn't: the composing and engraving skills written up after the first trial, and the first trial's recording engine to adapt rather than build from scratch. The obvious next step would be giving the same prompt to Codex and a fresh Claude session. Sheets and prompts: https://ai-jazz-tune-trial.netlify.app/#followup
 
 A few things I didn't expect:
 

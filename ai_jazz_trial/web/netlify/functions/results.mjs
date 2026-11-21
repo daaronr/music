@@ -2,7 +2,7 @@
 // Comments are kept for David and never returned here.
 import { getStore } from "@netlify/blobs";
 
-const TUNES = ["halation", "parallax", "glass_meridian"];
+const TUNES = ["halation", "parallax", "glass_meridian", "tenebrae", "noctilucent"];   // round 2 added 28 Sep
 const ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 
 function json(obj, status = 200) {
@@ -28,7 +28,8 @@ export default async (req) => {
   const votes = (await Promise.all(keys.map((k) => store.get(k, { type: "json" }))))
     .filter((v) => v && !v.test);
 
-  const prefs = { halation: 0, parallax: 0, glass_meridian: 0, none: 0 };
+  const prefs = { none: 0 };
+  TUNES.forEach((t) => (prefs[t] = 0));
   const ratings = {};
   TUNES.forEach((t) => (ratings[t] = { n: 0, sum: 0, dist: [0, 0, 0, 0, 0] }));
   const did = { listened: 0, read: 0, played: 0 };

@@ -1,7 +1,8 @@
 // Render /api/results for a browser that has voted; show the gate otherwise.
 (function () {
-  var NAMES = { halation: "Halation", parallax: "Parallax", glass_meridian: "Glass Meridian", none: "No preference" };
-  var ORDER = ["halation", "parallax", "glass_meridian"];
+  var NAMES = { halation: "Halation", parallax: "Parallax", glass_meridian: "Glass Meridian",
+    tenebrae: "Tenebrae (round 2)", noctilucent: "Noctilucent (round 2)", none: "No preference" };
+  var ORDER = ["halation", "parallax", "glass_meridian", "tenebrae", "noctilucent"];
   var voter = window.AJT_VOTER;
 
   function el(tag, cls, text) {
