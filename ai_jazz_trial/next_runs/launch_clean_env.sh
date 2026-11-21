@@ -11,7 +11,8 @@
 #    window. The desktop app's bundled 2.1.325 recognises it (1M window, list pricing). All
 #    five runs use 2.1.325 through a wrapper put first on PATH; run_headless.sh is unchanged.
 set -uo pipefail
-CLI="/Users/yosemite/Library/Application Support/Claude/claude-code/2.1.325/485fdac4332e/claude.app/Contents/MacOS/claude"
+# 21 Nov: 2.1.325 was gone after an app update; now the newest bundled build.
+CLI="/Users/yosemite/Library/Application Support/Claude/claude-code/2.1.330/4262a1273231/claude.app/Contents/MacOS/claude"
 RUNNER=/Users/yosemite/githubs/music/skills/agent-trial-run/scripts/run_headless.sh
 BIN=/Users/yosemite/githubs/music_trial_runs/bin
 if [ ! -x "$CLI" ]; then echo "missing CLI: $CLI" >&2; exit 3; fi

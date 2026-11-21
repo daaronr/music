@@ -47,4 +47,19 @@ GLASS_MERIDIAN = Tune(
     sections={0: "A", 8: "A2", 16: "B", 24: "C"},
 )
 
-ALL = {"halation": HALATION, "parallax": PARALLAX, "glass_meridian": GLASS_MERIDIAN}
+# Fable 5.2's run of the round-1 prompt (21 Nov 2026). The iReal link file was extracted by
+# hand from its Brightwork_iReal.html (same link, unchanged).
+BRIGHTWORK = Tune(
+    name="Brightwork", tempo=160,
+    ireal_url=_url("fable_brightwork/ireal/Brightwork_iReal_link.txt"),
+    head_xml=str(M / "fable_brightwork/musicxml/Brightwork_01_lead_sheet_concert.musicxml"), head_part=0,
+    head_in=list(range(32)),
+    head_out=list(range(31)),                   # README: head out stops on bar 31 (Fmaj7#11)
+    head_out_form_bars=30, ending_chords=["F^7#11"],
+    solo_xml=str(M / "fable_brightwork/musicxml/Brightwork_03_duo_solo_score_concert.musicxml"),
+    solo_parts=(0, 1),
+    sections={0: "A", 8: "A", 16: "B", 24: "A"},
+)
+
+ALL = {"halation": HALATION, "parallax": PARALLAX, "glass_meridian": GLASS_MERIDIAN,
+       "brightwork": BRIGHTWORK}
