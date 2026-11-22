@@ -2,7 +2,7 @@
 // Comments are kept for David and never returned here.
 import { getStore } from "@netlify/blobs";
 
-const TUNES = ["halation", "parallax", "glass_meridian", "tenebrae", "noctilucent"];   // round 2 added 28 Sep
+const TUNES = ["halation", "parallax", "glass_meridian", "brightwork", "tenebrae", "noctilucent"];   // round 2 added 28 Sep
 const ID_RE = /^[A-Za-z0-9-]{8,64}$/;
 
 function json(obj, status = 200) {

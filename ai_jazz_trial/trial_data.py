@@ -108,6 +108,16 @@ FORMS = {
         ("C", ["Fmaj9#11", "Ebmaj9#11", "Dm9 G13#11", "Dbmaj9#11 C7alt",
                "Fmaj9#11", "D7alt", "Gm9 C7alt", "F6/9"]),
     ],
+    "brightwork": [
+        ("A1", ["Fmaj7#11", "Fmaj7#11", "Bm7 E7", "Amaj7",
+                "Abmaj7#11", "Dbmaj7#11", "Gm7", "Gb7#11"]),
+        ("A2", ["Fmaj7#11", "Fmaj7#11", "Bm7 E7", "Amaj7",
+                "Abmaj7#11", "Dbmaj7#11", "F#m7", "B7"]),
+        ("B", ["Emaj7#11", "Emaj7#11", "Gmaj7#11", "Gmaj7#11",
+               "Bbmaj7#11", "Dbmaj7#11", "C7sus", "C7alt"]),
+        ("A3", ["Fmaj7#11", "Fmaj7#11", "Bm7 E7", "Amaj7",
+                "Abmaj7#11 Dbmaj7#11", "Gm7 C7", "Fmaj7#11", "Gbmaj7#11"]),
+    ],
     # round 2 (the dark brief)
     "tenebrae": [
         ("A", ["D7sus(b9)", "D7sus(b9)", "Ebmaj7#11", "Ebmaj7#11",
@@ -348,6 +358,47 @@ RUNS = [
              "v3, plus a written audio brief for the other runs"),
             ("23:38", "Consider making skills out of the process", GM_SKILLS, "high",
              "Two reusable audio skills"),
+        ],
+    },
+    {
+        "key": "brightwork",
+        "name": "Brightwork",
+        "model": "Claude Fable 5.2, max effort",
+        "where": "Claude Code, headless, 21 Nov",
+        "meta": ["F lydian", "♩ = 160", "32 bars · A A B A"],
+        "idea": ("The hook is a lydian triad pair: an F triad down, a G triad up, landing on the "
+                 "13th. The A section brightens from F lydian to A major, drops into shade (A♭ "
+                 "and D♭ lydian) and comes home. The bridge starts a half step below home, in E "
+                 "lydian, and climbs by minor thirds; each long melody note is the 13th of one "
+                 "chord and the ♯11 of the next. The duo opens with the hook in canon and ends "
+                 "with it split between the players."),
+        "sheets_note": ("Engraved with LilyPond (MuseScore no longer runs on this Mac), so the "
+                        "editable files are MusicXML only; they open in MuseScore."),
+        "lead": "fable_brightwork/pdf/Brightwork_01_lead_sheet_concert.pdf",
+        "score": "fable_brightwork/pdf/Brightwork_03_duo_solo_score_concert.pdf",
+        "pdfs": [
+            ("Everything in one file (12 pp.)", "fable_brightwork/Brightwork_complete.pdf"),
+            ("Lead sheet, concert", "fable_brightwork/pdf/Brightwork_01_lead_sheet_concert.pdf"),
+            ("Lead sheet, B♭ trumpet", "fable_brightwork/pdf/Brightwork_02_lead_sheet_Bb.pdf"),
+            ("Duo score, concert", "fable_brightwork/pdf/Brightwork_03_duo_solo_score_concert.pdf"),
+            ("Trumpet, concert", "fable_brightwork/pdf/Brightwork_04_trumpet_solo_concert.pdf"),
+            ("Trumpet in B♭", "fable_brightwork/pdf/Brightwork_05_trumpet_solo_Bb.pdf"),
+            ("Guitar", "fable_brightwork/pdf/Brightwork_06_guitar_solo.pdf"),
+        ],
+        "bundle": ("Brightwork_editable_files.zip",
+                   [f"fable_brightwork/musicxml/Brightwork_{n}.musicxml" for n in (
+                       "01_lead_sheet_concert", "02_lead_sheet_Bb", "03_duo_solo_score_concert",
+                       "04_trumpet_solo_concert", "05_trumpet_solo_Bb", "06_guitar_solo")] +
+                   ["fable_brightwork/ireal/Brightwork_iReal.html",
+                    "fable_brightwork/ireal/Brightwork_iReal_link.txt",
+                    "fable_brightwork/README.md"]),
+        "ireal": "fable_brightwork/ireal/Brightwork_iReal_link.txt",
+        "timeline": [
+            ("21 Nov 16:37 EST", "Write the tune and the duo solo (round 1's prompt, verbatim)",
+             PROMPT_CLAUDE, "max",
+             "Lead sheets written, then stopped at 17:30 on the 5-hour usage limit"),
+            ("18:28", "Resume the same session", "Continue.", "max",
+             "Duo score, parts, iReal chart and README, done by 18:57"),
         ],
     },
     # ---- round 2: the dark brief, one Claude run and one Codex run (see waltz_prompts/)

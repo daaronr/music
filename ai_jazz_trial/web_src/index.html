@@ -23,7 +23,7 @@
   <div class="wrap">
     <p class="kicker">An informal trial &middot; 26&ndash;28 September 2026 &middot; David Reinstein</p>
     <h1>Can AI write a modern jazz tune?</h1>
-    <p class="dek">Two rounds. In round 1 I gave three AI agents the same prompt: an original, bright [[post-bop]] tune with a two-[[chorus]] trumpet and guitar [[duo solo]] over its [[changes]], plus sheet music, [[MuseScore]] files and an [[iReal Pro]] chart. In round 2 two agents got a darker brief: a jazz waltz, a duo built on classical counterpoint, and a solo etude. Have a listen, then tell me which you prefer.</p>
+    <p class="dek">Two rounds. In round 1 four AI agent runs got the same prompt (the fourth added in November): an original, bright [[post-bop]] tune with a two-[[chorus]] trumpet and guitar [[duo solo]] over its [[changes]], plus sheet music, [[MuseScore]] files and an [[iReal Pro]] chart. In round 2 two agents got a darker brief: a jazz waltz, a duo built on classical counterpoint, and a solo etude. Have a listen, then tell me which you prefer.</p>
     <nav class="jump" aria-label="Sections"><ul>
       <li><a href="#listen">Listen</a></li>
       <li><a class="primary" href="#vote">Vote</a></li>
@@ -40,9 +40,9 @@
 <main class="wrap">
   <section id="listen" aria-labelledby="listen-h">
     <h2 id="listen-h">TL;DR: just hear the recordings</h2>
-    <p class="note">These are [[mocked-up]] recordings of each run&rsquo;s own sheet music. Each card has a video that follows the score with notes on the theory, bar by bar, and the audio on its own. The order is shuffled for each visitor, and nothing up here (videos included) says which AI wrote which. If you&rsquo;d like to listen blind, vote before reading the tune notes further down, which do.</p>
-    <h3 class="round-h" id="listen-round-1">Round 1: bright <span class="round-sub">three agents, one prompt: a post-bop tune with lydian colour, and a trumpet and guitar duo</span></h3>
-    <p class="note">Recorded with one recipe: the audio instructions behind the Halation recording, applied unchanged to the other two. Trumpet on top, alto sax on the guitar line.</p>
+    <p class="note">These are [[mocked-up]] recordings of each run&rsquo;s own sheet music. Most cards have a video that follows the score with notes on the theory, bar by bar (the newest round-1 tune doesn't have one yet), and every card has the audio on its own. The order is shuffled for each visitor, and nothing up here (videos included) says which AI wrote which. If you&rsquo;d like to listen blind, vote before reading the tune notes further down, which do.</p>
+    <h3 class="round-h" id="listen-round-1">Round 1: bright <span class="round-sub">four runs, one prompt: a post-bop tune with lydian colour, and a trumpet and guitar duo</span></h3>
+    <p class="note">Recorded with one recipe: the audio instructions behind the Halation recording, applied unchanged to the other three. Trumpet on top, alto sax on the guitar line.</p>
     <div class="listen-grid" id="listen-grid">$listen_cards</div>
     <h3 class="round-h dark" id="listen-round-2">Round 2: dark <span class="round-sub">two agents, one prompt: a jazz waltz with Phrygian, sus&#9837;9 sounds, a counterpoint duo and a solo etude</span></h3>
     <p class="note">Each session also made its own recording from one identical audio request: clarinet on the top line, trombone on the lower one.</p>
@@ -87,7 +87,7 @@
   <section id="about" aria-labelledby="about-h">
     <h2 id="about-h">What this is</h2>
     <div class="prose">
-      <p>Round 1: one evening I gave the same composition prompt to three AI coding agents: two separate [[Claude Code]] sessions running Claude Opus 5.5 at [[max effort]], and one [[Codex]] session running GPT-6 Astra. Each worked in its own folder of my music repo, and the whole thing took about an hour, with a few follow-up prompts about audio.</p>
+      <p>Round 1: one evening I gave the same composition prompt to three AI coding agents: two separate [[Claude Code]] sessions running Claude Opus 5.5 at [[max effort]], and one [[Codex]] session running GPT-6 Astra. Each worked in its own folder of my music repo, and the whole thing took about an hour, with a few follow-up prompts about audio. In November a fourth run joined round 1: Claude Fable 5.2 at max effort got the same prompt, word for word, unattended, in a copy of the repo as it was before the trial. It needed one &ldquo;Continue.&rdquo; after hitting a usage limit partway.</p>
       <p>Round 2: a day later I wrote a darker brief (a jazz waltz, classical counterpoint in the duo, and a technique-by-technique solo etude) and gave it, word for word, to one Claude Opus 5.5 session and one GPT-6 Astra session, each run unattended under matched conditions. Round 2 is the cleaner comparison of the two; see <a href="#how">How it was made</a>.</p>
       <p>This is far from a clean trial, benchmark or comparison. I&rsquo;m sharing it because the results are interesting to read and, I hope, to play.</p>
     </div>
@@ -168,8 +168,8 @@
       <summary>Recordings: who got which audio request</summary>
       <div class="inner prose">
         <p>Two sessions got one audio request each, in the same words: make an MP3 with something closer to [[Band-in-a-Box]] than &ldquo;cheesy 8-bit MIDI,&rdquo; and swap the guitar for alto sax on the recording (not the score). Halation&rsquo;s session got it at 23:21 and made the Halation recording.</p>
-        <p>So that the three can be heard on equal terms, the headline recordings of Parallax and Glass Meridian were then made by applying the Halation recording&rsquo;s instructions unchanged: same code, samples, mix and random seed, each tune at its composer&rsquo;s own tempo, with its own written ending.</p>
-        <p>On 28 September, after listening, I had the rhythm section redone for all five recordings on this page, in the same way: a softer ride cymbal, drums that change from bar to bar and phrase to phrase (fills, set-ups, a closed hi-hat or cross-stick on some sections), and bass lines and piano comping that repeat less. All three round-1 tunes were re-rendered with it, including Halation; its original demo is kept as an alternate on its card. The two round-2 recordings got the same change.</p>
+        <p>So that the round-1 tunes can be heard on equal terms, the headline recordings of Parallax, Glass Meridian and (in November) Brightwork were made by applying the Halation recording&rsquo;s instructions unchanged: same code, samples, mix and random seed, each tune at its composer&rsquo;s own tempo, with its own written ending.</p>
+        <p>On 28 September, after listening, I had the rhythm section redone for all five recordings on this page, in the same way: a softer ride cymbal, drums that change from bar to bar and phrase to phrase (fills, set-ups, a closed hi-hat or cross-stick on some sections), and bass lines and piano comping that repeat less. All three round-1 tunes were re-rendered with it, including Halation; its original demo is kept as an alternate on its card. The two round-2 recordings got the same change, and Brightwork was rendered with it from the start.</p>
         <p>The Codex session got the first audio request at 22:52 (without the sax swap), then three more rounds of feedback: sound more natural, use sax instead of guitar, a less clich&eacute;d swing feel, and a fuller upright bass. Its own versions, v1 (trumpet and guitar) and v3 (trumpet and sax), are kept as alternates on the Glass Meridian card.</p>
       </div>
     </details>
@@ -180,21 +180,21 @@
         <p class="note">[[concert pitch|Concert pitch]], four bars to a line; two chords in a bar split it at beat 3. Chords with a <span class="s11">&#9839;11</span> are marked, since I asked for bright [[lydian]] sounds.</p>
         <div class="charts">$grids</div>
         <ul class="asks">
-          <li>All three are 32-bar medium-up swing tunes centered on F or E&#9837;, and all three lean hard on maj7[[♯11]] chords.</li>
+          <li>All four are 32-bar medium-up swing tunes centered on F or E&#9837;, and all four lean hard on maj7[[♯11]] chords.</li>
           <li>The two Claude sessions opened the same way: two bars of a maj7&#9839;11 chord, then two bars of a maj7&#9839;5 a whole step down (Fmaj7&#9839;11 to E&#9837;maj7&#9839;5 in Halation, E&#9837;maj7&#9839;11 to D&#9837;maj7&#9839;5 in Parallax), with melody notes held across the change.</li>
           <li>Halation (Claude) and Glass Meridian (GPT) start their melodies with nearly the same notes over F lydian: A&ndash;C&ndash;G&ndash;D in Halation, A&ndash;C&ndash;G&ndash;B&ndash;D in Glass Meridian.</li>
         </ul>
         <div class="table-wrap">
           <table>
-            <thead><tr><td></td><th scope="col">Halation</th><th scope="col">Parallax</th><th scope="col">Glass Meridian</th></tr></thead>
+            <thead><tr><td></td><th scope="col">Halation</th><th scope="col">Parallax</th><th scope="col">Glass Meridian</th><th scope="col">Brightwork</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Model</th><td>Claude Opus 5.5 (max)</td><td>Claude Opus 5.5 (max)</td><td>GPT-6 Astra (Codex)</td></tr>
-              <tr><th scope="row">Tempo</th><td>&#9833; = 184</td><td>&#9833; = 176</td><td>&#9833; = 164</td></tr>
-              <tr><th scope="row">Form</th><td>A B A&prime; C</td><td>A A B A</td><td>A A2 B C</td></tr>
-              <tr><th scope="row">Around the head</th><td>1st and 2nd endings; all-lydian turnaround</td><td>4-bar guitar intro; coda</td><td>None; every pass ends on F6/9</td></tr>
-              <tr><th scope="row">Solo sheets</th><td>One PDF per chorus</td><td>One PDF per part, a chorus a page</td><td>One PDF per part, a chorus a page</td></tr>
-              <tr><th scope="row">Guitar notation</th><td>Treble clef, sounds an octave lower</td><td>Treble clef, sounds an octave lower</td><td>Written at sounding pitch</td></tr>
-              <tr><th scope="row">Notation done (file times)</th><td>23:23</td><td>About 23:35</td><td>22:50</td></tr>
+              <tr><th scope="row">Model</th><td>Claude Opus 5.5 (max)</td><td>Claude Opus 5.5 (max)</td><td>GPT-6 Astra (Codex)</td><td>Claude Fable 5.2 (max)</td></tr>
+              <tr><th scope="row">Tempo</th><td>&#9833; = 184</td><td>&#9833; = 176</td><td>&#9833; = 164</td><td>&#9833; = 160</td></tr>
+              <tr><th scope="row">Form</th><td>A B A&prime; C</td><td>A A B A</td><td>A A2 B C</td><td>A A B A</td></tr>
+              <tr><th scope="row">Around the head</th><td>1st and 2nd endings; all-lydian turnaround</td><td>4-bar guitar intro; coda</td><td>None; every pass ends on F6/9</td><td>None; head out stops on bar 31</td></tr>
+              <tr><th scope="row">Solo sheets</th><td>One PDF per chorus</td><td>One PDF per part, a chorus a page</td><td>One PDF per part, a chorus a page</td><td>One PDF per part</td></tr>
+              <tr><th scope="row">Guitar notation</th><td>Treble clef, sounds an octave lower</td><td>Treble clef, sounds an octave lower</td><td>Written at sounding pitch</td><td>Treble clef, sounds an octave lower</td></tr>
+              <tr><th scope="row">Prompt to finished notation (wall clock)</th><td>About 56 min (22:27&ndash;23:23)</td><td>About 66 min (22:29&ndash;23:35)</td><td>22 min (22:28&ndash;22:50)</td><td>About 82 min of running, split by a usage limit</td></tr>
             </tbody>
           </table>
         </div>
@@ -209,6 +209,7 @@
           <li>Claude: two separate sessions in the Claude Code desktop app, both Claude Opus 5.5 at max effort.</li>
           <li>Codex: the Codex desktop app with GPT-6 Astra. Its log shows reasoning effort &ldquo;xhigh&rdquo; for the composition and the first recording, then &ldquo;medium&rdquo; and &ldquo;high&rdquo; for the audio fixes.</li>
           <li>The machine had MuseScore 3.6.2, iReal Pro and Python. All three wrote their own code to generate the notation and rendered their PDFs through MuseScore.</li>
+          <li>Brightwork (21 November): Claude Fable 5.2 at max effort, run unattended from the command line in a copy of the repo rebuilt as round 1 found it, with the skills written after round 1 switched off. MuseScore no longer ran on the Mac by then, so it engraved with LilyPond. Its first two attempts (14&ndash;15 November) failed on a network drop and a usage limit; the third ran 54 minutes, hit the 5-hour usage limit, and finished after one &ldquo;Continue.&rdquo; Its log shows no look at the other tunes.</li>
           <li>My prompt pointed to &ldquo;the folder/repo&rdquo; for soloing ideas and then trailed off. The Parallax session went looking and found the topic list from my weekly brass-practice generator (pentatonic pairs, triad pairs, displacement).</li>
         </ul>
       </div>

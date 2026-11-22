@@ -1,6 +1,6 @@
 // Voter id, shuffled order, tooltips, copy buttons and the vote form.
 (function () {
-  var ROUNDS = [["halation", "parallax", "glass_meridian"], ["tenebrae", "noctilucent"]];
+  var ROUNDS = [["halation", "parallax", "glass_meridian", "brightwork"], ["tenebrae", "noctilucent"]];
   var TUNES = ROUNDS[0].concat(ROUNDS[1]);
 
   function get(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }

@@ -4,7 +4,7 @@ HAL_AUDIO = "claude_halation/audio"
 GM_AUDIO = "codex_glass_meridian/audio/output"
 TRIAL_AUDIO = "trial_recordings/output"
 
-SAME_RECIPE = ("Same recipe as the other two headline recordings: the audio instructions that "
+SAME_RECIPE = ("Same recipe as the other round-1 headline recordings: the audio instructions that "
                "produced the Halation recording, applied unchanged (code, samples, mix, random "
                "seed), at the composer's own tempo. Trumpet: University of Iowa samples. Alto "
                "sax (playing the guitar line), piano, bass and drums: Apple GarageBand "
@@ -90,6 +90,18 @@ RECORDINGS = {
                  "two got one audio request each, so this version had extra help."},
     ],
 }
+RECORDINGS["brightwork"] = [
+    {"label": "Band recording: trumpet and alto sax, with piano, bass and drums", "length": "3:23",
+     "src": f"{TRIAL_AUDIO}/Brightwork_band_trumpet_alto.mp3",
+     "file": "Brightwork_band_trumpet_alto.mp3", "main": True,
+     "note": SAME_RECIPE + " Rendered on 21 Nov with the current rhythm section; the head out "
+             "stops on bar 31, as the run's README says."},
+    {"label": "The run's own rough mock-up (General MIDI), made unasked", "length": "",
+     "src": "fable_brightwork/audio/Brightwork_mockup.mp3",
+     "file": "Brightwork_mockup.mp3", "main": False,
+     "note": "The composing session made this without being asked, with simple rule-based "
+             "bass, electric piano and drums."},
+]
 PENDING = {}
 
 GLOSSARY = {

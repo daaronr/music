@@ -2,7 +2,7 @@
 // A later vote from the same id replaces the earlier one. No IPs or names are stored.
 import { getStore } from "@netlify/blobs";
 
-const TUNES = ["halation", "parallax", "glass_meridian", "tenebrae", "noctilucent"];   // round 2 added 28 Sep
+const TUNES = ["halation", "parallax", "glass_meridian", "brightwork", "tenebrae", "noctilucent"];   // round 2 added 28 Sep
 const PREFS = [...TUNES, "none"];
 const DID = ["listened", "read", "played"];
 const ID_RE = /^[A-Za-z0-9-]{8,64}$/;
