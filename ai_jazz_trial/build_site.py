@@ -128,6 +128,7 @@ def listen_card(run):
 <article class="listen-card" data-tune="{k}" id="listen-{k}">
   <h3>{esc(run["name"])}</h3>
   <p class="meta">{meta}</p>
+  {f'<p class="pending added-later">{esc(run["added_later"])}</p>' if run.get("added_later") else ""}
   {video}
   {headline}
   {fold}
@@ -163,6 +164,7 @@ def tune_card(run):
   <h3>{esc(run["name"])}</h3>
   <p class="by">{model} · {where}</p>
   <p class="meta">{" · ".join(esc(m) for m in run["meta"])}</p>
+  {f'<p class="pending added-later">{esc(run["added_later"])}</p>' if run.get("added_later") else ""}
   <a class="sheet" href="{esc(lead_url)}"><img src="{esc(preview)}" alt="First page of the {esc(run["name"])} lead sheet" loading="lazy"><span>Open the lead sheet (PDF)</span></a>
   {video}
   <details class="fold" open><summary>The idea, per the run’s own notes</summary><p>{esc(run["idea"])}</p></details>

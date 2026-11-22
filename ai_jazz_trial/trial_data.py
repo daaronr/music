@@ -366,6 +366,9 @@ RUNS = [
         "model": "Claude Fable 5.2, max effort",
         "where": "Claude Code, headless, 21 Nov",
         "meta": ["F lydian", "♩ = 160", "32 bars · A A B A"],
+        "added_later": ("Added later: written on 21 November, nearly two months after the other "
+                        "three, from the same prompt, word for word. Votes cast before then "
+                        "didn't include it."),
         "idea": ("The hook is a lydian triad pair: an F triad down, a G triad up, landing on the "
                  "13th. The A section brightens from F lydian to A major, drops into shade (A♭ "
                  "and D♭ lydian) and comes home. The bridge starts a half step below home, in E "
