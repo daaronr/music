@@ -285,7 +285,8 @@ def main():
     subs = dict(
         listen_cards=listen, listen_cards_2=listen2, tune_cards=cards, tune_cards_2=cards2,
         round2_notes=round2_notes(), asks2=asks2,
-        tv_cards="".join(tv_card(r) for r in TV_RUNS), tv_prompt_note=esc(TV_PROMPT_NOTE), pref_choices=choices(), rating_rows=rating_rows(),
+        # TV-theme arrangements are copyrighted melodies: kept off the public page (tv_card unused).
+        pref_choices=choices(), rating_rows=rating_rows(),
         grids="".join(bp.grid_html(r["key"], r["name"]) for r in RUNS),
         timelines="".join(bp.timeline_html(r) for r in RUNS), asks=asks,
         prompt_full=esc(PROMPT_CLAUDE),
