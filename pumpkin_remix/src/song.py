@@ -2,7 +2,7 @@
 
 Arrangement, mix and master.  128 BPM; one sung beat of the 2023 sing-along = two beats here.
 
-  cold open  the original video audio, "...the glory of the pumpkin is the pie", lo-fi, tape stop
+  cold open  the original recording, "...the glory of the pumpkin is the pie", tape stop
   0-8    intro       filtered disco groove on the loop C | A7 | Dm7 | G7
   8-24   verse 1     disco: "Oh a lone pumpkin ... a useful fellow!"
   24-32  break/build piano + strings, "Oh a lone pumpkin" echo, snare build, "but the glory of the pumpkin is the..."
@@ -15,8 +15,10 @@ Arrangement, mix and master.  128 BPM; one sung beat of the 2023 sing-along = tw
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 import soundfile as sf
@@ -24,7 +26,7 @@ import soundfile as sf
 sys.path.insert(0, str(Path(__file__).parent))
 import inst  # noqa: E402
 from dsp import (SR, butter, compress, convolve, db, duck_curve, eq, fade_edges, limiter, lufs, pan,  # noqa: E402
-                 pingpong, reverb_ir, rng, sat, sweep, width, write_wav)
+                 pingpong, reverb_ir, rng, sweep, width, write_wav)
 from harmony import chords_between, root_midi, score_melody, voice  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,7 +46,8 @@ LOOP = ["Cadd9", "A-7", "D-9", "G7"]          # I-vi-ii-V; the song's own bars 1
 
 vox, _ = sf.read(str(W / "vocal_soft.wav"), dtype="float32", always_2d=True)
 orig, osr = sf.read(str(W / "video_audio.wav"), dtype="float32", always_2d=True)
-assert osr == SR
+brass_take, hsr = sf.read(str(W / "stems" / "other.wav"), dtype="float32", always_2d=True)
+assert osr == hsr == SR
 
 
 def vseg(b0, b1, fin=0.01, fout=0.03):
@@ -71,11 +74,12 @@ def cold_open():
     ts = tail[i] * (1 - f) + tail[i + 1] * f
     ts *= np.linspace(1, 0, len(ts))[:, None] ** 0.5
     a = np.vstack([head, ts])
-    # lo-fi: band-limit, mono-ish, crackle
-    a = butter(a, "band", [280, 3800])
-    a = width(sat(a * 1.6, 1.5), 0.3)
-    v = inst.vinyl(len(a) / SR, 0.05)
-    return (a + v[:len(a)]) * 0.9
+    # Keep the tape stop and open up the original recording.
+    a = butter(a, "high", 80)
+    a = eq(a, "peak", 260, 0.9, -2.0)
+    a = eq(a, "peak", 2900, 1.0, 2.0)
+    v = inst.vinyl(len(a) / SR, 0.008)
+    return (width(a, 0.8) + v[:len(a)]) * 0.9
 
 
 COLD = cold_open()
@@ -109,7 +113,7 @@ class Bus:
 
 
 B = {k: Bus(k) for k in ["kick", "drums", "perc", "bass", "sub808", "chords", "strings", "keys",
-                          "brass", "lead", "vocal", "chops", "fx", "orig"]}
+                          "brass", "lead", "vocal", "chops", "fx", "orig", "recorded_brass"]}
 KICKS = []          # sidechain triggers (four-on-the-floor sections)
 K808 = []
 
@@ -197,15 +201,15 @@ def trap_drums(bar0, bar1, chords, roll_end=True):
         for pos, dur in hits:
             t = T(bar, pos)
             name = chord_at(chords, t + 0.01)
-            r = root_midi(name, lo=31)
+            r = root_midi(name, lo=28)
             glide = None
             if pos == 2.75:                  # slide up into the next bar's root
                 nxt = chord_at(chords, T(bar + 1) + 0.01)
-                glide = root_midi(nxt, lo=31)
+                glide = root_midi(nxt, lo=28)
                 if glide == r:
                     glide = r + 12
             B["sub808"].add(t, inst.k808(r, dur * BEAT, glide_to=glide, glide_at=dur * BEAT * 0.6), -3)
-            B["kick"].add(t, inst.kick_house(punch=0.7, length=0.25, tune=50), -9)
+            B["kick"].add(t, inst.kick_house(punch=0.7, length=0.25, tune=50), -10.5)
             K808.append(t)
 
 
@@ -213,7 +217,7 @@ def trap_drums(bar0, bar1, chords, roll_end=True):
 
 def disco_bass(chords, g=-4):
     for t0, t1, name in chords:
-        r = root_midi(name, lo=33)
+        r = root_midi(name, lo=28)
         steps = int(round((t1 - t0) / (BEAT / 2)))
         for s in range(steps):
             t = t0 + s * BEAT / 2
@@ -223,7 +227,7 @@ def disco_bass(chords, g=-4):
 
 def offbeat_bass(chords, g=-3):
     for t0, t1, name in chords:
-        r = root_midi(name, lo=33)
+        r = root_midi(name, lo=28)
         steps = int(round((t1 - t0) / BEAT))
         for s in range(steps):
             B["bass"].add(t0 + s * BEAT + BEAT / 2, inst.bass_synth(r, BEAT * 0.45, cutoff=500, env_amt=1500,
@@ -366,6 +370,23 @@ def stutter(b0, length_beats, t, repeats, g=0.0, step=None):
         B["chops"].add(t + k * step, a, g - 0.4 * k)
 
 
+# ------------------------------------------------------------------ recorded brass
+
+def recorded_brass(t, start, end, duration, gain=0):
+    """Cut an instrumental passage from the separated accompaniment and fit it to the beat."""
+    clip = brass_take[round(start * SR):round(end * SR)]
+    with TemporaryDirectory(dir=W) as directory:
+        dry = Path(directory) / "source.wav"
+        fitted = Path(directory) / "fitted.wav"
+        sf.write(dry, clip, SR, subtype="FLOAT")
+        subprocess.run(["/opt/homebrew/bin/rubberband", "-3", "-q", "-D", str(duration),
+                        "-p", "0.08", str(dry), str(fitted)], check=True)
+        clip, _ = sf.read(fitted, dtype="float32", always_2d=True)
+    clip = butter(clip, "high", 65)
+    clip = eq(clip, "peak", 360, 1.0, -1.5)
+    B["recorded_brass"].add(t, fade_edges(clip, 0.018, 0.09), gain)
+
+
 # ================================================================== ARRANGEMENT
 
 B["orig"].add(0.0, COLD, 0)
@@ -376,7 +397,8 @@ intro_ch = loop_chords(0, 8)
 house_drums(0, 8, clap=False, ohat=True, chat=True)
 house_drums(4, 8, kick=False, ohat=False, chat=False, clap=True)
 offbeat_bass(loop_chords(0, 8), g=-6)
-piano_chords(intro_ch, g=-7, rhythm="stab")
+piano_chords(intro_ch[1:], g=-7, rhythm="stab")
+recorded_brass(T(0), 0.08, 2.29, BAR)               # original brass pickup
 string_pads(loop_chords(4, 8), g=-12)
 B["fx"].add(T(0), inst.impact(), -8)
 B["drums"].add(T(0), inst.crash(), -6)
@@ -391,11 +413,13 @@ disco_bass(v1_ch)
 string_pads(v1_ch, g=-9)
 guitar_scratch(v1_ch)
 vocal_section(-0.25, 31.8, 8, 1)
+recorded_brass(T(8) + 14 * SB, 15.56, 16.37, 0.93 * SB)  # reply after "yellow"
 for b in (14.5, 22.5):                              # gaps after "yellow" and "said"
-    t = T(8) + (b + 0.0 - 1) * SB
-    for k, off in enumerate([0, 1.5, 2.0]):
-        brass_stab(t + off * BEAT, chord_at(v1_ch, t + off * BEAT + 0.01), g=-7)
-    string_run(T(8) + (b + 1.0 - 1) * SB, start=72, g=-10)
+    t = T(8) + (b - 1) * SB
+    gain = -16 if b == 14.5 else -7
+    for off in (0, 1.5, 2.0):
+        brass_stab(t + off * BEAT, chord_at(v1_ch, t + off * BEAT + 0.01), g=gain)
+    string_run(t + SB, start=72, g=-10)
 t_fellow = T(8) + (30.0 - 1) * SB
 brass_stab(t_fellow, "G7", g=-6, dur=0.3)
 B["fx"].add(T(22), inst.downlifter(2 * BAR), -12)
@@ -417,14 +441,14 @@ house_drums(28, 31, clap=False, ohat=False, chat=False)
 house_drums(30, 31, kick=False, ohat=False, chat=True, clap=False)
 saw_chords(loop_chords(28, 32), g=-21, attack=0.3)
 offbeat_bass(loop_chords(28, 30), g=-9)
-snare_build(28, 4, g=-12)
-B["fx"].add(T(28), inst.riser(4 * BAR, 300, 11000), -14)
+snare_build(28, 4, g=-14)
+B["fx"].add(T(28), inst.riser(4 * BAR, 300, 11000), -17)
 for k in range(4):                                  # "glo-" stutter, bar 28
     chop(89.0, 89.5, T(28, k), g=-6 + k)
 for k in range(4):
     chop(89.0, 89.5, T(29, k * 0.5), g=-4 + 0.5 * k, semis=k)
-chop(87.85, 88.98, T(29, 2) - 0.15 * SB, g=1.0)                  # "but the"
-hook(T(30), g=1.5, pie=False)                                    # "glory of the pumpkin is the..."
+chop(87.85, 88.98, T(29, 2) - 0.15 * SB, g=2, bus="vocal")                  # "but the"
+hook(T(30), g=2, bus="vocal", pie=False)                                    # "glory of the pumpkin is the..."
 B["fx"].add(T(31, 3), inst.reverse_swell(BEAT), -8)
 
 # ---- drop 1 (32-48): B A B A'
@@ -460,16 +484,16 @@ for t0, t1, name in v2_ch:                         # dark pads
         B["chords"].add(t0, inst.pad(m, t1 - t0, attack=0.25, release=0.6, cutoff=1500), -9)
 arp(v2_ch, g=-17, step=BEAT / 2, lo=74)
 vocal_section(31.85, 63.9, 48, 33)
+recorded_brass(T(48) + 4 * SB, 34.35, 35.16, 0.95 * SB, -2)  # G7 reply in the trap verse
 # dark double an octave down (formants kept), quiet, for the trap verse
 low_path = W / "vocal_soft_oct_down.wav"
 if not low_path.exists():
-    import subprocess
     subprocess.run(["/opt/homebrew/bin/rubberband", "-3", "-F", "-q", "-p", "-12",
                     str(W / "vocal_soft.wav"), str(low_path)], check=True)
 low_all, _ = sf.read(str(low_path), dtype="float32", always_2d=True)
 i0, i1 = int((VLEAD + 31.85 * SB) * SR), int((VLEAD + 63.9 * SB) * SR)
 dbl = fade_edges(butter(low_all[i0:i1], "low", 2500), 0.01, 0.05)
-B["vocal"].add(T(48) + (31.85 - 33) * SB, dbl, -12)
+B["vocal"].add(T(48) + (31.85 - 33) * SB, dbl, -17)
 B["fx"].add(T(62), inst.riser(2 * BAR, 400, 6000), -16)
 
 # ---- build 2 (64-72)
@@ -500,6 +524,7 @@ saw_chords(v3_ch, g=-13)
 guitar_scratch(v3_ch, g=-15)
 vocal_section(63.85, 88.98, 72, 65, g=0.5)
 hook(T(72) + (89 - 65) * SB, g=0.5, bus="vocal", long_pie=True)
+recorded_brass(T(86, 2), 88.01, 89.82, 3 * BEAT, -1)  # low brass from the original coda
 for b in (70.5, 78.5, 86.5):                       # gaps after "lantern", "high", "drumstick"
     t = T(72) + (b - 65) * SB
     for off in (0, 0.5, 1.5):
@@ -518,10 +543,10 @@ hook(T(90), g=-1, pie=False)                       # "glory of the pumpkin is th
 chop(92.95, 96.0, T(92), g=3)                      # "pie"
 B["fx"].add(T(92), inst.downlifter(2 * BAR), -12)
 fin = orig[int(84.4 * SR):int(93.0 * SR)].copy()      # the original's last "pie" and chord
-fin = butter(fin, "band", [250, 5000])
+fin = eq(butter(fin, "high", 80), "peak", 265, 0.9, -2.0)
 fin = fade_edges(fin, 0.05, 1.5)
 B["orig"].add(T(94), fin, -2)
-B["orig"].add(T(94), inst.vinyl(len(fin) / SR, 0.04), 0)
+B["orig"].add(T(94), inst.vinyl(len(fin) / SR, 0.008), 0)
 
 
 # ================================================================== MIX
@@ -553,8 +578,8 @@ duck = duck_curve(N, KICKS, depth_db=-9, release=0.2)
 duck_soft = duck_curve(N, KICKS, depth_db=-4, release=0.16)
 duck808 = duck_curve(N, K808, depth_db=-5, release=0.3)
 
-# filter automation: intro opens from 350 Hz; the build-up high-passes the music
-lp_intro = log_curve([(0, 350), (T(0), 350), (T(6), 2500), (T(8) - 0.01, 19000), (END, 19000)])
+# filter automation: intro filter opens from 1.2 kHz; the build-up high-passes the music
+lp_intro = log_curve([(0, 1200), (T(0), 1200), (T(6), 7200), (T(8) - 0.01, 19000), (END, 19000)])
 hp_build1 = log_curve([(0, 20), (T(28), 20), (T(31, 3), 900), (T(32) - 0.005, 900), (T(32), 20), (END, 20)])
 hp_build2 = log_curve([(0, 20), (T(68), 20), (T(71, 3), 800), (T(72) - 0.005, 800), (T(72), 20), (END, 20)])
 lp_outro = log_curve([(0, 19000), (T(92), 19000), (T(95), 900), (END, 600)])
@@ -569,7 +594,9 @@ kick = B["kick"].x
 drums = butter(B["drums"].x, "high", 120)
 perc = butter(B["perc"].x, "high", 300)
 bass = butter(B["bass"].x, "low", 3500) * duck[:, None]
-sub808 = B["sub808"].x
+bass = eq(bass, "lshelf", 75, 0.7, 3.0)
+bass = eq(bass, "peak", 210, 0.9, -1.5)
+sub808 = eq(B["sub808"].x, "lshelf", 65, 0.7, 1.5)
 chords = butter(B["chords"].x, "high", 160) * duck[:, None] * duck808[:, None]
 strings = butter(B["strings"].x, "high", 140) * duck_soft[:, None]
 keys = butter(B["keys"].x, "high", 120) * duck_soft[:, None]
@@ -579,29 +606,32 @@ lead = lead + pingpong(lead, 0.75 * BEAT, 0.4, 6) * 0.35
 
 
 def vocal_chain(x):
-    x = butter(x, "high", 95)
-    x = eq(x, "peak", 320, 1.0, -2.5)
-    x = eq(x, "peak", 3500, 0.8, 4.5)
-    x = eq(x, "hshelf", 9000, 0.7, 3.0)
-    x = compress(x, -26, 4.0, 0.003, 0.08, makeup_db=6)
-    x = compress(x, -14, 8.0, 0.001, 0.05)
-    return sat(x, 1.15)
+    x = width(butter(x, "high", 105), 0.4)
+    x = eq(x, "peak", 260, 0.9, -3.0)
+    x = eq(x, "peak", 720, 1.3, -1.5)
+    x = eq(x, "peak", 2900, 1.0, 4.5)
+    x = eq(x, "hshelf", 7200, 0.7, 1.5)
+    # Let consonants through, then catch only the sharpest peaks.
+    x = compress(x, -25, 3.0, 0.012, 0.085, makeup_db=4)
+    return compress(x, -12, 3.0, 0.0015, 0.035)
 
 
 voc = vocal_chain(B["vocal"].x)
 chp = vocal_chain(B["chops"].x)
-# more space on the vocal in the break, the trap verse and the outro
-vrev_amt = env_curve([(0, 0.18), (T(24), 0.18), (T(24) + 0.01, 0.4), (T(28), 0.4), (T(28) + 0.01, 0.2),
-                      (T(48), 0.2), (T(48) + 0.01, 0.28), (T(64), 0.28), (T(64) + 0.01, 0.2), (T(92), 0.2),
-                      (T(92) + 0.01, 0.45), (END, 0.45)])
-vdelay = pingpong(voc, 0.75 * BEAT, 0.35, 5, lp=3500, hp=500) * 0.22
-cdelay = pingpong(chp, 0.5 * BEAT, 0.45, 6, lp=4000, hp=400) * 0.28
+# Keep the lead fairly dry; retain longer tails in the breakdown and outro.
+vrev_amt = env_curve([
+    (0, 0.09), (T(24), 0.09), (T(24) + 0.01, 0.28), (T(28), 0.28),
+    (T(28) + 0.01, 0.08), (T(48), 0.08), (T(48) + 0.01, 0.12),
+    (T(64), 0.12), (T(64) + 0.01, 0.09), (T(92), 0.09), (T(92) + 0.01, 0.30), (END, 0.30),
+])
+vdelay = pingpong(voc, 0.75 * BEAT, 0.35, 5, lp=3500, hp=500) * 0.09
+cdelay = pingpong(chp, 0.5 * BEAT, 0.45, 6, lp=4000, hp=400) * 0.19
 
 # relative levels inside groups (dB)
-G = dict(chords=-3, strings=-1, keys=-2, brass=-1, lead=-2, vocal=1, chops=0, drums=0, perc=-3)
+G = dict(chords=-3, strings=-1, keys=-2, brass=-1, lead=-2, vocal=1.5, chops=0, drums=0, perc=-3)
 # loudness targets per group (integrated LUFS, gated, so silent stretches do not count)
-TARGET = dict(kick=-15.5, bass=-17.0, sub808=-15.5, drums=-16.0, music=-14.5, vocals=-11.5, fx=-21.0,
-              orig=-14.0)
+TARGET = dict(kick=-15.5, bass=-13.5, sub808=-13.0, drums=-16.0, music=-15.0, vocals=-9.5, fx=-21.0,
+              orig=-14.0, recorded_brass=-17.5)
 
 
 def to_lufs(x, target):
@@ -611,16 +641,16 @@ def to_lufs(x, target):
 
 music = (chords * db(G["chords"]) + strings * db(G["strings"]) + keys * db(G["keys"]) +
          brass_b * db(G["brass"]) + lead * db(G["lead"]))
-# make room for the voice: dip the music up to 4 dB while it sings, and a static 3 kHz notch
+# make room for the voice: dip the music up to 5 dB while it sings, with a presence-band cut
 from scipy.ndimage import minimum_filter1d, uniform_filter1d  # noqa: E402
 key = (B["vocal"].x + B["chops"].x).mean(axis=1)
 e_db = 10 * np.log10(uniform_filter1d(key.astype(np.float64) ** 2, int(0.03 * SR)) + 1e-12)
 ref = np.percentile(e_db[e_db > -90], 95)
-gr = -4.0 * np.clip((e_db - ref + 24) / 18, 0, 1)
+gr = -5.0 * np.clip((e_db - ref + 24) / 18, 0, 1)
 gr = uniform_filter1d(minimum_filter1d(gr, int(0.12 * SR)), int(0.06 * SR))
 music = music * db(gr)[:, None].astype(np.float32)
-music = eq(music, "peak", 3000, 0.9, -2.0)
-music_wet = convolve(butter(music, "high", 300), plate) * 0.18
+music = eq(music, "peak", 2750, 0.9, -2.8)
+music_wet = convolve(butter(music, "high", 300), plate) * 0.13
 music = to_lufs(music + music_wet, TARGET["music"])
 music = sweep(music, "hp", hp_total, q=0.75)
 drums_all = drums * db(G["drums"]) + perc * db(G["perc"])
@@ -636,12 +666,14 @@ low_end = to_lufs(kick, TARGET["kick"]) + to_lufs(bass, TARGET["bass"]) + to_luf
 
 inst_mix = music + drums_all + low_end
 inst_mix = sweep(inst_mix, "lp", lp_total, q=0.8)
-mix = inst_mix + vox_all + fx + to_lufs(B["orig"].x, TARGET["orig"])
+recorded = to_lufs(B["recorded_brass"].x, TARGET["recorded_brass"])
+mix = inst_mix + vox_all + fx + recorded + to_lufs(B["orig"].x, TARGET["orig"])
 
 # stems for checking
 stem_dir = W / "mix_stems"
 stem_dir.mkdir(exist_ok=True)
-for name, x in [("music", music), ("drums", drums_all), ("low", low_end), ("vocals", vox_all), ("fx", fx)]:
+for name, x in [("music", music), ("drums", drums_all), ("low", low_end), ("vocals", vox_all), ("fx", fx),
+                ("recorded_brass", recorded)]:
     write_wav(stem_dir / f"{name}.wav", x * 0.5, bits=16)
 
 # ---- macro dynamics: quieter break and builds so the drops land
@@ -653,18 +685,18 @@ mix = mix * db(env_curve(SECTION_DB))[:, None].astype(np.float32)
 
 # ---- master
 print("mastering ...")
-m = butter(mix, "high", 28)
-m = eq(m, "lshelf", 90, 0.7, 1.0)
+m = butter(mix, "high", 24)
+m = eq(m, "lshelf", 75, 0.7, 4.0)
 m = eq(m, "hshelf", 3500, 0.6, 2.0)
 m = eq(m, "hshelf", 11000, 0.7, 1.5)
-m = compress(m, -14, 2.0, 0.01, 0.15, makeup_db=1.5)
+m = compress(m, -14, 1.55, 0.018, 0.12)
 pre = lufs(m)
-target = -9.5
-m = m * db(target - pre)
-m = sat(m * 0.9, 1.2) / 0.9 * 0.97
-m = limiter(m, -1.0, look=0.003, rel=0.08)
+target = -10.0
+# Leave headroom for intersample and lossy-encoder peaks.
+ceiling = -2.6
+m = limiter(m * db(target - pre), ceiling, look=0.003, rel=0.08)
 post = lufs(m)
-m = limiter(m * db(target - post), -1.0)
+m = limiter(m * db(target - post), ceiling)
 print(f"LUFS before {pre:.1f}, after {lufs(m):.1f}; peak {20*np.log10(np.abs(m).max()):.2f} dBFS; "
       f"length {len(m)/SR:.1f}s")
 OUT.mkdir(exist_ok=True)

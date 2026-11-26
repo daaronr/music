@@ -20,6 +20,9 @@ S = tl["sections"]
 mix, sr = sf.read(str(ROOT / "output" / "Glory_of_the_Pumpkin_Disco_Trap_Remix.wav"), dtype="float32")
 stems = {k: sf.read(str(W / "mix_stems" / f"{k}.wav"), dtype="float32")[0] * 2 for k in
          ["music", "drums", "low", "vocals", "fx"]}
+recorded_brass = W / "mix_stems" / "recorded_brass.wav"
+if recorded_brass.is_file():
+    stems["music"] += sf.read(recorded_brass, dtype="float32")[0] * 2
 meter = pyln.Meter(sr)
 names = list(S.keys())
 print("section          start  LUFS   vox-vs-backing dB")

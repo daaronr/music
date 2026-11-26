@@ -1,17 +1,17 @@
 # The Glory of the Pumpkin (Disco-Trap Remix)
 
 A dance remix of the 2023 Thanksgiving sing-along
-([YouTube](https://www.youtube.com/watch?v=rMWoPkhzRvE)). The vocal is David's own take from that
-video, separated from the mix and re-timed. Everything else is new: synthesized house and 808 drums,
-synth bass, supersaws, plus GarageBand/Logic sampled strings, brass, piano, guitar and claps.
+([YouTube](https://www.youtube.com/watch?v=rMWoPkhzRvE)). The remix combines David's original
+vocal and short passages of his recorded brass with new house drums, 808s, synth bass and
+GarageBand/Logic instruments.
 
-- `output/Glory_of_the_Pumpkin_Disco_Trap_Remix.mp3`: 3:14, 128 BPM, C major, mastered to about −9.5 LUFS
+- `output/Glory_of_the_Pumpkin_Disco_Trap_Remix.mp3`: 3:14, 128 BPM, C major, about −11 LUFS integrated
 - the 24-bit WAV master is in the same folder locally (not committed)
 
 ## Web player
 
-Open [index.html](index.html) to listen locally. It plays the MP3 in `output/`
-and jumps to the sections below. The cover is a still from the original sing-along.
+[Listen on Netlify](https://glory-of-the-pumpkin.netlify.app/) or open [index.html](index.html)
+locally. The cover is a still from the original sing-along.
 
 For a Netlify deploy, package the player, cover and MP3 from the pushed commit.
 From the repository root:
@@ -19,43 +19,45 @@ From the repository root:
 ```bash
 site_dir=$(mktemp -d)
 git archive HEAD:pumpkin_remix index.html cover.webp output/Glory_of_the_Pumpkin_Disco_Trap_Remix.mp3 | tar -x -C "$site_dir"
-netlify deploy --prod --no-build --dir "$site_dir" --site your-netlify-site-name
+netlify deploy --prod --no-build --dir "$site_dir" --site glory-of-the-pumpkin
 ```
 
 ## Structure
 
 | Time | Bars | Section |
 |---|---|---|
-| 0:00 | — | Cold open: the original video audio ("but the glory of the pumpkin is the pie"), lo-fi, tape stop |
-| 0:08 | 0–7 | Intro: filtered disco groove on C · Am7 · Dm9 · G7, "pump-kin" chops |
-| 0:23 | 8–23 | Verse 1, disco: "Oh a lone pumpkin… a useful fellow!" Four-on-the-floor, octave bass, strings, guitar, brass stabs |
+| 0:00 | — | Cold open: the original recording ("but the glory of the pumpkin is the pie"), tape stop |
+| 0:08 | 0–7 | Intro: original brass pickup, then the disco groove and "pump-kin" chops |
+| 0:23 | 8–23 | Verse 1, disco: "Oh a lone pumpkin… a useful fellow!" Four-on-the-floor, octave bass, strings, guitar, and an original brass reply after "yellow" |
 | 0:53 | 24–31 | Break and build: piano and strings, "Oh a lone pumpkin" echo, snare build, "but the glory of the pumpkin is the…" |
 | 1:08 | 32–47 | Drop: "PIE!", supersaws, the lead plays the tune's hook, vocal chops |
-| 1:38 | 48–63 | Verse 2, half-time trap: 808s, hat rolls, a quiet octave-down double. "So he raised up his head… Thanksgiving dinner" |
+| 1:38 | 48–63 | Verse 2, half-time trap: 808s, hat rolls, a quiet octave-down double and a recorded brass fill. "So he raised up his head… Thanksgiving dinner" |
 | 2:08 | 64–71 | Build: "Thanksgiving dinner" chops, back to four-on-the-floor |
-| 2:23 | 72–87 | Final chorus, full disco: "For the glory of the Jack… the glory of the turkey is the drumstick". The band stops for "but the glory of the pumpkin is the…" (voice and strings) and comes back on "PIE" |
+| 2:23 | 72–87 | Final chorus, full disco: "For the glory of the Jack… the glory of the turkey is the drumstick". The band stops for "but the glory of the pumpkin is the…" (voice and strings) and comes back on "PIE", with low brass from the original coda |
 | 2:53 | 88–95 | Outro: loop, last "pie", and the original video's final chord |
 
 ## How it was made
 
-1. **Source.** The audio track of `Dropbox/large_videos/The Glory of the Pumpkin - Thanksgiving sing-along - SD 480p.mov`
-   (the YouTube upload), plus the chords and melody from `~/Documents/MuseScore3/Scores/Glory_of_the_pumpkin.mscz`.
-   The Nov 2022 GarageBand bounces in `Dropbox/music_recordings/pumpkin - *.mp3` were not used; no
-   pumpkin `.band` project turned up.
-2. **Stems.** Demucs (`htdemucs_ft`) split the video audio into vocals and accompaniment.
+1. **Source.** The stereo GarageBand export `pumpkin - 21:11:2022, 23C.mp3` matches the
+   performance in the 2023 sing-along. The build aligns the export to the video timing and
+   can use the video soundtrack if the export is unavailable. The chords and melody come
+   from `Glory_of_the_pumpkin.mscz`.
+2. **Stems.** Demucs (`htdemucs_ft`) separates the vocal and accompaniment from the stereo
+   export. The recorded brass comes from short instrumental passages in the accompaniment
+   stem with minimal vocal bleed. Rubber Band fits each passage to the new tempo.
 3. **Timing.** Whisper word timestamps plus pitch-track onsets locate each sung syllable. A smooth
    tempo fit shows the performance at a steady ~70 bpm with nearly straight eighths. It slows a lot
    at "is the pie".
 4. **Re-timing.** One sung beat became two beats at 128 BPM, so the vocal plays about 9% slower
-   than sung. Rubber Band (R3 engine, formants kept) uses a time map that puts 118 syllables on their
-   written positions. The final ritardando is taken out. Onsets sit a median 28 ms from the grid.
+   than sung. Rubber Band (R3 engine, formants kept) uses a time map that puts the sung
+   syllables on their written positions and straightens the final ritardando.
 5. **Pitch.** Chord-aware correction (Rubber Band pitch map), one constant shift per sung note so
    vibrato survives. Each note goes to the written melody note when the voice is within 1.2
-   semitones of it, otherwise to the nearest note that fits the chord. Median error against those
-   targets went from 29 to 13 cents.
+   semitones of it, otherwise to the nearest note that fits the chord.
 6. **Arrangement, mix and master.** `src/song.py`, all numpy/scipy. Each bus is set to a loudness
-   target. Kick sidechain pumps the bass and chords. The music dips up to 4 dB while the voice sings,
-   and there is section-level gain so the break dips and the drops hit.
+   target. The mix uses a drier, centered lead with a slower compressor attack to let the
+   consonants through. The backing dips under the voice. The synth bass and 808s use a
+   lower register and a stronger low end.
 
 ## Choices worth knowing about
 
@@ -71,25 +73,10 @@ netlify deploy --prod --no-build --dir "$site_dir" --site your-netlify-site-name
   The final chorus keeps your held last "pie".
 - The drop loop is C · Am7 · Dm9 · G7 (I–vi–ii–V), the song's own bars 18 and 24.
 
-## Checks (no ears, so measured)
+## Listening checks
 
-- Section loudness: break about 5 dB under the drops, intro 3–4 dB under. No silent gaps, peak −2.5 dBFS.
-- Spectrum: sub 28%, bass 29%, low-mid 36%, upper bands 7% of energy. That started at 63% sub
-  before the buses were set to loudness targets.
-- Harmony: per-bar vocal vs. backing chroma correlation median 0.24. The same measure gives 0.13 on
-  the original video's own vocal against its accompaniment.
-- Words: Whisper (no lyric prompt) on the finished mix follows both verses and the final chorus
-  nearly word for word ("So he raised up his head… his fondest wish came true… the pride of the
-  whole Thanksgiving dinner… the glory of the turkey is the drumstick"). The hook was the weak spot.
-  After the splice, vocal ducking and the stop, the drop reads "the glory of the pumpkin is
-  good-bye" and the last line "the glory of the pumpkin is the sun". "Pie" stays soft, as it is in
-  the original take.
-
-Not verified by ear:
-- whether the Demucs vocal has audible artifacts (the source is a 127 kbps AAC from an iMovie export)
-- the build into the first drop (bars 28–31): the vocal reads clearly on its own, but Whisper finds
-  no words in the mix there
-- how the whole thing feels on a dance floor
+Check the words in the build into the first drop, the recorded brass in the intro and between
+vocal lines, and the bass in both the disco and trap sections.
 
 ## Rebuild
 
