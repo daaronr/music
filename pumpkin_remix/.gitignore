@@ -1,0 +1,4 @@
+# derived audio: stems, warped vocals, mix stems (rebuild with build.sh)
+work/
+output/*.wav
+src/__pycache__/
