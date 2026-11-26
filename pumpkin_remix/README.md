@@ -8,6 +8,20 @@ synth bass, supersaws, plus GarageBand/Logic sampled strings, brass, piano, guit
 - `output/Glory_of_the_Pumpkin_Disco_Trap_Remix.mp3`: 3:14, 128 BPM, C major, mastered to about −9.5 LUFS
 - the 24-bit WAV master is in the same folder locally (not committed)
 
+## Web player
+
+Open [index.html](index.html) to listen locally. It plays the MP3 in `output/`
+and jumps to the sections below. The cover is a still from the original sing-along.
+
+For a Netlify deploy, package the player, cover and MP3 from the pushed commit.
+From the repository root:
+
+```bash
+site_dir=$(mktemp -d)
+git archive HEAD:pumpkin_remix index.html cover.webp output/Glory_of_the_Pumpkin_Disco_Trap_Remix.mp3 | tar -x -C "$site_dir"
+netlify deploy --prod --no-build --dir "$site_dir" --site your-netlify-site-name
+```
+
 ## Structure
 
 | Time | Bars | Section |
